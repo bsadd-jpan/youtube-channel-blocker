@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Channel Blocker",
+  "version": "1.0",
+  "description": "特定のチャンネルをおすすめから非表示にします",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.png"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
