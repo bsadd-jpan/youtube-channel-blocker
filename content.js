@@ -1,106 +1,71 @@
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
-// ホームや関連動画用
-function processItem(item, blockList) {
-  const channelNameElem = item.querySelector('#channel-name a, ytd-channel-name a');
+// ボタン生成（クリック時にブロックリストに追加して再処理）
+function createBlockButton(channelName, runBlocker) {
+  const btn = document.createElement('button');
+  btn.textContent = '×';
+  btn.className = 'block-btn';
+  btn.style.color = 'red';
+  btn.style.border = 'none';
+  btn.style.background = 'transparent';
+  btn.style.cursor = 'pointer';
+  btn.style.marginRight = '8px';
+  btn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    chrome.storage.local.get(['blockedChannels'], (result) => {
+      const updatedList = result.blockedChannels || [];
+      if (!updatedList.includes(channelName)) {
+        updatedList.push(channelName);
+        chrome.storage.local.set({ blockedChannels: updatedList }, () => {
+          console.log(`Blocked: ${channelName}`);
+          runBlocker();
+        });
+      }
+    });
+  });
+  return btn;
+}
+
+// ブロック対象のアイテムを非表示にする
+function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
+  if (!blockList.includes(channelName)) return;
+
+  const parent = item.closest(closestSelectors);
+  if (parent) {
+    parent.style.display = 'none';
+  } else {
+    item.style.display = 'none';
+  }
+}
+
+// チャンネル名の要素とボタン挿入位置を指定して処理
+function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors) {
+  const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
 
-  // ×ボタンの追加（名前の前）
-  if (!channelNameElem.previousElementSibling || !channelNameElem.previousElementSibling.classList?.contains('block-btn')) {
-    const blockBtn = document.createElement('button');
-    blockBtn.textContent = '×';
-    blockBtn.className = 'block-btn';
-    blockBtn.style.marginRight = '8px';  // 名前の前なので右マージン
-    blockBtn.style.color = 'red';
-    blockBtn.style.border = 'none';
-    blockBtn.style.background = 'transparent';
-    blockBtn.style.cursor = 'pointer';
+  // 挿入位置の要素を取得
+  let insertTarget = insertBeforeElemSelector 
+    ? item.querySelector(insertBeforeElemSelector)
+    : null;
 
-    blockBtn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      chrome.storage.local.get(['blockedChannels'], (result) => {
-        const updatedList = result.blockedChannels || [];
-        if (!updatedList.includes(channelName)) {
-          updatedList.push(channelName);
-          chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-            console.log(`Blocked: ${channelName}`);
-            runBlocker(); // 最新リストで再処理
-          });
-        }
-      });
-    });
-
-    if (channelNameElem.parentElement) {
-      channelNameElem.parentElement.insertBefore(blockBtn, channelNameElem);
+  // ボタンがまだなければ作成・挿入
+  const prevElem = insertTarget ? insertTarget.previousElementSibling : channelNameElem.previousElementSibling;
+  if (!prevElem || !prevElem.classList?.contains('block-btn')) {
+    const btn = createBlockButton(channelName, runBlocker);
+    if (insertTarget) {
+      insertTarget.parentElement.insertBefore(btn, insertTarget);
+    } else if (channelNameElem.parentElement) {
+      channelNameElem.parentElement.insertBefore(btn, channelNameElem);
     }
   }
 
   // ブロック判定と非表示
-  if (blockList.includes(channelName)) {
-    const parent = item.closest('ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer');
-    if (parent) {
-      parent.style.display = 'none';
-    } else {
-      item.style.display = 'none';
-    }
-  }
-}
-
-// 検索結果用
-function processSearchItem(item, blockList) {
-  const channelNameElem = item.querySelector('#channel-name a, ytd-channel-name a');
-  if (!channelNameElem) return;
-
-  const channelName = channelNameElem.textContent.trim();
-
-  const thumb = item.querySelector('yt-img-shadow');
-  if (!thumb) return;
-
-  if (!thumb.previousElementSibling || !thumb.previousElementSibling.classList?.contains('block-btn')) {
-    const blockBtn = document.createElement('button');
-    blockBtn.textContent = '×';
-    blockBtn.className = 'block-btn';
-    blockBtn.style.position = 'relative';
-    blockBtn.style.left = '0';
-    blockBtn.style.top = '0';
-    blockBtn.style.marginRight = '8px';
-    blockBtn.style.color = 'red';
-    blockBtn.style.border = 'none';
-    blockBtn.style.background = 'transparent';
-    blockBtn.style.cursor = 'pointer';
-
-    blockBtn.addEventListener('click', (event) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      chrome.storage.local.get(['blockedChannels'], (result) => {
-        const updatedList = result.blockedChannels || [];
-        if (!updatedList.includes(channelName)) {
-          updatedList.push(channelName);
-          chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-            console.log(`Blocked: ${channelName}`);
-            runBlocker(); // 最新リストで再処理
-          });
-        }
-      });
-    });
-
-    thumb.parentElement.insertBefore(blockBtn, thumb);
-  }
-
-  if (blockList.includes(channelName)) {
-    const parent = item.closest('ytd-video-renderer');
-    if (parent) {
-      parent.style.display = 'none';
-    } else {
-      item.style.display = 'none';
-    }
-  }
+  applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
 }
 
 function runBlocker() {
@@ -108,61 +73,34 @@ function runBlocker() {
     const blockList = result.blockedChannels || [];
 
     // ホーム・おすすめ動画
-    const homeItems = document.querySelectorAll('#dismissible');
-    homeItems.forEach(item => processItem(item, blockList));
+    document.querySelectorAll('#dismissible').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        '#channel-name a, ytd-channel-name a',
+        null,
+        'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+      );
+    });
 
     // 関連動画サイドバー
-    const sideItems = document.querySelectorAll('yt-lockup-view-model');
-    sideItems.forEach(item => {
-      const channelNameElem = item.querySelector('.yt-content-metadata-view-model-wiz__metadata-text');
-      if (!channelNameElem) return;
-
-      const channelName = channelNameElem.textContent.trim();
-
-      if (!channelNameElem.previousElementSibling || !channelNameElem.previousElementSibling.classList?.contains('block-btn')) {
-        const blockBtn = document.createElement('button');
-        blockBtn.textContent = '×';
-        blockBtn.className = 'block-btn';
-        blockBtn.style.marginRight = '8px';
-        blockBtn.style.color = 'red';
-        blockBtn.style.border = 'none';
-        blockBtn.style.background = 'transparent';
-        blockBtn.style.cursor = 'pointer';
-
-        blockBtn.addEventListener('click', (event) => {
-          event.stopPropagation();
-          event.preventDefault();
-
-          chrome.storage.local.get(['blockedChannels'], (result) => {
-            const updatedList = result.blockedChannels || [];
-            if (!updatedList.includes(channelName)) {
-              updatedList.push(channelName);
-              chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-                console.log(`Blocked: ${channelName}`);
-                runBlocker(); // 最新リストで再処理
-              });
-            }
-          });
-        });
-
-        if (channelNameElem.parentElement) {
-          channelNameElem.parentElement.insertBefore(blockBtn, channelNameElem);
-        }
-      }
-
-      if (blockList.includes(channelName)) {
-        const parent = item.closest('ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer');
-        if (parent) {
-          parent.style.display = 'none';
-        } else {
-          item.style.display = 'none';
-        }
-      }
+    document.querySelectorAll('yt-lockup-view-model').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        '.yt-content-metadata-view-model-wiz__metadata-text',
+        null,
+        'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+      );
     });
 
     // 検索結果動画
-    const searchItems = document.querySelectorAll('ytd-video-renderer');
-    searchItems.forEach(item => processSearchItem(item, blockList));
+    document.querySelectorAll('ytd-video-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        '#channel-name a, ytd-channel-name a',
+        'yt-img-shadow',
+        'ytd-video-renderer'
+      );
+    });
   });
 }
 
