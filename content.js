@@ -15,6 +15,7 @@ function createBlockButton(channelName, runBlocker) {
     event.stopPropagation();
     event.preventDefault();
 
+    // チャンネル名をブロックリストに追加し、再描画
     chrome.storage.local.get(['blockedChannels'], (result) => {
       const updatedList = result.blockedChannels || [];
       if (!updatedList.includes(channelName)) {
@@ -33,6 +34,7 @@ function createBlockButton(channelName, runBlocker) {
 function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
   if (!blockList.includes(channelName)) return;
 
+  // 指定した親要素ごと非表示にする
   const parent = item.closest(closestSelectors);
   if (parent) {
     parent.style.display = 'none';
@@ -53,7 +55,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     ? item.querySelector(insertBeforeElemSelector)
     : null;
 
-  // ボタンがまだなければ作成・挿入
+  // 既にボタンがなければ作成・挿入
   const prevElem = insertTarget ? insertTarget.previousElementSibling : channelNameElem.previousElementSibling;
   if (!prevElem || !prevElem.classList?.contains('block-btn')) {
     const btn = createBlockButton(channelName, runBlocker);
@@ -68,6 +70,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
 }
 
+// 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
 function runBlocker() {
   chrome.storage.local.get(['blockedChannels'], (result) => {
     const blockList = result.blockedChannels || [];
@@ -104,7 +107,9 @@ function runBlocker() {
   });
 }
 
+// DOM変化時に呼ばれる（YouTubeは動的なので必要）
 function onMutations() {
+  // 連続変化時は処理を遅延・まとめて実行
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
     runBlocker();
@@ -112,6 +117,8 @@ function onMutations() {
 }
 
 // 初期実行＆監視開始
-runBlocker();
+runBlocker(); // ページロード時に一度実行
+
+// ページ内のDOM変化を監視（動画リストの動的追加・削除に対応）
 const observer = new MutationObserver(onMutations);
 observer.observe(document.body, { childList: true, subtree: true });
