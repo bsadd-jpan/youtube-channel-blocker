@@ -1,19 +1,19 @@
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
-// チャンネル名要素からボタン追加とブロック判定を行う
+// ホームや関連動画用
 function processItem(item, blockList) {
   const channelNameElem = item.querySelector('#channel-name a, ytd-channel-name a');
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
 
-  // ×ボタンの追加
-  if (!channelNameElem.nextElementSibling || !channelNameElem.nextElementSibling.classList.contains('block-btn')) {
+  // ×ボタンの追加（名前の前）
+  if (!channelNameElem.previousElementSibling || !channelNameElem.previousElementSibling.classList?.contains('block-btn')) {
     const blockBtn = document.createElement('button');
     blockBtn.textContent = '×';
     blockBtn.className = 'block-btn';
-    blockBtn.style.marginLeft = '8px';
+    blockBtn.style.marginRight = '8px';  // 名前の前なので右マージン
     blockBtn.style.color = 'red';
     blockBtn.style.border = 'none';
     blockBtn.style.background = 'transparent';
@@ -32,7 +32,9 @@ function processItem(item, blockList) {
       });
     });
 
-    channelNameElem.parentElement.appendChild(blockBtn);
+    if (channelNameElem.parentElement) {
+      channelNameElem.parentElement.insertBefore(blockBtn, channelNameElem);
+    }
   }
 
   // ブロック判定と非表示
@@ -46,7 +48,60 @@ function processItem(item, blockList) {
   }
 }
 
-// 全体を走査してブロック処理
+// 検索結果用
+function processSearchItem(item, blockList) {
+  // 検索結果のチャンネル名は ytd-video-renderer 内の #channel-name a または ytd-channel-name a など
+  const channelNameElem = item.querySelector('#channel-name a, ytd-channel-name a');
+  if (!channelNameElem) return;
+
+  const channelName = channelNameElem.textContent.trim();
+
+  // ×ボタンの追加（yt-img-shadowの前に）
+  const thumb = item.querySelector('yt-img-shadow');
+  if (!thumb) return;
+
+  // 既に×ボタンが付いていないか確認
+  if (!thumb.previousElementSibling || !thumb.previousElementSibling.classList?.contains('block-btn')) {
+    const blockBtn = document.createElement('button');
+    blockBtn.textContent = '×';
+    blockBtn.className = 'block-btn';
+    blockBtn.style.position = 'relative';
+    blockBtn.style.left = '0';
+    blockBtn.style.top = '0';
+    blockBtn.style.marginRight = '8px';
+    blockBtn.style.color = 'red';
+    blockBtn.style.border = 'none';
+    blockBtn.style.background = 'transparent';
+    blockBtn.style.cursor = 'pointer';
+
+    blockBtn.addEventListener('click', () => {
+      chrome.storage.local.get(['blockedChannels'], (result) => {
+        const updatedList = result.blockedChannels || [];
+        if (!updatedList.includes(channelName)) {
+          updatedList.push(channelName);
+          chrome.storage.local.set({ blockedChannels: updatedList }, () => {
+            console.log(`Blocked: ${channelName}`);
+            runBlocker(); // 最新リストで再処理
+          });
+        }
+      });
+    });
+
+    thumb.parentElement.insertBefore(blockBtn, thumb);
+  }
+
+  // ブロック判定と非表示
+  if (blockList.includes(channelName)) {
+    // 検索結果の親要素は ytd-video-renderer
+    const parent = item.closest('ytd-video-renderer');
+    if (parent) {
+      parent.style.display = 'none';
+    } else {
+      item.style.display = 'none';
+    }
+  }
+}
+
 function runBlocker() {
   chrome.storage.local.get(['blockedChannels'], (result) => {
     const blockList = result.blockedChannels || [];
@@ -63,11 +118,12 @@ function runBlocker() {
 
       const channelName = channelNameElem.textContent.trim();
 
-      if (!channelNameElem.nextElementSibling || !channelNameElem.nextElementSibling.classList.contains('block-btn')) {
+      // ×ボタン追加（名前の前）
+      if (!channelNameElem.previousElementSibling || !channelNameElem.previousElementSibling.classList?.contains('block-btn')) {
         const blockBtn = document.createElement('button');
         blockBtn.textContent = '×';
         blockBtn.className = 'block-btn';
-        blockBtn.style.marginLeft = '8px';
+        blockBtn.style.marginRight = '8px';
         blockBtn.style.color = 'red';
         blockBtn.style.border = 'none';
         blockBtn.style.background = 'transparent';
@@ -86,11 +142,13 @@ function runBlocker() {
           });
         });
 
-        channelNameElem.parentElement.appendChild(blockBtn);
+        if (channelNameElem.parentElement) {
+          channelNameElem.parentElement.insertBefore(blockBtn, channelNameElem);
+        }
       }
 
       if (blockList.includes(channelName)) {
-        const parent = item.closest('ytd-compact-video-renderer, ytd-compact-autoplay-renderer');
+        const parent = item.closest('ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer');
         if (parent) {
           parent.style.display = 'none';
         } else {
@@ -98,10 +156,13 @@ function runBlocker() {
         }
       }
     });
+
+    // 検索結果動画
+    const searchItems = document.querySelectorAll('ytd-video-renderer');
+    searchItems.forEach(item => processSearchItem(item, blockList));
   });
 }
 
-// MutationObserverのコールバック
 function onMutations() {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
@@ -109,7 +170,7 @@ function onMutations() {
   }, DEBOUNCE_DELAY);
 }
 
-// 初期化
+// 初期実行＆監視開始
 runBlocker();
 const observer = new MutationObserver(onMutations);
 observer.observe(document.body, { childList: true, subtree: true });
