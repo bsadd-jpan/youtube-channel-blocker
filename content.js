@@ -19,7 +19,10 @@ function processItem(item, blockList) {
     blockBtn.style.background = 'transparent';
     blockBtn.style.cursor = 'pointer';
 
-    blockBtn.addEventListener('click', () => {
+    blockBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
       chrome.storage.local.get(['blockedChannels'], (result) => {
         const updatedList = result.blockedChannels || [];
         if (!updatedList.includes(channelName)) {
@@ -50,17 +53,14 @@ function processItem(item, blockList) {
 
 // 検索結果用
 function processSearchItem(item, blockList) {
-  // 検索結果のチャンネル名は ytd-video-renderer 内の #channel-name a または ytd-channel-name a など
   const channelNameElem = item.querySelector('#channel-name a, ytd-channel-name a');
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
 
-  // ×ボタンの追加（yt-img-shadowの前に）
   const thumb = item.querySelector('yt-img-shadow');
   if (!thumb) return;
 
-  // 既に×ボタンが付いていないか確認
   if (!thumb.previousElementSibling || !thumb.previousElementSibling.classList?.contains('block-btn')) {
     const blockBtn = document.createElement('button');
     blockBtn.textContent = '×';
@@ -74,7 +74,10 @@ function processSearchItem(item, blockList) {
     blockBtn.style.background = 'transparent';
     blockBtn.style.cursor = 'pointer';
 
-    blockBtn.addEventListener('click', () => {
+    blockBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
       chrome.storage.local.get(['blockedChannels'], (result) => {
         const updatedList = result.blockedChannels || [];
         if (!updatedList.includes(channelName)) {
@@ -90,9 +93,7 @@ function processSearchItem(item, blockList) {
     thumb.parentElement.insertBefore(blockBtn, thumb);
   }
 
-  // ブロック判定と非表示
   if (blockList.includes(channelName)) {
-    // 検索結果の親要素は ytd-video-renderer
     const parent = item.closest('ytd-video-renderer');
     if (parent) {
       parent.style.display = 'none';
@@ -118,7 +119,6 @@ function runBlocker() {
 
       const channelName = channelNameElem.textContent.trim();
 
-      // ×ボタン追加（名前の前）
       if (!channelNameElem.previousElementSibling || !channelNameElem.previousElementSibling.classList?.contains('block-btn')) {
         const blockBtn = document.createElement('button');
         blockBtn.textContent = '×';
@@ -129,7 +129,10 @@ function runBlocker() {
         blockBtn.style.background = 'transparent';
         blockBtn.style.cursor = 'pointer';
 
-        blockBtn.addEventListener('click', () => {
+        blockBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          event.preventDefault();
+
           chrome.storage.local.get(['blockedChannels'], (result) => {
             const updatedList = result.blockedChannels || [];
             if (!updatedList.includes(channelName)) {
