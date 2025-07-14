@@ -15,8 +15,8 @@
   **Like the official version, this extension may suddenly stop working.  
   👉 Back up your block list periodically! 💾**
 
-- **力を入れて更新する気はないですが、何かあればブログやX（Twitter）にコメントしてくれれば気が向いた時に直すかもしれません。✍️**  
-  **I don’t actively maintain this, but if you leave a comment on my blog or X (Twitter), I *might* fix things when I feel like it. ✍️**
+- **力を入れて更新する気はないですが、何かあればブログやX（Twitter）にコメントしてください。もちろん、プルリクエストも可です。**  
+  **I don’t actively maintain this, but please leave a comment on my blog or X (Twitter) if you find any issues. Pull requests are also acceptable. ✍️**
 
   📘 Blog: [https://blog.hatena.ne.jp/physx/physx.hatenablog.com/](https://blog.hatena.ne.jp/physx/physx.hatenablog.com/)  
   🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
