@@ -44,7 +44,7 @@ function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
 }
 
 // チャンネル名の要素とボタン挿入位置を指定して処理
-function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors) {
+function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker) {
   const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
 
@@ -81,7 +81,8 @@ function runBlocker() {
         item, blockList,
         '#channel-name a, ytd-channel-name a',
         null,
-        'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+        'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
+        runBlocker // ←追加
       );
     });
 
@@ -91,7 +92,8 @@ function runBlocker() {
         item, blockList,
         '.yt-content-metadata-view-model-wiz__metadata-text',
         null,
-        'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+        'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
+        runBlocker // ←追加
       );
     });
 
@@ -101,7 +103,8 @@ function runBlocker() {
         item, blockList,
         '#channel-name a, ytd-channel-name a',
         'yt-img-shadow',
-        'ytd-video-renderer'
+        'ytd-video-renderer',
+        runBlocker // ←追加
       );
     });
   });
