@@ -108,12 +108,28 @@ function runBlocker() {
 }
 
 // DOM変化時に呼ばれる（YouTubeは動的なので必要）
+// // function onMutations() {
+// //   // 連続変化時は処理を遅延・まとめて実行
+// //   clearTimeout(debounceTimer);
+// //   debounceTimer = setTimeout(() => {
+// //     runBlocker();
+// //   }, DEBOUNCE_DELAY);
+// }
+
 function onMutations() {
-  // 連続変化時は処理を遅延・まとめて実行
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
+  // 検索画面の動画数を取得
+  const videoCount = document.querySelectorAll('ytd-video-renderer').length;
+
+  // 動画が5個以上なら即座に処理、それ以外は遅延処理
+  if (videoCount >= 5) {
     runBlocker();
-  }, DEBOUNCE_DELAY);
+    clearTimeout(debounceTimer);
+  } else {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      runBlocker();
+    }, DEBOUNCE_DELAY);
+  }
 }
 
 // 初期実行＆監視開始
