@@ -51,7 +51,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   const channelName = channelNameElem.textContent.trim();
 
   // 挿入位置の要素を取得
-  let insertTarget = insertBeforeElemSelector 
+  let insertTarget = insertBeforeElemSelector
     ? item.querySelector(insertBeforeElemSelector)
     : null;
 
@@ -82,7 +82,7 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         null,
         'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
 
@@ -93,7 +93,7 @@ function runBlocker() {
         '.yt-content-metadata-view-model-wiz__metadata-text',
         null,
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
 
@@ -104,21 +104,19 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         'yt-img-shadow',
         'ytd-video-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
   });
 }
 
-// DOM変化時に呼ばれる（YouTubeは動的なので必要）
-// // function onMutations() {
-// //   // 連続変化時は処理を遅延・まとめて実行
-// //   clearTimeout(debounceTimer);
-// //   debounceTimer = setTimeout(() => {
-// //     runBlocker();
-// //   }, DEBOUNCE_DELAY);
-// }
+// 初期ロード直後に全動画一括処理（既存分の一瞬表示防止）
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded: Initial block processing started.');
+  runBlocker();
+});
 
+// DOM変化時に呼ばれる（YouTubeは動的なので必要）
 function onMutations() {
   // 検索画面の動画数を取得
   const videoCount = document.querySelectorAll('ytd-video-renderer').length;
@@ -134,9 +132,6 @@ function onMutations() {
     }, DEBOUNCE_DELAY);
   }
 }
-
-// 初期実行＆監視開始
-runBlocker(); // ページロード時に一度実行
 
 // ページ内のDOM変化を監視（動画リストの動的追加・削除に対応）
 const observer = new MutationObserver(onMutations);
