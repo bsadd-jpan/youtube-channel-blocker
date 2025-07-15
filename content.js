@@ -82,7 +82,7 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         null,
         'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
 
@@ -93,7 +93,7 @@ function runBlocker() {
         '.yt-content-metadata-view-model-wiz__metadata-text',
         null,
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
 
@@ -104,20 +104,36 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         'yt-img-shadow',
         'ytd-video-renderer',
-        runBlocker // ←追加
+        runBlocker
       );
     });
   });
 }
 
-// DOM変化時に呼ばれる（YouTubeは動的なので必要）
-// // function onMutations() {
-// //   // 連続変化時は処理を遅延・まとめて実行
-// //   clearTimeout(debounceTimer);
-// //   debounceTimer = setTimeout(() => {
-// //     runBlocker();
-// //   }, DEBOUNCE_DELAY);
-// }
+// サムネイル要素追加時に即座にrunBlockerを呼ぶ
+const observer = new MutationObserver((mutationsList) => {
+  let triggered = false;
+  for (const mutation of mutationsList) {
+    for (const node of mutation.addedNodes) {
+      if (
+        node.nodeType === 1 &&
+        (
+          node.matches?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer') ||
+          node.querySelector?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer')
+        )
+      ) {
+        runBlocker();
+        triggered = true;
+        break;
+      }
+    }
+    if (triggered) break;
+  }
+  if (!triggered) {
+    onMutations();
+  }
+});
+observer.observe(document.body, { childList: true, subtree: true });
 
 function onMutations() {
   // 検索画面の動画数を取得
@@ -135,9 +151,5 @@ function onMutations() {
   }
 }
 
-// 初期実行＆監視開始
-runBlocker(); // ページロード時に一度実行
-
-// ページ内のDOM変化を監視（動画リストの動的追加・削除に対応）
-const observer = new MutationObserver(onMutations);
-observer.observe(document.body, { childList: true, subtree: true });
+// 初期化処理
+runBlocker();
