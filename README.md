@@ -10,7 +10,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ## 使い方 🚀
 
-1. 「youtube-channel-blocker」フォルダを作成し、コードや画像ファイルをその中に入れます。  
+1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます。  
 2. アイコン用に適当な**PNG形式**の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
    - `icon128.png`  
@@ -23,7 +23,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ## How to use 🚀
 
-1. Create a folder named **`youtube-channel-blocker`** and place all code and image files inside it.  
+1. Create a folder named **`youtube-channel-blocker`** and place all code inside it.  
 2. Prepare two **PNG format** images for the icons. Rename them to:  
    - `icon48.png`  
    - `icon128.png`  
