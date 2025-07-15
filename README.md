@@ -71,5 +71,5 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ## Contact 📬
 
-[Blog](https://blog.hatena.ne.jp/physx/physx.hatenablog.com/)  
-[X (Twitter)](https://x.com/aki009113)
+📘 Blog: [https://blog.hatena.ne.jp/physx/physx.hatenablog.com/](https://blog.hatena.ne.jp/physx/physx.hatenablog.com/)  
+🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
