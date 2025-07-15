@@ -1,7 +1,12 @@
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
-// ボタン生成（クリック時にブロックリストに追加して再処理）
+/**
+ * チャンネルブロックボタンを生成
+ * @param {string} channelName - チャンネル名
+ * @param {Function} runBlocker - ブロック処理を再実行する関数
+ * @returns {HTMLButtonElement} - 生成したボタン要素
+ */
 function createBlockButton(channelName, runBlocker) {
   const btn = document.createElement('button');
   btn.textContent = '×';
@@ -30,7 +35,13 @@ function createBlockButton(channelName, runBlocker) {
   return btn;
 }
 
-// ブロック対象のアイテムを非表示にする
+/**
+ * ブロック対象のアイテムを非表示にする
+ * @param {Element} item - 対象となる動画アイテムのDOM要素
+ * @param {string} channelName - チャンネル名
+ * @param {string[]} blockList - ブロック対象チャンネル名の配列
+ * @param {string} closestSelectors - 非表示にする親要素のセレクタ
+ */
 function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
   if (!blockList.includes(channelName)) return;
 
@@ -43,7 +54,15 @@ function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
   }
 }
 
-// チャンネル名の要素とボタン挿入位置を指定して処理
+/**
+ * チャンネル名の要素とボタン挿入位置を指定して処理
+ * @param {Element} item - 対象となる動画アイテムのDOM要素
+ * @param {string[]} blockList - ブロック対象チャンネル名の配列
+ * @param {string} channelSelector - チャンネル名を取得するためのセレクタ
+ * @param {string|null} insertBeforeElemSelector - ボタン挿入位置のセレクタ（nullならデフォルト位置）
+ * @param {string} blockParentSelectors - 非表示にする親要素のセレクタ
+ * @param {Function} runBlocker - ブロック処理を再実行する関数
+ */
 function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker) {
   const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
@@ -70,7 +89,9 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
 }
 
-// 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
+/**
+ * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
+ */
 function runBlocker() {
   chrome.storage.local.get(['blockedChannels'], (result) => {
     const blockList = result.blockedChannels || [];
@@ -107,6 +128,17 @@ function runBlocker() {
         runBlocker
       );
     });
+    // 検索結果動画のチャンネル名
+    document.querySelectorAll('ytd-channel-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        // '#channel-name, ytd-channel-name',
+        'ytd-channel-name #text, #channel-name a, ytd-channel-name a',
+        null,
+        'ytd-channel-renderer',
+        runBlocker
+      );
+    });
   });
 }
 
@@ -135,6 +167,9 @@ const observer = new MutationObserver((mutationsList) => {
 });
 observer.observe(document.body, { childList: true, subtree: true });
 
+/**
+ * 動画数によってrunBlockerの呼び出しタイミングを調整
+ */
 function onMutations() {
   // 検索画面の動画数を取得
   const videoCount = document.querySelectorAll('ytd-video-renderer').length;
@@ -151,5 +186,4 @@ function onMutations() {
   }
 }
 
-// 初期化処理
-runBlocker();
+// 初
