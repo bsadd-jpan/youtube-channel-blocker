@@ -8,7 +8,9 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ---
 
-## 使い方 🚀
+## 日本語
+
+### 使い方 🚀
 
 1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます。  
 2. アイコン用に適当な**PNG形式**の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
@@ -19,9 +21,26 @@ A simple Chrome extension to block unwanted YouTube channels.
 5. 左上の **「パッケージ化されていない拡張機能を読み込む」** をクリックし、「youtube-channel-blocker」フォルダを選択します。  
 6. これで拡張機能が読み込まれ、すぐに使用できます。
 
+### 注意 ⚠️
+
+- **理論上ブロックできる最大件数：約34,000件** 🧮  
+  （YouTubeチャンネル名が最大50文字の場合の計算です。）
+
+- **大体の不具合はブラウザの更新で直ることが多いです（細かい不具合に対処は困難）🔧**  
+
+- **今のところは処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えてしまう）🙈**  
+
+- **本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点では確認出来てません）💾**  
+
+- **力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません**  
+
+- **時々、トップページのレイアウトが崩れちゃう問題はだいぶ面倒そうなので対処困難です。😣🛠️**
+
 ---
 
-## How to use 🚀
+## English
+
+### How to use 🚀
 
 1. Create a folder named **`youtube-channel-blocker`** and place all code inside it.  
 2. Prepare two **PNG format** images for the icons. Rename them to:  
@@ -33,29 +52,10 @@ A simple Chrome extension to block unwanted YouTube channels.
 5. Click **Load unpacked** (top left) and select the `youtube-channel-blocker` folder from your computer.  
 6. The extension will now be loaded and ready to use.
 
----
-
-## 注意 ⚠️
-
-- **理論上ブロックできる最大件数：約34,000件** 🧮  
-  （YouTubeチャンネル名が最大50文字の場合の計算です。）  
-
-- **大体の不具合はブラウザの更新で直ることが多いです（細かい不具合に対処は困難…）🔧**  
-
-- **今のところは処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えてしまう）🙈**  
-
-- **本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点では確認出来てません）💾**  
-
-- **力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません**  
-
-- **時々、トップページのレイアウトが崩れちゃう問題はだいぶ面倒そうなので対処困難です。😣🛠️**  
-
----
-
-## Notes ⚠️
+### Notes ⚠️
 
 - **Theoretical maximum number of blocked channels: approx. 34,000** 🧮  
-  (Calculated based on channel names up to 50 characters long.)  
+  (Calculated based on channel names up to 50 characters long.)
 
 - **Most issues can usually be resolved by updating your browser. Fixing minor bugs beyond that is difficult. 🔧**  
 
@@ -69,7 +69,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ---
 
-## Contact 📬
+## Contact / 連絡 📬
 
 📘 Blog: [https://blog.hatena.ne.jp/physx/physx.hatenablog.com/](https://blog.hatena.ne.jp/physx/physx.hatenablog.com/)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
