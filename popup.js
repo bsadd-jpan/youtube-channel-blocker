@@ -2,7 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const textarea = document.getElementById('blockList');
   const saveBtn = document.getElementById('save');
 
-  // エクスポート・インポートボタン追加
+  // トグルボタンを作成
+  const toggleBtn = document.createElement('button');
+  toggleBtn.textContent = 'Blocker: ON';
+  toggleBtn.style.marginLeft = '8px';
+  toggleBtn.style.padding = '4px 8px';
+  toggleBtn.style.border = 'none';
+  toggleBtn.style.borderRadius = '4px';
+  toggleBtn.style.cursor = 'pointer';
+  toggleBtn.style.color = 'white';
+  toggleBtn.style.backgroundColor = 'red';
+
+  saveBtn.parentNode.insertBefore(toggleBtn, saveBtn.nextSibling);
+
+  // エクスポート・インポートボタン
   const exportBtn = document.createElement('button');
   exportBtn.textContent = 'エクスポート';
   exportBtn.style.marginLeft = '8px';
@@ -10,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   importBtn.textContent = 'インポート';
   importBtn.style.marginLeft = '8px';
 
-  saveBtn.parentNode.insertBefore(exportBtn, saveBtn.nextSibling);
+  saveBtn.parentNode.insertBefore(exportBtn, toggleBtn.nextSibling);
   saveBtn.parentNode.insertBefore(importBtn, exportBtn.nextSibling);
 
   const status = document.createElement('div');
@@ -18,16 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
   status.style.marginTop = '8px';
   saveBtn.parentNode.insertBefore(status, importBtn.nextSibling);
 
-  // 読み込み
-  chrome.storage.local.get(['blockedChannels'], (result) => {
-    if (chrome.runtime.lastError) {
-      status.textContent = '読み込みに失敗しました';
-      return;
-    }
+  // 初期状態読み込み
+  chrome.storage.local.get(['blockedChannels', 'blockerEnabled'], (result) => {
+    // ブロックリスト
     textarea.value = (result.blockedChannels || []).join('\n');
+
+    // トグル状態
+    const isEnabled = result.blockerEnabled !== false; // デフォルトはON
+    updateToggleButton(toggleBtn, isEnabled);
   });
 
-  // 保存
+  // 保存ボタン
   saveBtn.addEventListener('click', () => {
     const blockList = textarea.value
       .split('\n')
@@ -36,13 +50,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chrome.storage.local.set({ blockedChannels: blockList }, () => {
       if (chrome.runtime.lastError) {
-        status.style.color = 'red';
-        status.textContent = '保存に失敗しました';
+        showStatus('保存に失敗しました', 'red');
         return;
       }
-      status.style.color = 'green';
-      status.textContent = '保存しました';
-      setTimeout(() => { status.textContent = ''; }, 2000);
+      showStatus('保存しました', 'green');
+    });
+  });
+
+  // トグルボタン
+  toggleBtn.addEventListener('click', () => {
+    chrome.storage.local.get(['blockerEnabled'], (result) => {
+      const isEnabled = !(result.blockerEnabled !== false); // 反転
+      chrome.storage.local.set({ blockerEnabled: isEnabled }, () => {
+        updateToggleButton(toggleBtn, isEnabled);
+        const msg = isEnabled ? '有効化しました' : '無効化しました';
+        showStatus(msg, 'green');
+      });
     });
   });
 
@@ -59,9 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      status.style.color = 'green';
-      status.textContent = 'エクスポートしました';
-      setTimeout(() => { status.textContent = ''; }, 2000);
+      showStatus('エクスポートしました', 'green');
     });
   });
 
@@ -80,18 +101,32 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!Array.isArray(arr)) throw new Error();
           chrome.storage.local.set({ blockedChannels: arr }, () => {
             textarea.value = arr.join('\n');
-            status.style.color = 'green';
-            status.textContent = 'インポートしました';
-            setTimeout(() => { status.textContent = ''; }, 2000);
+            showStatus('インポートしました', 'green');
           });
         } catch {
-          status.style.color = 'red';
-          status.textContent = 'インポート失敗（ファイル形式エラー）';
-          setTimeout(() => { status.textContent = ''; }, 2000);
+          showStatus('インポート失敗（ファイル形式エラー）', 'red');
         }
       };
       reader.readAsText(file);
     };
     input.click();
   });
+
+  // トグルボタンの見た目更新
+  function updateToggleButton(btn, isEnabled) {
+    if (isEnabled) {
+      btn.textContent = 'Blocker: ON';
+      btn.style.backgroundColor = 'red';
+    } else {
+      btn.textContent = 'Blocker: OFF';
+      btn.style.backgroundColor = 'gray';
+    }
+  }
+
+  // ステータス表示
+  function showStatus(message, color) {
+    status.textContent = message;
+    status.style.color = color;
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  }
 });
