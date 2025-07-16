@@ -3,8 +3,8 @@
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
 
-📖 このREADMEには**日本語と英語の説明**が含まれています。  
-📖 This README includes instructions in **both Japanese and English**.
+📖 このREADMEには日本語と英語の説明が含まれています。  
+📖 This README includes instructions in both Japanese and English.
 
 ---
 
@@ -13,28 +13,26 @@ A simple Chrome extension to block unwanted YouTube channels.
 ### 使い方 🚀
 
 1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます。  
-2. アイコン用に適当な**PNG形式**の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
+2. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
-   - `icon128.png`  
-3. ブラウザのURLバーに **`chrome://extensions/`** と入力し、拡張機能ページを開きます。  
-4. 右上の **「デベロッパーモード」** を ON にします。  
-5. 左上の **「パッケージ化されていない拡張機能を読み込む」** をクリックし、「youtube-channel-blocker」フォルダを選択します。  
+   - `icon128.png`
+3. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます。  
+4. 右上の「デベロッパーモード」を ON にします。  
+5. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します。  
 6. これで拡張機能が読み込まれ、すぐに使用できます。
 
 ### 注意 ⚠️
 
-- **理論上ブロックできる最大件数：約34,000件** 🧮  
+- 理論上ブロックできる最大件数：約34,000件 🧮  
   （YouTubeチャンネル名が最大50文字の場合の計算です。）
 
-- **大体の不具合はブラウザの更新で直ることが多いです（細かい不具合に対処は困難）🔧**  
+- 大体の不具合はブラウザの更新で直ります（細かい不具合への対処は困難）🔧
 
-- **今のところは処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えてしまう）🙈**  
+- 処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えることも）🙈
 
-- **本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点では確認出来てません）💾**  
+- 本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点でその現象は確認出来てませんが）💾
 
-- **力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません**  
-
-- **時々、トップページのレイアウトが崩れちゃう問題はだいぶ面倒そうなので対処困難です。😣🛠️**
+- 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません
 
 ---
 
@@ -42,34 +40,32 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ### How to use 🚀
 
-1. Create a folder named **`youtube-channel-blocker`** and place all code inside it.  
-2. Prepare two **PNG format** images for the icons. Rename them to:  
-   - `icon48.png`  
-   - `icon128.png`  
+1. Create a folder named `youtube-channel-blocker` and place all code inside it.  
+2. Prepare two PNG images for the icons and rename them:  
+   - `icon48.png`
+   - `icon128.png`
    Place both files in the folder.  
-3. Open your browser and go to **`chrome://extensions/`** in the URL bar.  
-4. Turn on **Developer mode** using the toggle switch at the top right.  
-5. Click **Load unpacked** (top left) and select the `youtube-channel-blocker` folder from your computer.  
-6. The extension will now be loaded and ready to use.
+3. Open your browser and go to `chrome://extensions/` in the URL bar.  
+4. Enable "Developer mode" using the toggle at the top right.  
+5. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder from your computer.  
+6. The extension is now loaded and ready to use.
 
 ### Notes ⚠️
 
-- **Theoretical maximum number of blocked channels: approx. 34,000** 🧮  
-  (Calculated based on channel names up to 50 characters long.)
+- The maximum theoretical number of blocked channels is approximately 34,000 🧮  
+  (This assumes each YouTube channel name is up to 50 characters long.)
 
-- **Most issues can usually be resolved by updating your browser. Fixing minor bugs beyond that is difficult. 🔧**  
+- Most issues can usually be fixed by updating your browser. Fixing minor bugs beyond that is difficult. 🔧
 
-- **Due to processing limitations, it’s currently difficult to hide elements instantly. Thumbnails from blocked channels may briefly appear if the process lags. 🙈**  
+- Due to processing limitations, it’s currently not possible to instantly hide blocked channels. Thumbnails from blocked channels may briefly appear if the process lags. 🙈
 
-- **Like the official version, there’s a chance the block list could suddenly disappear. (This hasn’t been observed yet.) 👉 Regularly backing up your list is recommended. 💾**  
+- Like the official version, there is a chance the block list may suddenly disappear. (This has not been observed so far.) 👉 Regular backups of your list are recommended. 💾
 
-- **I’m not actively maintaining this, but I might respond to comments on my blog or X (Twitter), or to pull requests. ✍️**  
-
-- **Occasional layout issues on the homepage seem quite troublesome and may be hard to fix. 😣🛠️**
+- Active maintenance is not planned, but I may respond to comments on my blog or X (Twitter), or to pull requests. ✍️
 
 ---
 
 ## Contact / 連絡 📬
 
-📘 Blog: [https://blog.hatena.ne.jp/physx/physx.hatenablog.com/](https://blog.hatena.ne.jp/physx/physx.hatenablog.com/)  
+📘 Blog: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
