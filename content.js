@@ -93,7 +93,13 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
 function runBlocker() {
-  chrome.storage.local.get(['blockedChannels'], (result) => {
+  chrome.storage.local.get(['blockerEnabled', 'blockedChannels'], (result) => {
+    if (result.blockerEnabled === false) {
+      console.log('Blocker is disabled');
+      clearBlocks();
+      return;
+    }
+
     const blockList = result.blockedChannels || [];
 
     // ホーム・おすすめ動画
@@ -128,17 +134,28 @@ function runBlocker() {
         runBlocker
       );
     });
-    // 検索結果動画のチャンネル名
+
+    // 検索結果のチャンネル
     document.querySelectorAll('ytd-channel-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
-        // '#channel-name, ytd-channel-name',
         'ytd-channel-name #text, #channel-name a, ytd-channel-name a',
         null,
         'ytd-channel-renderer',
         runBlocker
       );
     });
+  });
+}
+
+/**
+ * 全てのブロックを解除（無効化時）
+ */
+function clearBlocks() {
+  document.querySelectorAll(
+    'ytd-rich-item-renderer, ytd-video-renderer, ytd-channel-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+  ).forEach(item => {
+    item.style.display = '';
   });
 }
 
@@ -150,8 +167,8 @@ const observer = new MutationObserver((mutationsList) => {
       if (
         node.nodeType === 1 &&
         (
-          node.matches?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer') ||
-          node.querySelector?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer')
+          node.matches?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-channel-renderer') ||
+          node.querySelector?.('ytd-video-renderer, ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-channel-renderer')
         )
       ) {
         runBlocker();
@@ -171,10 +188,8 @@ observer.observe(document.body, { childList: true, subtree: true });
  * 動画数によってrunBlockerの呼び出しタイミングを調整
  */
 function onMutations() {
-  // 検索画面の動画数を取得
   const videoCount = document.querySelectorAll('ytd-video-renderer').length;
 
-  // 動画が5個以上なら即座に処理、それ以外は遅延処理
   if (videoCount >= 5) {
     runBlocker();
     clearTimeout(debounceTimer);
@@ -185,3 +200,6 @@ function onMutations() {
     }, DEBOUNCE_DELAY);
   }
 }
+
+// 初回実行
+runBlocker();
