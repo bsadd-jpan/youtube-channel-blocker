@@ -15,6 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   saveBtn.parentNode.insertBefore(toggleBtn, saveBtn.nextSibling);
 
+  // 直近の1つを削除ボタン
+  const removeLastBtn = document.createElement('button');
+  removeLastBtn.textContent = '直近の1つを削除';
+  removeLastBtn.style.marginLeft = '8px';
+  removeLastBtn.style.padding = '4px 8px';
+  removeLastBtn.style.border = 'none';
+  removeLastBtn.style.borderRadius = '4px';
+  removeLastBtn.style.cursor = 'pointer';
+  removeLastBtn.style.color = 'white';
+  removeLastBtn.style.backgroundColor = '#f08c00';
+
+  saveBtn.parentNode.insertBefore(removeLastBtn, toggleBtn.nextSibling);
+
   // エクスポート・インポートボタン
   const exportBtn = document.createElement('button');
   exportBtn.textContent = 'エクスポート';
@@ -23,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   importBtn.textContent = 'インポート';
   importBtn.style.marginLeft = '8px';
 
-  saveBtn.parentNode.insertBefore(exportBtn, toggleBtn.nextSibling);
+  saveBtn.parentNode.insertBefore(exportBtn, removeLastBtn.nextSibling);
   saveBtn.parentNode.insertBefore(importBtn, exportBtn.nextSibling);
 
   const status = document.createElement('div');
@@ -33,10 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 初期状態読み込み
   chrome.storage.local.get(['blockedChannels', 'blockerEnabled'], (result) => {
-    // ブロックリスト
     textarea.value = (result.blockedChannels || []).join('\n');
-
-    // トグル状態
     const isEnabled = result.blockerEnabled !== false; // デフォルトはON
     updateToggleButton(toggleBtn, isEnabled);
   });
@@ -54,6 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       showStatus('保存しました', 'green');
+    });
+  });
+
+  // 直近の1つを削除ボタンの動作
+  removeLastBtn.addEventListener('click', () => {
+    chrome.storage.local.get(['blockedChannels'], (result) => {
+      let blockList = result.blockedChannels || [];
+      if (blockList.length === 0) {
+        showStatus('リストは空です', 'red');
+        return;
+      }
+      blockList.pop(); // 最後のチャンネル名を削除
+      chrome.storage.local.set({ blockedChannels: blockList }, () => {
+        textarea.value = blockList.join('\n');
+        showStatus('直近の1つを削除しました', 'green');
+      });
     });
   });
 
