@@ -191,7 +191,7 @@ function runBlocker() {
       );
     });
 
-    // 検索画面
+    // 検索画面のチャンネル名
     document.querySelectorAll('ytd-channel-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
