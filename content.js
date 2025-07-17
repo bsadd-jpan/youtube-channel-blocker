@@ -10,9 +10,9 @@ function createPopup() {
   popup.style.position = 'fixed';
   popup.style.backgroundColor = 'rgba(0,0,0,0.8)';
   popup.style.color = 'white';
-  popup.style.padding = '10px 20px';
+  popup.style.padding = '10px 10px';
   popup.style.borderRadius = '10px';
-  popup.style.fontSize = '24px';
+  popup.style.fontSize = '18px';
   popup.style.pointerEvents = 'none'; // マウス操作を妨げない
   popup.style.zIndex = 9999;
   popup.style.transition = 'opacity 0.3s ease';
