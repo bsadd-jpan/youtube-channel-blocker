@@ -146,6 +146,7 @@ function runBlocker() {
 
     const blockList = result.blockedChannels || [];
 
+    // ホーム画面
     document.querySelectorAll('#dismissible').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -156,6 +157,7 @@ function runBlocker() {
       );
     });
 
+    // 関連動画サイドバー:通常動画用
     document.querySelectorAll('yt-lockup-view-model').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -189,6 +191,7 @@ function runBlocker() {
       );
     });
 
+    // 検索画面
     document.querySelectorAll('ytd-channel-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
