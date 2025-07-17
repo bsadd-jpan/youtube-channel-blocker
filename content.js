@@ -153,7 +153,7 @@ function runBlocker() {
  */
 function clearBlocks() {
   document.querySelectorAll(
-    'ytd-rich-item-renderer, ytd-video-renderer, ytd-channel-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer'
+    'ytd-rich-item-renderer, ytd-video-renderer, ytd-channel-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer, yt-lockup-view-model'
   ).forEach(item => {
     item.style.display = '';
   });
