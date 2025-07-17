@@ -68,6 +68,10 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
+  if (!channelName) {
+    console.log('No channel name found, skipping');
+    return;
+  }
 
   // 挿入位置の要素を取得
   let insertTarget = insertBeforeElemSelector 
@@ -120,6 +124,18 @@ function runBlocker() {
         '.yt-content-metadata-view-model-wiz__metadata-text',
         null,
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
+        runBlocker
+      );
+    });
+
+
+    // 関連動画サイドバー:ショート動画用
+    document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        'ytd-channel-name #text',
+        null,
+        'ytd-compact-video-renderer',
         runBlocker
       );
     });
