@@ -2,6 +2,48 @@ const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
 /**
+ * ポップアップ表示用要素を作成（1回だけ）
+ */
+function createPopup() {
+  const popup = document.createElement('div');
+  popup.id = 'block-popup';
+  popup.style.position = 'fixed';
+  popup.style.backgroundColor = 'rgba(0,0,0,0.8)';
+  popup.style.color = 'white';
+  popup.style.padding = '5px 10px';
+  popup.style.borderRadius = '5px';
+  popup.style.fontSize = '12px';
+  popup.style.pointerEvents = 'none'; // マウス操作を妨げない
+  popup.style.zIndex = 9999;
+  popup.style.transition = 'opacity 0.3s ease';
+  popup.style.opacity = '0';
+  document.body.appendChild(popup);
+  return popup;
+}
+
+const popup = createPopup();
+let popupTimeout = null;
+
+/**
+ * ポップアップを表示
+ * @param {MouseEvent} event - マウスイベント（位置取得用）
+ * @param {string} channelName - 表示するチャンネル名
+ */
+function showPopup(event, channelName) {
+  popup.textContent = `Blocked: ${channelName}`;
+  const x = event.clientX + 15;
+  const y = event.clientY + 15;
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+  popup.style.opacity = '1';
+
+  if (popupTimeout) clearTimeout(popupTimeout);
+  popupTimeout = setTimeout(() => {
+    popup.style.opacity = '0';
+  }, 5000);
+}
+
+/**
  * チャンネルブロックボタンを生成
  * @param {string} channelName - チャンネル名
  * @param {Function} runBlocker - ブロック処理を再実行する関数
@@ -20,7 +62,6 @@ function createBlockButton(channelName, runBlocker) {
     event.stopPropagation();
     event.preventDefault();
 
-    // チャンネル名をブロックリストに追加し、再描画
     chrome.storage.local.get(['blockedChannels'], (result) => {
       const updatedList = result.blockedChannels || [];
       if (!updatedList.includes(channelName)) {
@@ -28,6 +69,9 @@ function createBlockButton(channelName, runBlocker) {
         chrome.storage.local.set({ blockedChannels: updatedList }, () => {
           console.log(`Blocked: ${channelName}`);
           runBlocker();
+
+          // ポップアップ表示
+          showPopup(event, channelName);
         });
       }
     });
@@ -45,7 +89,6 @@ function createBlockButton(channelName, runBlocker) {
 function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
   if (!blockList.includes(channelName)) return;
 
-  // 指定した親要素ごと非表示にする
   const parent = item.closest(closestSelectors);
   if (parent) {
     parent.style.display = 'none';
@@ -69,12 +112,10 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
 
   const channelName = channelNameElem.textContent.trim();
 
-  // 挿入位置の要素を取得
   let insertTarget = insertBeforeElemSelector 
     ? item.querySelector(insertBeforeElemSelector)
     : null;
 
-  // 既にボタンがなければ作成・挿入
   const prevElem = insertTarget ? insertTarget.previousElementSibling : channelNameElem.previousElementSibling;
   if (!prevElem || !prevElem.classList?.contains('block-btn')) {
     const btn = createBlockButton(channelName, runBlocker);
@@ -85,7 +126,6 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     }
   }
 
-  // ブロック判定と非表示
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
 }
 
@@ -102,7 +142,6 @@ function runBlocker() {
 
     const blockList = result.blockedChannels || [];
 
-    // ホーム・おすすめ動画
     document.querySelectorAll('#dismissible').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -113,7 +152,6 @@ function runBlocker() {
       );
     });
 
-    // 関連動画サイドバー
     document.querySelectorAll('yt-lockup-view-model').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -124,7 +162,6 @@ function runBlocker() {
       );
     });
 
-    // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -135,7 +172,6 @@ function runBlocker() {
       );
     });
 
-    // 検索結果のチャンネル
     document.querySelectorAll('ytd-channel-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
@@ -159,7 +195,6 @@ function clearBlocks() {
   });
 }
 
-// サムネイル要素追加時に即座にrunBlockerを呼ぶ
 const observer = new MutationObserver((mutationsList) => {
   let triggered = false;
   for (const mutation of mutationsList) {

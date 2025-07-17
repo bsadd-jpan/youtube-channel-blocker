@@ -75,7 +75,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 ## 実装予定（やるとは言わない）
 - チャンネルページや動画再生ページに×ボタン追加
 - 動画タイトルからキーワード非表示
-- ×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）
+- ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える
 - 拡張機能の詳細設定を追加
 - ×ボタンのUIやポップアップの改善
 
@@ -84,6 +84,6 @@ A simple Chrome extension to block unwanted YouTube channels.
 ## Planned Features (Not Promised)
 - Add × button to channel pages and video playback pages
 - Hide keywords from video titles
-- Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)
+- ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds
 - Add advanced settings to the extension
 - Improve the UI of the × button and popup
