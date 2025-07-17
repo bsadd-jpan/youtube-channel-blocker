@@ -10,9 +10,9 @@ function createPopup() {
   popup.style.position = 'fixed';
   popup.style.backgroundColor = 'rgba(0,0,0,0.8)';
   popup.style.color = 'white';
-  popup.style.padding = '5px 10px';
-  popup.style.borderRadius = '5px';
-  popup.style.fontSize = '12px';
+  popup.style.padding = '10px 10px';
+  popup.style.borderRadius = '10px';
+  popup.style.fontSize = '18px';
   popup.style.pointerEvents = 'none'; // マウス操作を妨げない
   popup.style.zIndex = 9999;
   popup.style.transition = 'opacity 0.3s ease';
@@ -146,7 +146,7 @@ function runBlocker() {
 
     const blockList = result.blockedChannels || [];
 
-    // ホーム画面
+    // ホーム画面の動画
     document.querySelectorAll('#dismissible').forEach(item => {
       processItemGeneric(
         item, blockList,
