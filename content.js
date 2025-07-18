@@ -1,6 +1,8 @@
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
+let hoveredChannelName = null; // マウスオーバーで保存するチャンネル名
+
 /**
  * ポップアップ表示用要素を作成（1回だけ）
  */
@@ -44,6 +46,35 @@ function showPopup(event, channelName) {
 }
 
 /**
+ * エラーポップアップを表示
+ * @param {MouseEvent} event
+ * @param {string} message
+ */
+function showErrorPopup(event, message) {
+  popup.textContent = message;
+  const x = event.clientX + 15;
+  const y = event.clientY + 15;
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+  popup.style.opacity = '1';
+
+  if (popupTimeout) clearTimeout(popupTimeout);
+  popupTimeout = setTimeout(() => {
+    popup.style.opacity = '0';
+  }, 5000);
+}
+
+/**
+ * マウスオーバー時に名前を保存する
+ * @param {Element} elem
+ */
+function attachMouseoverSaveName(elem) {
+  elem.addEventListener('mouseover', () => {
+    hoveredChannelName = elem.textContent.trim();
+  });
+}
+
+/**
  * チャンネルブロックボタンを生成
  * @param {string} channelName
  * @param {Function} runBlocker
@@ -62,6 +93,12 @@ function createBlockButton(channelName, runBlocker) {
     event.stopPropagation();
     event.preventDefault();
 
+    // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
+    if (hoveredChannelName !== channelName) {
+      showErrorPopup(event, 'エラー。一致しません');
+      return;
+    }
+
     chrome.storage.local.get(['blockedChannels'], (result) => {
       const updatedList = result.blockedChannels || [];
       if (!updatedList.includes(channelName)) {
@@ -70,7 +107,6 @@ function createBlockButton(channelName, runBlocker) {
           console.log(`Blocked: ${channelName}`);
           runBlocker();
 
-          // ポップアップ表示
           showPopup(event, channelName);
         });
       }
@@ -130,7 +166,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
 
   const channelName = channelNameElem.textContent.trim();
 
-  let insertTarget = insertBeforeElemSelector 
+  let insertTarget = insertBeforeElemSelector
     ? item.querySelector(insertBeforeElemSelector)
     : null;
 
@@ -142,6 +178,9 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     } else if (channelNameElem.parentElement) {
       channelNameElem.parentElement.insertBefore(btn, channelNameElem);
     }
+
+    // マウスオーバーで名前保存のためイベント付与
+    attachMouseoverSaveName(channelNameElem);
   }
 
   // チャンネル名ブロック判定
