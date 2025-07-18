@@ -8,6 +8,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
 ⚠️ Warning: Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
+
 ---
 
 ## 日本語
