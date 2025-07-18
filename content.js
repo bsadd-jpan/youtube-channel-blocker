@@ -65,16 +65,6 @@ function showErrorPopup(event, message) {
 }
 
 /**
- * マウスオーバー時に名前を保存する
- * @param {Element} elem
- */
-function attachMouseoverSaveName(elem) {
-  elem.addEventListener('mouseover', () => {
-    hoveredChannelName = elem.textContent.trim();
-  });
-}
-
-/**
  * チャンネルブロックボタンを生成
  * @param {string} channelName
  * @param {Function} runBlocker
@@ -95,7 +85,7 @@ function createBlockButton(channelName, runBlocker) {
 
     // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
     if (hoveredChannelName !== channelName) {
-      showErrorPopup(event, 'エラー。一致しません');
+      showErrorPopup(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
       return;
     }
 
@@ -178,10 +168,12 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     } else if (channelNameElem.parentElement) {
       channelNameElem.parentElement.insertBefore(btn, channelNameElem);
     }
-
-    // マウスオーバーで名前保存のためイベント付与
-    attachMouseoverSaveName(channelNameElem);
   }
+
+  // マウスがitem（親要素）に入ったらチャンネル名を保存
+  item.addEventListener('mouseenter', () => {
+    hoveredChannelName = channelName;
+  });
 
   // チャンネル名ブロック判定
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
