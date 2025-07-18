@@ -34,7 +34,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ### 使い方（応用編）✨
 
-個人的な「こんな機能あると良いなあ」で実装済みのやつを箇条書き
+個人的な「こんな機能あると良いなあ」で**実装済み**のやつを箇条書き
 
 - リストのインポート・エクスポート  
   - エキスポートボタンではjsonファイルとしてリストを出力  
@@ -47,6 +47,16 @@ A simple Chrome extension to block unwanted YouTube channels.
   - 拡張機能のアイコンを押すと表示  
   - ×ボタンを押したときにでてくる「Blocked:チャンネル名」というポップアップとあわせて、誤入力をすぐに挽回可能  
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策
+- 動画タイトルフィルターを実装
+  - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示
+  - 3つのキーワードのAND条件（キーワードセット）でも非表示可能
+  - 1つのキーワードの文字数制限は30文字、キーワードセットは最大1000個
+  - 対象は動画タイトルのみ（「切り抜き」をキーワードにしても、「○○切り抜き」というチャンネル名は表示される）  
+  
+  - 例：「切り抜き」と「さしすせそ」と「GTA」を1つのキーワードセットに入れた場合 
+    - タイトル「私の切り抜き動画集」→表示される  
+    - タイトル「GTA切り抜き集」→表示される  
+    - タイトル「GTAの面白い瞬間【さしすせそ/切り抜き】」→非表示になる
 
 ---
 
@@ -67,6 +77,14 @@ A simple Chrome extension to block unwanted YouTube channels.
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
 
 ---
+
+## 実装予定（やるとは言わない）  
+- チャンネルページや動画再生ページに×ボタン追加  
+- ~~動画タイトルからキーワード非表示~~ 追加済み
+- ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える  
+- ~~拡張機能の詳細設定を追加~~ 簡易版を追加済み
+- ×ボタンのUIやポップアップの改善
+
 
 ## English
 
@@ -109,6 +127,16 @@ Features personally implemented as “would be nice to have”:
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
   - Helps counter rare cases where wrong videos get added to the list on the homepage.
 
+- Implemented Video Title Filter
+  - Videos can be hidden based on AND conditions of three keywords (keyword sets).  
+  - Each keyword is limited to 30 characters, and up to 1000 keyword sets can be registered.  
+  - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
+  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).  
+  - For example, if a keyword set contains "clip," "sashisuseso," and "GTA":  
+    - Title "My clip video collection" → displayed  
+    - Title "GTA clip collection" → displayed  
+    - Title "Funny GTA moments [sashisuseso/clip]" → hidden  
+
 ---
 
 ### Notes ⚠️
@@ -126,3 +154,13 @@ Features personally implemented as “would be nice to have”:
 
 📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
+
+
+---
+
+## Planned Features (Not Promised)  
+- Add × button to channel pages and video playback pages  
+- ~~Hide keywords from video titles~~ Added
+- ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds  
+- ~~Add advanced settings to the extension~~ Added (Simple Version)
+- Improve the UI of the × button and popup
