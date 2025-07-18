@@ -155,6 +155,10 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
+  if (!channelName) {
+    console.log('No channel name found, skipping');
+    return;
+  }
 
   let insertTarget = insertBeforeElemSelector
     ? item.querySelector(insertBeforeElemSelector)
@@ -234,6 +238,18 @@ function runBlocker() {
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
         runBlocker,
         keywordSets
+      );
+    });
+
+
+    // 関連動画サイドバー:ショート動画用
+    document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        'ytd-channel-name #text',
+        null,
+        'ytd-compact-video-renderer',
+        runBlocker
       );
     });
 
