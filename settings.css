@@ -62,28 +62,17 @@ body, html {
   font-weight: bold;
 }
 
-/* コンテンツ部分をフレックスコンテナにし、中央ぞろえに */
+/* コンテンツ中央配置 */
 #content {
   flex-grow: 1;
-  /* 高さは画面いっぱい */
   height: 100vh;
-
-  /* 内側の余白 */
   padding: 40px;
-
-  /* スクロールは内側で */
   overflow-y: auto;
-
-  /* 背景色 */
   background: #f9f9f9;
-
-  /* 縦横中央揃え */
   display: flex;
-  justify-content: center; /* 横中央 */
-  /* align-items: center;     縦中央 */
+  justify-content: center;
 }
 
-/* カードの最大幅を設定し中央に */
 .card {
   background: #ffffff;
   border-radius: 8px;
@@ -91,9 +80,6 @@ body, html {
   padding: 20px;
   max-width: 800px;
   width: 100%;
-
-  /* margin: auto; は不要です。#contentのflex中央揃えで中央配置されるため */
-  margin: auto;
 }
 
 .card h2 {
@@ -101,7 +87,7 @@ body, html {
   color: #333;
 }
 
-#searchInput {
+#searchInput, #keywordSearchInput {
   width: 100%;
   padding: 10px 12px;
   font-size: 16px;
@@ -110,7 +96,7 @@ body, html {
   border-radius: 6px;
 }
 
-#blockListContainer {
+#blockListContainer, #keywordListContainer {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -119,7 +105,7 @@ body, html {
   overflow: hidden;
 }
 
-#blockListContainer li {
+#blockListContainer li, #keywordListContainer li {
   display: flex;
   justify-content: space-between;
   padding: 12px 16px;
@@ -127,11 +113,12 @@ body, html {
   align-items: center;
 }
 
-#blockListContainer li:last-child {
+#blockListContainer li:last-child,
+#keywordListContainer li:last-child {
   border-bottom: none;
 }
 
-#blockListContainer li button.removeBtn {
+.removeBtn {
   background-color: #e74c3c;
   border: none;
   color: white;
@@ -141,11 +128,12 @@ body, html {
   font-size: 14px;
 }
 
-#blockListContainer li button.removeBtn:hover {
+.removeBtn:hover {
   background-color: #c0392b;
 }
 
-#exportBtn, #importBtn {
+#exportChannelsBtn, #importChannelsBtn,
+#exportKeywordsBtn, #importKeywordsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
@@ -158,58 +146,42 @@ body, html {
   transition: background 0.3s ease;
 }
 
-#exportBtn:hover, #importBtn:hover {
+#exportChannelsBtn:hover, #importChannelsBtn:hover,
+#exportKeywordsBtn:hover, #importKeywordsBtn:hover {
   background-color: #0056b3;
 }
 
+/* ステータスメッセージ */
 #status {
   margin-top: 16px;
   font-weight: bold;
-  color: #28a745;
+  min-height: 24px;
+  padding: 8px;
+  border-radius: 4px;
+  display: none; /* デフォルト非表示 */
 }
 
-/* 追加: タブ切り替え表示制御 */
+#status.success,
+#status.error {
+  display: block; /* success/error時に表示 */
+}
+
+#status.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+#status.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
 .tab-content {
   display: none;
 }
 
 .tab-content.active {
   display: block;
-}
-
-/* ここから追加部分 */
-/* 動画タイトルフィルター用 */
-#keywordListContainer {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-#keywordListContainer li {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid #eee;
-  align-items: center;
-}
-
-#keywordListContainer li:last-child {
-  border-bottom: none;
-}
-
-#keywordListContainer li button.removeBtn {
-  background-color: #e74c3c;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-#keywordListContainer li button.removeBtn:hover {
-  background-color: #c0392b;
 }

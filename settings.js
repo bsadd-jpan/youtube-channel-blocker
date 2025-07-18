@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '解除',
       removeBtnKeyword: '解除',
+      keywordTooLong: 'キーワードは30文字以内で入力してください。',
     },
     en: {
       noMatch: 'No matching channels.',
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       importError: 'Import failed (invalid file format)',
       removeBtn: 'Remove',
       removeBtnKeyword: 'Remove',
+      keywordTooLong: 'Please enter keywords up to 30 characters.',
     }
   };
 
@@ -190,6 +192,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // キーワード検索
   keywordSearchInput.addEventListener('input', () => renderKeywordList(keywordSearchInput.value));
 
+  // キーワード入力に文字数制限とエラーメッセージ表示を追加
+  keywordInputs.forEach(input => {
+    input.setAttribute('maxlength', '30'); // HTML属性でも制限
+
+    input.addEventListener('input', () => {
+      if (input.value.length > 30) {
+        input.value = input.value.slice(0, 30);
+        getLang(lang => showStatus(texts[lang].keywordTooLong, 'red'));
+      }
+    });
+  });
+
   // 新規キーワードセット追加
   addKeywordBtn.addEventListener('click', () => {
     const newKeywords = keywordInputs.map(input => input.value.trim()).filter(Boolean);
@@ -285,26 +299,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ステータス表示
-  function showStatus(msg, color) {
-    status.textContent = msg;
-    status.style.backgroundColor = color === 'green' ? '#d4edda' : '#f8d7da';
-    status.style.color = color === 'green' ? '#155724' : '#721c24';
-    status.style.border = color === 'green' ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
-    status.style.padding = msg ? '8px' : '';
-    status.style.borderRadius = msg ? '4px' : '';
-    if (msg) {
-      setTimeout(clearStatus, 3000);
-    }
+  function showStatus(msg, type) {
+  status.textContent = msg;
+  status.classList.remove('success', 'error');
+  if (type === 'green') {
+    status.classList.add('success');
+  } else {
+    status.classList.add('error');
   }
+  status.style.display = 'block';
+  setTimeout(clearStatus, 3000);
+}
 
-  function clearStatus() {
-    status.textContent = '';
-    status.style.backgroundColor = '';
-    status.style.color = '';
-    status.style.border = '';
-    status.style.padding = '';
-    status.style.borderRadius = '';
-  }
+function clearStatus() {
+  status.textContent = '';
+  status.classList.remove('success', 'error');
+  status.style.display = 'none';
+}
 
   function downloadJSON(data, filename) {
     const blob = new Blob([data], { type: 'application/json' });
