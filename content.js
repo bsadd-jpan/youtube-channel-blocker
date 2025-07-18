@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2025 AKS_Studio aki009
+ * This software is licensed under the MIT License.
+ * See the LICENSE file for details.
+ */
+
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
@@ -155,6 +161,10 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   if (!channelNameElem) return;
 
   const channelName = channelNameElem.textContent.trim();
+  if (!channelName) {
+    console.log('No channel name found, skipping');
+    return;
+  }
 
   let insertTarget = insertBeforeElemSelector
     ? item.querySelector(insertBeforeElemSelector)
@@ -236,6 +246,7 @@ function runBlocker() {
         keywordSets
       );
     });
+
 
     // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {

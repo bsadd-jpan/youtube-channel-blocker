@@ -6,11 +6,11 @@ A simple Chrome extension to block unwanted YouTube channels.
 📖 このREADMEには日本語と英語の説明が含まれています。  
 📖 This README includes instructions in both Japanese and English.
 
-⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
+⚠️ 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
 
-→コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、私の環境で再現できなかっただけかもしれないので、問題あればお知らせください、
+→コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、私の環境で再現できなかっただけかもしれないので、問題あればお知らせください。
 
-⚠️ Warning: Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
+⚠️ Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
 
 →I have updated the code and tested it with about 100 channels without any issues. However, since the problem might be intermittent, please let me know if you encounter any problems.
 
@@ -20,15 +20,16 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ### インストール 🛠️
 
-1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます（.gitignoreは不要です。）
+1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます（.gitignoreは不要です。）  
 2. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
-   - `icon128.png`
+   - `icon128.png`  
 3. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
 4. 右上の「デベロッパーモード」を ON にします  
 5. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
 6. これで拡張機能が読み込まれ、すぐに使用できます
 
+---
 
 ### 使い方（基本編）🔴
 
@@ -54,8 +55,8 @@ A simple Chrome extension to block unwanted YouTube channels.
 - **「直近の１つを削除」ボタンを実装**  
   - 拡張機能のアイコンを押すと表示  
   - ×ボタンを押したときにでてくる「Blocked:チャンネル名」というポップアップとあわせて、誤入力をすぐに挽回可能  
-  - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策
-- **動画タイトルフィルターを実装**
+  - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策  
+- **動画タイトルフィルターを実装**  
   - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
   - 1つのキーワードの文字数制限は30文字、キーワードセットは最大1000個  
   - 対象は動画タイトルのみ（チャンネル名は対象外）   
@@ -65,16 +66,32 @@ A simple Chrome extension to block unwanted YouTube channels.
     - タイトル「GTA切り抜き集」→表示される  
     - タイトル「さしすせそ切り抜き集」→表示される  
     - タイトル「GTAの面白い瞬間【さしすせそ/切り抜き】」→非表示になる
+
 ---
 
 ### 注意 ⚠️
 
 - 理論上ブロックできる最大件数：約34,000件 🧮  
-  （YouTubeチャンネル名が最大50文字の場合の計算です。）  
-- 大体の不具合はブラウザの更新で直ります（細かい不具合への対処は困難）🔧  
-- 処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えることも）🙈  
-- 本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点でその現象は確認出来てませんが）💾  
-- 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません  
+- 大体の不具合はブラウザの更新で直ります🔧  
+- 処理の関係上、一瞬で非表示にするのは困難です🙈  
+- 本家と同じくリストが消える可能性があるので定期的にバックアップを推奨💾  
+- ブログやX（Twitter）へのコメントやプルリクがあれば対応するかも  
+
+## ライセンス
+
+このソフトウェアは [MITライセンス](LICENSE) のもとで配布されています。  
+詳細については同梱の LICENSE ファイルをご確認ください。
+
+## 免責事項
+
+このソフトウェアは現状のまま提供され、いかなる保証もありません。  
+使用によって生じたいかなる損害や問題についても、作者は一切の責任を負いません。  
+すべての使用は利用者自身の責任において行われるものとします。
+
+## 連絡 📬
+
+📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
 
 ---
 
@@ -108,6 +125,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 5. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
 6. The extension will be loaded and ready to use immediately.
 
+---
 
 ### How to use (Basic) 🔴
 
@@ -118,7 +136,6 @@ A simple Chrome extension to block unwanted YouTube channels.
 - The list can be viewed by clicking the extension icon.  
 - Removing names from the list will unblock them (a browser refresh is required).  
 - If the extension doesn’t work, refreshing the page should fix it.
-
 
 ### How to use (Advanced) ✨
 
@@ -136,7 +153,7 @@ Features personally implemented as “would be nice to have”:
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
   - Helps counter rare cases where wrong videos get added to the list on the homepage.
 
-- Implemented Video Title Filter
+- Implemented Video Title Filter  
   - Videos can be hidden based on AND conditions of three keywords (keyword sets).  
   - Each keyword is limited to 30 characters, and up to 1000 keyword sets can be registered.  
   - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
@@ -151,11 +168,29 @@ Features personally implemented as “would be nice to have”:
 ### Notes ⚠️
 
 - The maximum theoretical number of blockable channels is about 34,000 🧮  
-  (Assuming YouTube channel names are up to 50 characters long.)  
-- Most issues can be fixed by refreshing the browser (minor bug fixes beyond that are difficult). 🔧  
-- Due to processing constraints, immediate hiding is difficult; thumbnails may briefly appear. 🙈  
-- Like the official version, there is a chance the block list may suddenly disappear (this has not been observed so far). 👉 Regular backups are recommended. 💾  
-- Active development is not planned, but comments on my blog or X (Twitter) or pull requests may be responded to. ✍️  
+- Most issues can be fixed by refreshing the browser 🔧  
+- Immediate hiding is difficult; thumbnails may briefly appear 🙈  
+- Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
+- Development is not active, but comments or pull requests might be addressed ✍️  
+
+## License
+
+This software is distributed under the [MIT License](LICENSE).  
+For details, please see the included LICENSE file.
+
+## Disclaimer
+
+This software is provided "as is", without any warranty of any kind.  
+The author shall not be held liable for any damages or issues arising from the use of this software.  
+All use is at the user's own risk.
+
+---
+
+## Contact 📬
+
+📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
+
 
 ---
 

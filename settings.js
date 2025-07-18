@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2025 AKS_Studio aki009
+ * This software is licensed under the MIT License.
+ * See the LICENSE file for details.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   // タブボタン
   const tabListBtn = document.getElementById('tab-list');
