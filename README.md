@@ -41,6 +41,8 @@ A simple Chrome extension to block unwanted YouTube channels.
 - リストから名前を消すと戻せます（ブラウザの更新が必要）  
 - 動作しないときはページの更新で直るはずです
 
+---
+
 ### 使い方（応用編）✨
 
 個人的な「こんな機能あると良いなあ」で**実装済み**のやつを箇条書き
@@ -71,11 +73,13 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ### 注意 ⚠️
 
-- 理論上ブロックできる最大件数：約34,000件 🧮  
-- 大体の不具合はブラウザの更新で直ります🔧  
-- 処理の関係上、一瞬で非表示にするのは困難です🙈  
-- 本家と同じくリストが消える可能性があるので定期的にバックアップを推奨💾  
-- ブログやX（Twitter）へのコメントやプルリクがあれば対応するかも  
+- 理論上ブロックできる最大件数：約34,000件🧮（YouTubeチャンネル名が最大50文字の場合の計算）
+- 大体の不具合はブラウザの更新で直ります（細かい不具合への対処は困難）🔧
+- 処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えることも）🙈  
+- 本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点でその現象は確認出来てませんが）💾  
+- 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません 
+
+---
 
 ## ライセンス
 
@@ -88,14 +92,8 @@ A simple Chrome extension to block unwanted YouTube channels.
 使用によって生じたいかなる損害や問題についても、作者は一切の責任を負いません。  
 すべての使用は利用者自身の責任において行われるものとします。
 
-## 連絡 📬
-
-📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
-🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
-
----
-
 ## 実装予定（やるとは言わない）  
+
 - チャンネルページや動画再生ページに×ボタン追加  
 - ~~動画タイトルからキーワード非表示~~ 追加済み
 - ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える  
@@ -137,6 +135,8 @@ A simple Chrome extension to block unwanted YouTube channels.
 - Removing names from the list will unblock them (a browser refresh is required).  
 - If the extension doesn’t work, refreshing the page should fix it.
 
+---
+
 ### How to use (Advanced) ✨
 
 Features personally implemented as “would be nice to have”:
@@ -173,6 +173,8 @@ Features personally implemented as “would be nice to have”:
 - Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
 - Development is not active, but comments or pull requests might be addressed ✍️  
 
+---
+
 ## License
 
 This software is distributed under the [MIT License](LICENSE).  
@@ -184,17 +186,8 @@ This software is provided "as is", without any warranty of any kind.
 The author shall not be held liable for any damages or issues arising from the use of this software.  
 All use is at the user's own risk.
 
----
-
-## Contact 📬
-
-📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
-🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
-
-
----
-
 ## Planned Features (Not Promised)  
+
 - Add × button to channel pages and video playback pages  
 - ~~Hide keywords from video titles~~ Added
 - ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds  
