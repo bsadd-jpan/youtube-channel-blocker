@@ -12,6 +12,7 @@
     <nav id="sidebar">
       <ul>
         <li><button id="tab-list" class="tab active">非表示リスト</button></li>
+        <li><button id="tab-keywords" class="tab">動画タイトルキーワードNG</button></li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
       </ul>
     </nav>
@@ -19,15 +20,33 @@
     <!-- メインコンテンツ -->
     <main id="content">
       <div class="card">
+
         <!-- 非表示リストセクション -->
         <section id="section-list" class="tab-content active">
-          <h2>非表示リスト</h2>
+          <h2>非表示リスト（チャンネル名）</h2>
           <input type="text" id="searchInput" placeholder="検索..." />
           <ul id="blockListContainer"></ul>
         </section>
 
+        <!-- 動画タイトルキーワードNGリストセクション -->
+        <section id="section-keywords" class="tab-content" style="display:none;">
+          <h2>動画タイトルキーワードNGリスト</h2>
+
+          <!-- ここから追加部分 -->
+          <div class="keyword-inputs" style="margin-bottom: 12px;">
+            <input type="text" id="keyword1" placeholder="キーワード1" style="margin-right: 8px; padding: 6px 8px; width: 30%;" />
+            <input type="text" id="keyword2" placeholder="キーワード2" style="margin-right: 8px; padding: 6px 8px; width: 30%;" />
+            <input type="text" id="keyword3" placeholder="キーワード3" style="margin-right: 8px; padding: 6px 8px; width: 30%;" />
+            <button id="addKeywordBtn" style="padding: 6px 16px; cursor: pointer;">追加</button>
+          </div>
+          <!-- ここまで追加部分 -->
+
+          <input type="text" id="keywordSearchInput" placeholder="検索..." />
+          <ul id="keywordListContainer"></ul>
+        </section>
+
         <!-- エクスポート／インポートセクション -->
-        <section id="section-import-export" class="tab-content">
+        <section id="section-import-export" class="tab-content" style="display:none;">
           <h2>エクスポート／インポート</h2>
           <button id="exportBtn">エクスポート</button>
           <button id="importBtn">インポート</button>
