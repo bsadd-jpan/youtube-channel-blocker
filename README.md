@@ -6,7 +6,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 📖 このREADMEには日本語と英語の説明が含まれています。  
 📖 This README includes instructions in both Japanese and English.
 
-⚠️ 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
+⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
 
 →コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、私の環境で再現できなかっただけかもしれないので、問題あればお知らせください。
 
@@ -20,10 +20,10 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ### インストール 🛠️
 
-1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます（.gitignoreは不要です。）  
+1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます（.gitignoreは不要です。）    
 2. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
-   - `icon128.png`  
+   - `icon128.png`    
 3. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
 4. 右上の「デベロッパーモード」を ON にします  
 5. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
@@ -124,6 +124,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 6. The extension will be loaded and ready to use immediately.
 
 ---
+---
 
 ### How to use (Basic) 🔴
 
@@ -134,7 +135,6 @@ A simple Chrome extension to block unwanted YouTube channels.
 - The list can be viewed by clicking the extension icon.  
 - Removing names from the list will unblock them (a browser refresh is required).  
 - If the extension doesn’t work, refreshing the page should fix it.
-
 ---
 
 ### How to use (Advanced) ✨
