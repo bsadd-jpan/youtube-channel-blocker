@@ -7,10 +7,12 @@ A simple Chrome extension to block unwanted YouTube channels.
 📖 This README includes instructions in both Japanese and English.
 
 ⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
+→コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、再現性できなかっただけかもしれないので、問題あればお知らせください、
 
 →コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、私の環境で再現できなかっただけかもしれないので、問題あればお知らせください、
 
 ⚠️ Warning: Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
+→I have updated the code and tested it with about 100 channels without any issues. However, since the problem might be intermittent, please let me know if you encounter any problems.
 
 →I have updated the code and tested it with about 100 channels without any issues. However, since the problem might be intermittent, please let me know if you encounter any problems.
 
