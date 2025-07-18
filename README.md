@@ -7,8 +7,14 @@ A simple Chrome extension to block unwanted YouTube channels.
 📖 This README includes instructions in both Japanese and English.
 
 ⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
+→コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、再現性できなかっただけかもしれないので、問題あればお知らせください、
+
+→コードを修正して、100チャンネルほどで問題ないことを確認しました。しかし、私の環境で再現できなかっただけかもしれないので、問題あればお知らせください、
 
 ⚠️ Warning: Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
+→I have updated the code and tested it with about 100 channels without any issues. However, since the problem might be intermittent, please let me know if you encounter any problems.
+
+→I have updated the code and tested it with about 100 channels without any issues. However, since the problem might be intermittent, please let me know if you encounter any problems.
 
 ---
 
@@ -40,18 +46,18 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 個人的な「こんな機能あると良いなあ」で**実装済み**のやつを箇条書き
 
-- リストのインポート・エクスポート  
+- **リストのインポート・エクスポート**  
   - エキスポートボタンではjsonファイルとしてリストを出力  
   - インポートボタンではjsonファイルを入力することで、リストを完全に置換  
   - 本家Channel Blockerは時々リストが消える現象があったので、この拡張機能も定期的なバックアップを推奨（この拡張機能でリストが消える現象は現時点では未確認）  
-- 拡張機能の動作トグルを実装  
+- **拡張機能の動作トグルを実装**  
   - 拡張機能のアイコンから、赤い「Blocker:ON」を押すと「Blocker:OFF」と灰色になって、非表示が無効化  
   - ボタンを押したら更新不要で反映（反映が遅いことがあるので注意）  
-- 「直近の１つを削除」ボタンを実装  
+- **「直近の１つを削除」ボタンを実装**  
   - 拡張機能のアイコンを押すと表示  
   - ×ボタンを押したときにでてくる「Blocked:チャンネル名」というポップアップとあわせて、誤入力をすぐに挽回可能  
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策
-- 動画タイトルフィルターを実装
+- **動画タイトルフィルターを実装**
   - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
   - 1つのキーワードの文字数制限は30文字、キーワードセットは最大1000個  
   - 対象は動画タイトルのみ（チャンネル名は対象外）   
@@ -74,19 +80,21 @@ A simple Chrome extension to block unwanted YouTube channels.
 
 ---
 
-## 連絡 📬
-
-📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
-🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
-
----
-
 ## 実装予定（やるとは言わない）  
 - チャンネルページや動画再生ページに×ボタン追加  
 - ~~動画タイトルからキーワード非表示~~ 追加済み
 - ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える  
 - ~~拡張機能の詳細設定を追加~~ 簡易版を追加済み
 - ×ボタンのUIやポップアップの改善
+
+---
+
+## 連絡 📬
+
+📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
+
+---
 
 
 ## English
@@ -153,17 +161,16 @@ Features personally implemented as “would be nice to have”:
 
 ---
 
-## Contact 📬
-
-📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
-🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
-
-
----
-
 ## Planned Features (Not Promised)  
 - Add × button to channel pages and video playback pages  
 - ~~Hide keywords from video titles~~ Added
 - ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds  
 - ~~Add advanced settings to the extension~~ Added (Simple Version)
 - Improve the UI of the × button and popup
+
+---
+
+## Contact 📬
+
+📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)

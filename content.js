@@ -1,6 +1,8 @@
 const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
+let hoveredChannelName = null; // マウスオーバーで保存するチャンネル名
+
 /**
  * ポップアップ表示用要素を作成（1回だけ）
  */
@@ -44,6 +46,25 @@ function showPopup(event, channelName) {
 }
 
 /**
+ * エラーポップアップを表示
+ * @param {MouseEvent} event
+ * @param {string} message
+ */
+function showErrorPopup(event, message) {
+  popup.textContent = message;
+  const x = event.clientX + 15;
+  const y = event.clientY + 15;
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+  popup.style.opacity = '1';
+
+  if (popupTimeout) clearTimeout(popupTimeout);
+  popupTimeout = setTimeout(() => {
+    popup.style.opacity = '0';
+  }, 5000);
+}
+
+/**
  * チャンネルブロックボタンを生成
  * @param {string} channelName
  * @param {Function} runBlocker
@@ -62,6 +83,12 @@ function createBlockButton(channelName, runBlocker) {
     event.stopPropagation();
     event.preventDefault();
 
+    // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
+    if (hoveredChannelName !== channelName) {
+      showErrorPopup(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
+      return;
+    }
+
     chrome.storage.local.get(['blockedChannels'], (result) => {
       const updatedList = result.blockedChannels || [];
       if (!updatedList.includes(channelName)) {
@@ -70,7 +97,6 @@ function createBlockButton(channelName, runBlocker) {
           console.log(`Blocked: ${channelName}`);
           runBlocker();
 
-          // ポップアップ表示
           showPopup(event, channelName);
         });
       }
@@ -134,7 +160,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     return;
   }
 
-  let insertTarget = insertBeforeElemSelector 
+  let insertTarget = insertBeforeElemSelector
     ? item.querySelector(insertBeforeElemSelector)
     : null;
 
@@ -147,6 +173,11 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
       channelNameElem.parentElement.insertBefore(btn, channelNameElem);
     }
   }
+
+  // マウスがitem（親要素）に入ったらチャンネル名を保存
+  item.addEventListener('mouseenter', () => {
+    hoveredChannelName = channelName;
+  });
 
   // チャンネル名ブロック判定
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
