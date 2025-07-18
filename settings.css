@@ -1,0 +1,178 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  background: #f9f9f9;
+}
+
+/* コンテナは横並びフレックス */
+#container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* サイドバー */
+#sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
+  width: 220px;
+  padding-top: 20px;
+}
+
+#sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar ul li {
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar ul li button.tab {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#sidebar ul li button.tab:hover {
+  background-color: #f1f1f1;
+}
+
+#sidebar ul li button.tab.active {
+  background-color: #eaf6fb;
+  border-left: 4px solid #007bff;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* コンテンツ部分をフレックスコンテナにし、中央ぞろえに */
+#content {
+  flex-grow: 1;
+  /* 高さは画面いっぱい */
+  height: 100vh;
+
+  /* 内側の余白 */
+  padding: 40px;
+
+  /* スクロールは内側で */
+  overflow-y: auto;
+
+  /* 背景色 */
+  background: #f9f9f9;
+
+  /* 縦横中央揃え */
+  display: flex;
+  justify-content: center; /* 横中央 */
+  /* align-items: center;     縦中央 */
+}
+
+/* カードの最大幅を設定し中央に */
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+
+  /* margin: auto; は不要です。#contentのflex中央揃えで中央配置されるため */
+  margin: auto;
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#blockListContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#blockListContainer li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+#blockListContainer li:last-child {
+  border-bottom: none;
+}
+
+#blockListContainer li button.removeBtn {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#blockListContainer li button.removeBtn:hover {
+  background-color: #c0392b;
+}
+
+#exportBtn, #importBtn {
+  margin-top: 20px;
+  margin-right: 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+#exportBtn:hover, #importBtn:hover {
+  background-color: #0056b3;
+}
+
+#status {
+  margin-top: 16px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* 追加: タブ切り替え表示制御 */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
