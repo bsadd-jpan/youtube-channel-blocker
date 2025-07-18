@@ -13,7 +13,7 @@ function createPopup() {
   popup.style.padding = '10px 10px';
   popup.style.borderRadius = '10px';
   popup.style.fontSize = '18px';
-  popup.style.pointerEvents = 'none'; // マウス操作を妨げない
+  popup.style.pointerEvents = 'none';
   popup.style.zIndex = 9999;
   popup.style.transition = 'opacity 0.3s ease';
   popup.style.opacity = '0';
@@ -26,8 +26,8 @@ let popupTimeout = null;
 
 /**
  * ポップアップを表示
- * @param {MouseEvent} event - マウスイベント（位置取得用）
- * @param {string} channelName - 表示するチャンネル名
+ * @param {MouseEvent} event
+ * @param {string} channelName
  */
 function showPopup(event, channelName) {
   popup.textContent = `Blocked: ${channelName}`;
@@ -45,9 +45,9 @@ function showPopup(event, channelName) {
 
 /**
  * チャンネルブロックボタンを生成
- * @param {string} channelName - チャンネル名
- * @param {Function} runBlocker - ブロック処理を再実行する関数
- * @returns {HTMLButtonElement} - 生成したボタン要素
+ * @param {string} channelName
+ * @param {Function} runBlocker
+ * @returns {HTMLButtonElement}
  */
 function createBlockButton(channelName, runBlocker) {
   const btn = document.createElement('button');
@@ -81,10 +81,10 @@ function createBlockButton(channelName, runBlocker) {
 
 /**
  * ブロック対象のアイテムを非表示にする
- * @param {Element} item - 対象となる動画アイテムのDOM要素
- * @param {string} channelName - チャンネル名
- * @param {string[]} blockList - ブロック対象チャンネル名の配列
- * @param {string} closestSelectors - 非表示にする親要素のセレクタ
+ * @param {Element} item
+ * @param {string} channelName
+ * @param {string[]} blockList
+ * @param {string} closestSelectors
  */
 function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
   if (!blockList.includes(channelName)) return;
@@ -98,15 +98,33 @@ function applyBlockDisplay(item, channelName, blockList, closestSelectors) {
 }
 
 /**
- * チャンネル名の要素とボタン挿入位置を指定して処理
- * @param {Element} item - 対象となる動画アイテムのDOM要素
- * @param {string[]} blockList - ブロック対象チャンネル名の配列
- * @param {string} channelSelector - チャンネル名を取得するためのセレクタ
- * @param {string|null} insertBeforeElemSelector - ボタン挿入位置のセレクタ（nullならデフォルト位置）
- * @param {string} blockParentSelectors - 非表示にする親要素のセレクタ
- * @param {Function} runBlocker - ブロック処理を再実行する関数
+ * 動画タイトルに対するキーワードANDブロック判定
+ * @param {string} title
+ * @param {string[][]} keywordSets
+ * @returns {boolean}
  */
-function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker) {
+function isTitleBlocked(title, keywordSets) {
+  title = title.toLowerCase();
+
+  for (const keywords of keywordSets) {
+    if (keywords.length === 0) continue;
+    const allIncluded = keywords.every(kw => title.includes(kw.toLowerCase()));
+    if (allIncluded) return true;
+  }
+  return false;
+}
+
+/**
+ * チャンネル名の要素とボタン挿入位置を指定して処理
+ * @param {Element} item
+ * @param {string[]} blockList
+ * @param {string} channelSelector
+ * @param {string|null} insertBeforeElemSelector
+ * @param {string} blockParentSelectors
+ * @param {Function} runBlocker
+ * @param {string[][]} keywordSets
+ */
+function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker, keywordSets) {
   const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
 
@@ -126,14 +144,29 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     }
   }
 
+  // チャンネル名ブロック判定
   applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
+
+  // 動画タイトルキーワードANDブロック判定
+  const titleElem = item.querySelector('#video-title, h3 a, #title, yt-formatted-string#description-text, ytd-video-renderer #video-title, yt-formatted-string#video-title');
+  if (!titleElem) return;
+
+  const titleText = titleElem.textContent || '';
+  if (isTitleBlocked(titleText, keywordSets)) {
+    const parent = item.closest(blockParentSelectors);
+    if (parent) {
+      parent.style.display = 'none';
+    } else {
+      item.style.display = 'none';
+    }
+  }
 }
 
 /**
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
 function runBlocker() {
-  chrome.storage.local.get(['blockerEnabled', 'blockedChannels'], (result) => {
+  chrome.storage.local.get(['blockerEnabled', 'blockedChannels', 'titleKeywordSets'], (result) => {
     if (result.blockerEnabled === false) {
       console.log('Blocker is disabled');
       clearBlocks();
@@ -142,6 +175,13 @@ function runBlocker() {
 
     const blockList = result.blockedChannels || [];
 
+    // キーワードセットは最大1000件、各セットは最大3語
+    let keywordSetsRaw = result.titleKeywordSets || [];
+    if (keywordSetsRaw.length > 1000) {
+      keywordSetsRaw = keywordSetsRaw.slice(0, 1000);
+    }
+    const keywordSets = keywordSetsRaw.map(set => set.slice(0, 3));
+
     // ホーム画面の動画
     document.querySelectorAll('#dismissible').forEach(item => {
       processItemGeneric(
@@ -149,7 +189,8 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         null,
         'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker
+        runBlocker,
+        keywordSets
       );
     });
 
@@ -160,7 +201,8 @@ function runBlocker() {
         '.yt-content-metadata-view-model-wiz__metadata-text',
         null,
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
-        runBlocker
+        runBlocker,
+        keywordSets
       );
     });
 
@@ -171,7 +213,8 @@ function runBlocker() {
         '#channel-name a, ytd-channel-name a',
         'yt-img-shadow',
         'ytd-video-renderer',
-        runBlocker
+        runBlocker,
+        keywordSets
       );
     });
 
@@ -182,14 +225,15 @@ function runBlocker() {
         'ytd-channel-name #text, #channel-name a, ytd-channel-name a',
         null,
         'ytd-channel-renderer',
-        runBlocker
+        runBlocker,
+        keywordSets
       );
     });
   });
 }
 
 /**
- * 全てのブロックを解除（無効化時）
+ * すべてのブロックを解除（無効化時）
  */
 function clearBlocks() {
   document.querySelectorAll(
@@ -223,9 +267,6 @@ const observer = new MutationObserver((mutationsList) => {
 });
 observer.observe(document.body, { childList: true, subtree: true });
 
-/**
- * 動画数によってrunBlockerの呼び出しタイミングを調整
- */
 function onMutations() {
   const videoCount = document.querySelectorAll('ytd-video-renderer').length;
 
