@@ -251,7 +251,7 @@ function runBlocker() {
     document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
-        'ytd-channel-name #text',
+        'ytd-channel-name yt-formatted-string#text',
         null,
         'ytd-compact-video-renderer',
         runBlocker
