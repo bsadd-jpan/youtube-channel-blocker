@@ -23,11 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('keyword3'),
   ];
 
-  // エクスポート・インポート用要素
-  const exportBtn = document.getElementById('exportBtn');
-  const importBtn = document.getElementById('importBtn');
+  // エクスポート・インポート用要素（分離ボタン対応）
+  const exportChannelsBtn = document.getElementById('exportChannelsBtn');
+  const importChannelsBtn = document.getElementById('importChannelsBtn');
+  const exportKeywordsBtn = document.getElementById('exportKeywordsBtn');
+  const importKeywordsBtn = document.getElementById('importKeywordsBtn');
   const fileInput = document.getElementById('fileInput');
   const status = document.getElementById('status');
+
+  let currentImportTarget = ''; // "channels" or "keywords"
 
   const texts = {
     ja: {
@@ -36,15 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
       removed: 'チャンネルをリストから解除しました',
       removedKeyword: 'キーワードセットをリストから解除しました',
       addedKeyword: 'キーワードセットを追加しました',
-      exported: 'エクスポートしました',
-      imported: 'インポートしました',
+      exportList: 'チャンネル名ブロックリストをエクスポートしました',
+      exportKeywords: '動画タイトルフィルターをエクスポートしました',
+      importList: 'チャンネル名ブロックリストをインポートしました',
+      importKeywords: '動画タイトルフィルターをインポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '解除',
       removeBtnKeyword: '解除',
-      exportList: 'チャンネル名ブロックリストをエクスポートしました',
-      exportKeywords: '動画タイトルキーワードNGリストをエクスポートしました',
-      importList: 'チャンネル名ブロックリストをインポートしました',
-      importKeywords: '動画タイトルキーワードNGリストをインポートしました',
     },
     en: {
       noMatch: 'No matching channels.',
@@ -52,15 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
       removed: 'Channel removed from list',
       removedKeyword: 'Keyword set removed from list',
       addedKeyword: 'Keyword set added',
-      exported: 'Exported successfully',
-      imported: 'Imported successfully',
-      importError: 'Import failed (invalid file format)',
-      removeBtn: 'Remove',
-      removeBtnKeyword: 'Remove',
       exportList: 'Exported channel block list',
       exportKeywords: 'Exported title keyword NG list',
       importList: 'Imported channel block list',
       importKeywords: 'Imported title keyword NG list',
+      importError: 'Import failed (invalid file format)',
+      removeBtn: 'Remove',
+      removeBtnKeyword: 'Remove',
     }
   };
 
@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // タブ切替関数
   function switchTab(to) {
-    // to: 'list', 'keywords', 'importExport'
     tabListBtn.classList.toggle('active', to === 'list');
     tabKeywordsBtn.classList.toggle('active', to === 'keywords');
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
@@ -136,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', () => renderBlockList(searchInput.value));
 
   // キーワードNGリスト描画
-  // 表示は配列の配列を「スペース区切りでAND条件」として文字列化して表示
   function renderKeywordList(filter = '') {
     chrome.storage.local.get('titleKeywordSets', (result) => {
       getLang((lang) => {
@@ -171,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // キーワードセット削除（完全一致で比較）
+  // キーワードセット削除
   function removeKeywordSet(targetSet) {
     chrome.storage.local.get('titleKeywordSets', (result) => {
       let list = result.titleKeywordSets || [];
@@ -192,17 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // キーワード検索
   keywordSearchInput.addEventListener('input', () => renderKeywordList(keywordSearchInput.value));
 
-  // 新規キーワードセット追加ボタン処理
+  // 新規キーワードセット追加
   addKeywordBtn.addEventListener('click', () => {
     const newKeywords = keywordInputs.map(input => input.value.trim()).filter(Boolean);
-    if (newKeywords.length === 0) return; // 空入力は無視
+    if (newKeywords.length === 0) return;
 
     chrome.storage.local.get('titleKeywordSets', (result) => {
       let list = result.titleKeywordSets || [];
 
-      // 重複チェック
       if (list.some(k => JSON.stringify(k) === JSON.stringify(newKeywords))) {
-        return; // 重複あれば追加しない
+        return;
       }
 
       if (list.length >= 1000) {
@@ -219,41 +216,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // エクスポートボタン動作（現在のタブの内容をエクスポート）
-  exportBtn.addEventListener('click', () => {
+  // エクスポート
+  exportChannelsBtn.addEventListener('click', () => {
     getLang(lang => {
-      if (tabListBtn.classList.contains('active')) {
-        chrome.storage.local.get('blockedChannels', (result) => {
-          const data = JSON.stringify(result.blockedChannels || [], null, 2);
-          downloadJSON(data, 'blocked_channels_backup.json');
-          showStatus(texts[lang].exportList, 'green');
-        });
-      } else if (tabKeywordsBtn.classList.contains('active')) {
-        chrome.storage.local.get('titleKeywordSets', (result) => {
-          const data = JSON.stringify(result.titleKeywordSets || [], null, 2);
-          downloadJSON(data, 'title_keyword_ng_backup.json');
-          showStatus(texts[lang].exportKeywords, 'green');
-        });
-      } else {
-        showStatus('', '');
-      }
+      chrome.storage.local.get('blockedChannels', (result) => {
+        const data = JSON.stringify(result.blockedChannels || [], null, 2);
+        downloadJSON(data, 'blocked_channels_backup.json');
+        showStatus(texts[lang].exportList, 'green');
+      });
     });
   });
 
-  // インポートボタン動作（ファイル選択ダイアログ表示）
-  importBtn.addEventListener('click', () => fileInput.click());
+  exportKeywordsBtn.addEventListener('click', () => {
+    getLang(lang => {
+      chrome.storage.local.get('titleKeywordSets', (result) => {
+        const data = JSON.stringify(result.titleKeywordSets || [], null, 2);
+        downloadJSON(data, 'title_keyword_ng_backup.json');
+        showStatus(texts[lang].exportKeywords, 'green');
+      });
+    });
+  });
 
-  // ファイル読み込み・インポート処理
+  // インポート
+  importChannelsBtn.addEventListener('click', () => {
+    currentImportTarget = 'channels';
+    fileInput.click();
+  });
+
+  importKeywordsBtn.addEventListener('click', () => {
+    currentImportTarget = 'keywords';
+    fileInput.click();
+  });
+
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
 
+    const reader = new FileReader();
     reader.onload = (event) => {
       try {
         const json = JSON.parse(event.target.result);
         getLang(lang => {
-          if (tabListBtn.classList.contains('active')) {
+          if (currentImportTarget === 'channels') {
             if (!Array.isArray(json) || json.some(item => typeof item !== 'string')) {
               showStatus(texts[lang].importError, 'red');
               return;
@@ -262,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
               renderBlockList(searchInput.value);
               showStatus(texts[lang].importList, 'green');
             });
-          } else if (tabKeywordsBtn.classList.contains('active')) {
+          } else if (currentImportTarget === 'keywords') {
             if (!Array.isArray(json) || json.some(set => !Array.isArray(set) || set.some(w => typeof w !== 'string'))) {
               showStatus(texts[lang].importError, 'red');
               return;
@@ -271,34 +275,21 @@ document.addEventListener('DOMContentLoaded', () => {
               renderKeywordList(keywordSearchInput.value);
               showStatus(texts[lang].importKeywords, 'green');
             });
-          } else {
-            showStatus('', '');
           }
         });
       } catch {
         getLang(lang => showStatus(texts[lang].importError, 'red'));
       }
     };
-
     reader.readAsText(file);
   });
 
   // ステータス表示
   function showStatus(msg, color) {
     status.textContent = msg;
-    if (color === 'green') {
-      status.style.backgroundColor = '#d4edda';
-      status.style.color = '#155724';
-      status.style.border = '1px solid #c3e6cb';
-    } else if (color === 'red') {
-      status.style.backgroundColor = '#f8d7da';
-      status.style.color = '#721c24';
-      status.style.border = '1px solid #f5c6cb';
-    } else {
-      status.style.backgroundColor = '';
-      status.style.color = '';
-      status.style.border = '';
-    }
+    status.style.backgroundColor = color === 'green' ? '#d4edda' : '#f8d7da';
+    status.style.color = color === 'green' ? '#155724' : '#721c24';
+    status.style.border = color === 'green' ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
     status.style.padding = msg ? '8px' : '';
     status.style.borderRadius = msg ? '4px' : '';
     if (msg) {
@@ -315,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
     status.style.borderRadius = '';
   }
 
-  // JSONダウンロード補助
   function downloadJSON(data, filename) {
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);

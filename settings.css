@@ -178,7 +178,7 @@ body, html {
 }
 
 /* ここから追加部分 */
-/* 動画タイトルキーワードNGリスト用 */
+/* 動画タイトルフィルター用 */
 #keywordListContainer {
   list-style: none;
   padding: 0;
