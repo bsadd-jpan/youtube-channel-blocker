@@ -52,14 +52,14 @@ Layout issues cannot be addressed each time, so please resolve them by refreshin
   - エキスポートボタンではjsonファイルとしてリストを出力  
   - インポートボタンではjsonファイルを入力することで、リストを完全に置換  
   - 本家Channel Blockerは時々リストが消える現象があったので、この拡張機能も定期的なバックアップを推奨（この拡張機能でリストが消える現象は現時点では未確認）  
-- **拡張機能の動作トグルを実装**  
+- **拡張機能の動作トグル**  
   - 拡張機能のアイコンから、赤い「Blocker:ON」を押すと「Blocker:OFF」と灰色になって、非表示が無効化  
   - ボタンを押したら更新不要で反映（反映が遅いことがあるので注意）  
-- **「直近の１つを削除」ボタンを実装**  
+- **「直近の１つを削除」ボタン**  
   - 拡張機能のアイコンを押すと表示  
   - ×ボタンを押したときにでてくる「Blocked:チャンネル名」というポップアップとあわせて、誤入力をすぐに挽回可能  
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策  
-- **動画タイトルフィルターを実装**  
+- **動画タイトルフィルター**  
   - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
   - 1つのキーワードの文字数制限は30文字、キーワードセットは最大1000個  
   - 対象は動画タイトルのみ（チャンネル名は対象外）   
@@ -100,6 +100,7 @@ Layout issues cannot be addressed each time, so please resolve them by refreshin
 - ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える  
 - ~~拡張機能の詳細設定を追加~~ 簡易版を追加済み
 - ×ボタンのUIやポップアップの改善
+- ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
 
 ---
 
@@ -146,15 +147,15 @@ Features personally implemented as “would be nice to have”:
   - The export button outputs the list as a JSON file.  
   - The import button completely replaces the list using a JSON file.  
   - The official Channel Blocker sometimes loses the list, so regular backups are recommended (this extension has not shown this issue so far).  
-- Implemented a toggle to enable/disable the extension  
+- Toggle to enable/disable the extension  
   - Click the extension icon and press the red "Blocker:ON" button to switch to gray "Blocker:OFF," disabling the blocking feature.  
   - No page refresh is needed to apply changes (though it might take a few seconds).  
-- Added a "Remove Last" button  
+- "Remove Last" button  
   - This appears when clicking the extension icon.  
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
   - Helps counter rare cases where wrong videos get added to the list on the homepage.
 
-- Implemented Video Title Filter  
+- Video Title Filter  
   - Videos can be hidden based on AND conditions of three keywords (keyword sets).  
   - Each keyword is limited to 30 characters, and up to 1000 keyword sets can be registered.  
   - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
@@ -194,6 +195,7 @@ All use is at the user's own risk.
 - ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds  
 - ~~Add advanced settings to the extension~~ Added (Simple Version)
 - Improve the UI of the × button and popup
+- Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
 
 ---
 
