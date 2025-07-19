@@ -259,6 +259,7 @@ function runBlocker() {
     //   );
     // });
 
+
     // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {
       processItemGeneric(
