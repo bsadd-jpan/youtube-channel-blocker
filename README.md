@@ -13,7 +13,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 ### インストール 🛠️
 
 #### 📦 Gitを使わない場合
-1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードをその中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
+1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
 
 #### 📦 Gitを使う場合
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -26,7 +26,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 3. このリポジトリのGitHubページを開き、緑色の [Code] ボタンをクリックします。
 4. 「HTTPS」のURL欄右側の📋（クリップボードアイコン）をクリックしてURLをコピーします。
 5. 任意の場所でターミナル（またはコマンドプロンプト）を開きます。
-6. 次のコマンドでリポジトリをクローンします（<URL>部分にコピーしたURLを貼り付け）。例えば、デスクトップに保存したい場合は、
+6. 次のコマンドでリポジトリをクローンします（<`URL`>部分にコピーしたURLを貼り付け）。例えば、デスクトップに保存したい場合は、
     ```bash
     cd C:\Users\[PCのユーザー名]\Desktop\
     git clone <URL>
@@ -160,7 +160,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 3. Open the GitHub page of this repository and click the green [Code] button.
 4. Click the clipboard icon 📋 next to the HTTPS URL to copy it.
 5. Open a terminal (or command prompt) at your preferred location.\
-6. Clone the repository using the command below (replace <URL> with the copied URL). If you want to save it on your Desktop, for example:
+6. Clone the repository using the command below (replace <`URL`> with the copied URL). If you want to save it on your Desktop, for example:
 
   ```bash
   cd C:\Users\[YourUserName]\Desktop\
@@ -169,7 +169,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 🔄 Updating to the latest version
 
-To update to the newest version via Git, run the following command inside the folder:
+To update to the newest version via Git, run the following command inside the folder(e.g., your Desktop):
   ```bash
   cd C:\Users\[YourUserName]\Desktop\youtube-channel-blocker
   git pull
