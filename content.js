@@ -248,15 +248,17 @@ function runBlocker() {
     });
 
     // 関連動画サイドバー:ショート動画用
-    document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
-      processItemGeneric(
-        item, blockList,
-        'ytd-channel-name yt-formatted-string#text',
-        null,
-        'ytd-compact-video-renderer',
-        runBlocker
-      );
-    });
+    // 動作が不安定なので保留
+    // document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
+    //   processItemGeneric(
+    //     item, blockList,
+    //     'ytd-channel-name #text',
+    //     null,
+    //     'ytd-compact-video-renderer',
+    //     runBlocker
+    //   );
+    // });
+
 
     // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {
