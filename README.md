@@ -3,6 +3,9 @@
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
 
+チャンネル名の非表示リストや動画タイトルフィルターを用いて、見たくない動画を検索や関連動画、ホームページから非表示にできます。
+Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
+
 📖 このREADMEには日本語と英語の説明が含まれています。  
 📖 This README includes instructions in both Japanese and English.
 
@@ -13,7 +16,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 ### インストール 🛠️
 
 #### 📦 Gitを使わない場合
-1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードをその中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
+1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
 
 #### 📦 Gitを使う場合
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -26,7 +29,7 @@ A simple Chrome extension to block unwanted YouTube channels.
 3. このリポジトリのGitHubページを開き、緑色の [Code] ボタンをクリックします。
 4. 「HTTPS」のURL欄右側の📋（クリップボードアイコン）をクリックしてURLをコピーします。
 5. 任意の場所でターミナル（またはコマンドプロンプト）を開きます。
-6. 次のコマンドでリポジトリをクローンします（<URL>部分にコピーしたURLを貼り付け）。例えば、デスクトップに保存したい場合は、
+6. 次のコマンドでリポジトリをクローンします（<`URL`>部分にコピーしたURLを貼り付け）。例えば、デスクトップに保存したい場合は、
     ```bash
     cd C:\Users\[PCのユーザー名]\Desktop\
     git clone <URL>
@@ -80,14 +83,15 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策  
 - **動画タイトルフィルター**  
   - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
-  - 1つのキーワードの文字数制限は30文字、キーワードセットは最大1000個  
+  - 1つのキーワードの文字数制限は30文字 
   - 対象は動画タイトルのみ（チャンネル名は対象外）   
-  - 3つのキーワードのAND条件（キーワードセット）でも非表示可能  
+  - 3つのキーワードのAND条件（キーワードセット）でも非表示可能
+  - キーワードセットは最大1000個   
   - キーワード設定の例：「切り抜き」と「さしすせそ」と「GTA」を1つのキーワードセットに入れた場合 
-    - タイトル「私の切り抜き動画集」→表示される  
-    - タイトル「GTA切り抜き集」→表示される  
-    - タイトル「さしすせそ切り抜き集」→表示される  
-    - タイトル「GTAの面白い瞬間【さしすせそ/切り抜き】」→非表示になる
+    - タイトル「私の<u>切り抜き</u>動画集」→表示される  
+    - タイトル「<u>GTA切り抜き</u>集」→表示される  
+    - タイトル「<u>さしすせそ切り抜き</u>集」→表示される  
+    - タイトル「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示になる
 - **エラーメッセージのポップアップ**
   - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ
   - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）
@@ -160,7 +164,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 3. Open the GitHub page of this repository and click the green [Code] button.
 4. Click the clipboard icon 📋 next to the HTTPS URL to copy it.
 5. Open a terminal (or command prompt) at your preferred location.\
-6. Clone the repository using the command below (replace <URL> with the copied URL). If you want to save it on your Desktop, for example:
+6. Clone the repository using the command below (replace <`URL`> with the copied URL). If you want to save it on your Desktop, for example:
 
   ```bash
   cd C:\Users\[YourUserName]\Desktop\
@@ -169,7 +173,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 🔄 Updating to the latest version
 
-To update to the newest version via Git, run the following command inside the folder:
+To update to the newest version via Git, run the following command inside the folder(e.g., your Desktop):
   ```bash
   cd C:\Users\[YourUserName]\Desktop\youtube-channel-blocker
   git pull
@@ -214,14 +218,15 @@ Features personally implemented as “would be nice to have”:
   - Helps counter rare cases where wrong videos get added to the list on the homepage.
 
 - Video Title Filter  
-  - Videos can be hidden based on AND conditions of three keywords (keyword sets).  
-  - Each keyword is limited to 30 characters, and up to 1000 keyword sets can be registered.  
+  - Each keyword is limited to 30 characters
   - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
-  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).  
+  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).
+  - Videos can be hidden based on AND conditions of three keywords (keyword sets).    
+  - Up to 1000 keyword sets can be registered.  
   - For example, if a keyword set contains "clip," "sashisuseso," and "GTA":  
-    - Title "My clip video collection" → displayed  
-    - Title "GTA clip collection" → displayed  
-    - Title "Funny GTA moments [sashisuseso/clip]" → hidden  
+    - Title "My <u>clip</u> video collection" → displayed  
+    - Title "<u>GTA clip</u> collection" → displayed  
+    - Title "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
 - Error message popups
     - If clicking × would add a different channel by mistake, an error popup appears.
     - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.
