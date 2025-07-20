@@ -1,4 +1,4 @@
-# YouTube Channel Blocker
+# YouTube Channel Blocker（v0.1.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
@@ -6,37 +6,56 @@ A simple Chrome extension to block unwanted YouTube channels.
 📖 このREADMEには日本語と英語の説明が含まれています。  
 📖 This README includes instructions in both Japanese and English.
 
-⚠️ 警告: 大体の動作は問題ありませんが、レイアウトの崩れのせいか、×ボタンを押したときに違うチャンネルがリストに追加される場合があります。ご注意ください。
-
-→非表示にしたいチャンネル名と実際に入るチャンネル名が違う場合はエラーメッセージ（Error:で始まるポップアップ）を表示して、リストに入れないようにしました。。レイアウトの崩れは都度の対応しようがないので、ブラウザの更新で対応してください。
-
-⚠️ Most features work fine, but due to layout issues, pressing the × button may occasionally add the wrong channel to the list. Please be careful.
-
-→If the channel name you want to block differs from the actual detected channel name, an error message (a popup starting with "Error:") will be displayed and the channel will not be added to the block list.
-Layout issues cannot be addressed each time, so please resolve them by refreshing the browser
-
 ---
 
 ## 日本語
 
 ### インストール 🛠️
 
-1. 「youtube-channel-blocker」フォルダを作成し、コードをその中に入れます（.gitignoreは不要です。）    
-2. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
+#### 📦 Gitを使わない場合
+1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードをその中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
+
+#### 📦 Gitを使う場合
+1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
+2. インストール確認：
+   ```bash
+   git --version
+   ```
+コードを取得（初回のみ）
+
+3. このリポジトリのGitHubページを開き、緑色の [Code] ボタンをクリックします。
+4. 「HTTPS」のURL欄右側の📋（クリップボードアイコン）をクリックしてURLをコピーします。
+5. 任意の場所でターミナル（またはコマンドプロンプト）を開きます。
+6. 次のコマンドでリポジトリをクローンします（<URL>部分にコピーしたURLを貼り付け）。例えば、デスクトップに保存したい場合は、
+    ```bash
+    cd C:\Users\[PCのユーザー名]\Desktop\
+    git clone <URL>
+    ```
+
+🔄 最新版を取得（更新）
+
+Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します（クローンしたフォルダに移動して、プル）：
+
+  ```bash
+  cd C:\Users\[PCのユーザー名]\Desktop\youtube-channel-blocker
+  git pull
+  ```
+
+#### インストールの共通手順
+1. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
    - `icon128.png`    
-3. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
-4. 右上の「デベロッパーモード」を ON にします  
-5. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
-6. これで拡張機能が読み込まれ、すぐに使用できます
+2. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
+3. 右上の「デベロッパーモード」を ON にします  
+4. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
+5. これで拡張機能が読み込まれ、すぐに使用できます
 
 ---
 
 ### 使い方（基本編）🔴
 
 - 動画のチャンネル名の横にある赤い×ボタンを押します（チャンネルページや再生している動画からの非表示は未実装）  
-- そのチャンネルが投稿した動画が非表示になったら動作確認完了です  
-- 非表示にならなかったら、更新やインストールのやり直し、画像やコードの不足がないかを確認してみてください  
+- 非表示にならなかったら、ブラウザの更新やインストールのやり直し、画像やコードの不足がないかを確認してみてください  
 - 自分で名前をリストに追加して、「保存」ボタンを押すことでも非表示にできます（※名前が完全一致していること）  
 - リストは拡張機能のアイコンをクリックすると確認できます  
 - リストから名前を消すと戻せます（ブラウザの更新が必要）  
@@ -69,12 +88,17 @@ Layout issues cannot be addressed each time, so please resolve them by refreshin
     - タイトル「GTA切り抜き集」→表示される  
     - タイトル「さしすせそ切り抜き集」→表示される  
     - タイトル「GTAの面白い瞬間【さしすせそ/切り抜き】」→非表示になる
+- **エラーメッセージのポップアップ**
+  - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ
+  - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）
+  - レイアウト崩れによるものだと思うので、ブラウザの更新等を推奨
+  - エラーメッセージではないが、×ボタンでリストに追加したときは「Blocked: チャンネル名」とポップアップするので間違いがないか要確認
 
 ---
 
 ### 注意 ⚠️
 
-- 理論上ブロックできる最大件数：約34,000件🧮（YouTubeチャンネル名が最大50文字の場合の計算）
+- 理論上ブロックできる最大件数：約34,000件🧮（最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
 - 大体の不具合はブラウザの更新で直ります（細かい不具合への対処は困難）🔧
 - 処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えることも）🙈  
 - 本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点でその現象は確認出来てませんが）💾  
@@ -87,21 +111,28 @@ Layout issues cannot be addressed each time, so please resolve them by refreshin
 このソフトウェアは [MITライセンス](LICENSE) のもとで配布されています。  
 詳細については同梱の LICENSE ファイルをご確認ください。
 
+超意訳
+・自己責任で自由に使っていいよ！
+・コードに記載されている作者の名前とライセンスは消さないこと
+・バグっても壊れても泣かないこと
+
 ## 免責事項
 
 このソフトウェアは現状のまま提供され、いかなる保証もありません。  
 使用によって生じたいかなる損害や問題についても、作者は一切の責任を負いません。  
 すべての使用は利用者自身の責任において行われるものとします。
 
-## 実装予定（やるとは言わない）  
+## 実装予定（未実装・確実にやるとは言わない）  
 
 - チャンネルページや動画再生ページに×ボタン追加  
-- ~~動画タイトルからキーワード非表示~~ 追加済み
-- ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~ 追加済み・5秒で消える  
-- ~~拡張機能の詳細設定を追加~~ 簡易版を追加済み
+- ~~動画タイトルからキーワード非表示~~
+- ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~  
+- ~~拡張機能の詳細設定を追加~~
 - ×ボタンのUIやポップアップの改善
 - ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-
+- 詳細ページでリストの編集ボタンを追加
+- 詳細ページにも言語ボタン追加
+- インストール等がやりやすいようにストアにも出したい
 ---
 
 ## 連絡 📬
@@ -116,16 +147,43 @@ Layout issues cannot be addressed each time, so please resolve them by refreshin
 
 ### Installation 🛠️
 
-1. Create a folder named `youtube-channel-blocker` and place all the code inside it.  
-2. Prepare two PNG images for the icons, rename them as follows, and place them in the folder:  
+📦 If you do not use Git
+1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).
+
+📦 If you use Git
+1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
+2. Confirm the installation by running:
+  ```bash
+  git --version
+  ```
+
+3. Open the GitHub page of this repository and click the green [Code] button.
+4. Click the clipboard icon 📋 next to the HTTPS URL to copy it.
+5. Open a terminal (or command prompt) at your preferred location.\
+6. Clone the repository using the command below (replace <URL> with the copied URL). If you want to save it on your Desktop, for example:
+
+  ```bash
+  cd C:\Users\[YourUserName]\Desktop\
+  git clone <URL>
+  ```
+
+🔄 Updating to the latest version
+
+To update to the newest version via Git, run the following command inside the folder:
+  ```bash
+  cd C:\Users\[YourUserName]\Desktop\youtube-channel-blocker
+  git pull
+  ```
+
+#### Common installation steps
+1. Prepare two PNG images for the icons, rename them as follows, and place them in the folder:  
    - `icon48.png`  
    - `icon128.png`  
-3. Open your browser and navigate to `chrome://extensions/` in the URL bar.  
-4. Enable "Developer mode" using the toggle at the top right.  
-5. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
-6. The extension will be loaded and ready to use immediately.
+2. Open your browser and navigate to `chrome://extensions/` in the URL bar.  
+3. Enable "Developer mode" using the toggle at the top right.  
+4. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
+5. The extension will be loaded and ready to use immediately.
 
----
 ---
 
 ### How to use (Basic) 🔴
@@ -164,6 +222,11 @@ Features personally implemented as “would be nice to have”:
     - Title "My clip video collection" → displayed  
     - Title "GTA clip collection" → displayed  
     - Title "Funny GTA moments [sashisuseso/clip]" → hidden  
+- Error message popups
+    - If clicking × would add a different channel by mistake, an error popup appears.
+    - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.
+    - This is likely caused by layout glitches; refreshing the browser is recommended.
+    - When a channel is successfully added, a "Blocked: channel name" popup confirms it.
 
 ---
 
@@ -182,20 +245,28 @@ Features personally implemented as “would be nice to have”:
 This software is distributed under the [MIT License](LICENSE).  
 For details, please see the included LICENSE file.
 
+**Super Simplified:**
+- Use it freely at your own risk!
+- Don’t remove the author’s name or the license from the code.
+- No crying if it breaks or has bugs.
+
 ## Disclaimer
 
 This software is provided "as is", without any warranty of any kind.  
 The author shall not be held liable for any damages or issues arising from the use of this software.  
 All use is at the user's own risk.
 
-## Planned Features (Not Promised)  
+## Planned Features (Not Implemented, and No Promises)
 
 - Add × button to channel pages and video playback pages  
-- ~~Hide keywords from video titles~~ Added
-- ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~ Added・disappears in 5 seconds  
-- ~~Add advanced settings to the extension~~ Added (Simple Version)
+- ~~Hide keywords from video titles~~
+- ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~
+- ~~Add advanced settings to the extension~~
 - Improve the UI of the × button and popup
 - Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
+- Add block list editing buttons on detailed settings page.
+- Add a language switch button to the details settings page.
+- Make installation easier by publishing in the Chrome Web Store.
 
 ---
 
