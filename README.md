@@ -6,14 +6,24 @@ A simple Chrome extension to block unwanted YouTube channels.
 チャンネル名の非表示リストや動画タイトルフィルターを用いて、見たくない動画を検索や関連動画、ホームページから非表示にできます。  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
 
-手順に従って問題なく動いたか等もコメントいただけると嬉しいです。
- It would be great if you could also share in the comments whether it worked smoothly for you after following the steps.
+**✅ できること / Features**  
 
-※現時点でショート動画は動作の対象外です。  
-※Shorts are not supported at this time, but support may be added in the future.
+- リストにいれたチャンネルの動画をトップページ・検索・関連動画から非表示  
+  Hide videos from channels added to the blocklist on the homepage, search results, and related videos.  
 
-📖 このREADMEには日本語と英語の説明が含まれています。  
-📖 This README includes instructions in both Japanese and English.
+- キーワードに該当する動画タイトルをトップページ・検索・関連動画から非表示  
+  Hide videos with titles matching specified keywords on the homepage, search results, and related videos.  
+
+**❌ できないこと / Limitations**  
+
+- ショート動画や再生リストの非表示  
+  Cannot hide Shorts or playlists.  
+
+- Next動画の再生停止や入れ替え  
+  Cannot stop autoplay of Next videos or replace recommended videos.
+
+📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
+📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).
 
 ---
 
@@ -146,6 +156,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ---
 
 ## 連絡 📬
+不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。本GitHubのページではDiscussionやissueも開放しております。
 
 📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
@@ -282,6 +293,7 @@ All use is at the user's own risk.
 ---
 
 ## Contact 📬
+I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps. Feel free to use Discussions or open an issue on this GitHub page.
 
 📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
