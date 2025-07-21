@@ -9,6 +9,9 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 手順に従って問題なく動いたか等もコメントいただけると嬉しいです。
  It would be great if you could also share in the comments whether it worked smoothly for you after following the steps.
 
+※現時点でショート動画は動作の対象外です。  
+※Shorts are not supported at this time, but support may be added in the future.
+
 📖 このREADMEには日本語と英語の説明が含まれています。  
 📖 This README includes instructions in both Japanese and English.
 
