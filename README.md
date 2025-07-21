@@ -6,22 +6,6 @@ A simple Chrome extension to block unwanted YouTube channels.
 チャンネル名の非表示リストや動画タイトルフィルターを用いて、見たくない動画を検索や関連動画、ホームページから非表示にできます。  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
 
-**✅ できること / Features**  
-
-- リストにいれたチャンネルの動画をトップページ・検索・関連動画から非表示  
-  Hide videos from channels added to the blocklist on the homepage, search results, and related videos.  
-
-- キーワードに該当する動画タイトルをトップページ・検索・関連動画から非表示  
-  Hide videos with titles matching specified keywords on the homepage, search results, and related videos.  
-
-**❌ できないこと / Limitations**  
-
-- ショート動画や再生リストの非表示  
-  Cannot hide Shorts or playlists.  
-
-- Next動画の再生停止や入れ替え  
-  Cannot stop autoplay of Next videos or replace recommended videos.
-
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
 📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).
 
@@ -31,10 +15,10 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 
 ### インストール 🛠️
 
-#### 📦 Gitを使わない場合
+#### Gitを使わない場合 📦 
 1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
 
-#### 📦 Gitを使う場合
+#### Gitを使う場合 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
 2. インストール確認：
    ```bash
@@ -51,7 +35,7 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
     git clone <URL>
     ```
 
-🔄 最新版を取得（更新）
+最新版を取得（更新）🔄 
 
 Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します（クローンしたフォルダに移動して、プル）：
 
@@ -71,7 +55,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ---
 
-### 使い方（基本編）🔴
+### 使い方🔴
 
 - 動画のチャンネル名の横にある赤い×ボタンを押します（チャンネルページや再生している動画からの非表示は未実装）  
 - 非表示にならなかったら、ブラウザの更新やインストールのやり直し、画像やコードの不足がないかを確認してみてください  
@@ -82,7 +66,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ---
 
-### 使い方（応用編）✨
+### 追加実装✨
 
 個人的な「こんな機能あると良いなあ」で**実装済み**のやつを箇条書き
 
@@ -156,7 +140,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ---
 
 ## 連絡 📬
-不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。本GitHubのページではDiscussionやissueも開放しております。
+不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。  
+本GitHubのページではDiscussionやissueも開放しております。
 
 📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
@@ -168,10 +153,10 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ### Installation 🛠️
 
-📦 If you do not use Git
+If you do not use Git 📦 
 1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).
 
-📦 If you use Git
+If you use Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
 2. Confirm the installation by running:
   ```bash
@@ -188,7 +173,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   git clone <URL>
   ```
 
-🔄 Updating to the latest version
+Updating to the latest version 🔄 
 
 To update to the newest version via Git, run the following command inside the folder(e.g., your Desktop):
   ```bash
@@ -207,7 +192,7 @@ To update to the newest version via Git, run the following command inside the fo
 
 ---
 
-### How to use (Basic) 🔴
+### How to use 🔴
 
 - Press the red × button next to the channel name on video thumbnails (blocking from channel pages or currently playing videos is not yet implemented).  
 - If videos from that channel disappear, the extension is working properly.  
@@ -218,7 +203,7 @@ To update to the newest version via Git, run the following command inside the fo
 - If the extension doesn’t work, refreshing the page should fix it.
 ---
 
-### How to use (Advanced) ✨
+### Additional feature implementation ✨
 
 Features personally implemented as “would be nice to have”:
 
@@ -293,7 +278,8 @@ All use is at the user's own risk.
 ---
 
 ## Contact 📬
-I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps. Feel free to use Discussions or open an issue on this GitHub page.
+I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps.  
+ Feel free to use Discussions or open an issue on this GitHub page.
 
 📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
