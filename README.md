@@ -91,10 +91,10 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   - 3つのキーワードのAND条件（キーワードセット）でも非表示可能
   - キーワードセットは最大1000個   
   - キーワード設定の例：「切り抜き」と「さしすせそ」と「GTA」を1つのキーワードセットに入れた場合 
-    - タイトル「私の<u>切り抜き</u>動画集」→表示される  
-    - タイトル「<u>GTA切り抜き</u>集」→表示される  
-    - タイトル「<u>さしすせそ切り抜き</u>集」→表示される  
-    - タイトル「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示になる
+    - 「私の<u>切り抜き</u>動画集」→表示される  
+    - 「<u>GTA切り抜き</u>集」→表示される  
+    - 「<u>さしすせそ切り抜き</u>集」→表示される  
+    - 「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示になる
 - **エラーメッセージのポップアップ**
   - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ
   - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）
@@ -227,9 +227,9 @@ Features personally implemented as “would be nice to have”:
   - Videos can be hidden based on AND conditions of three keywords (keyword sets).    
   - Up to 1000 keyword sets can be registered.  
   - For example, if a keyword set contains "clip," "sashisuseso," and "GTA":  
-    - Title "My <u>clip</u> video collection" → displayed  
-    - Title "<u>GTA clip</u> collection" → displayed  
-    - Title "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
+    - "My <u>clip</u> video collection" → displayed  
+    - "<u>GTA clip</u> collection" → displayed  
+    - "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
 - Error message popups
     - If clicking × would add a different channel by mistake, an error popup appears.
     - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.
