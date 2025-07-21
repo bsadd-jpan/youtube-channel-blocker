@@ -140,7 +140,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ---
 
 ## 連絡 📬
-不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。本GitHubのページではDiscussionやissueも開放しております。
+不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。  
+本GitHubのページではDiscussionやissueも開放しております。
 
 📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
@@ -277,7 +278,8 @@ All use is at the user's own risk.
 ---
 
 ## Contact 📬
-I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps. Feel free to use Discussions or open an issue on this GitHub page.
+I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps.  
+ Feel free to use Discussions or open an issue on this GitHub page.
 
 📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
