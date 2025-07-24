@@ -259,53 +259,57 @@ To update to the newest version via Git, run the following command inside the fo
 
 ### How to use 🔴
 
-- Press the red × button next to the channel name on video thumbnails (blocking from channel pages or currently playing videos is not yet implemented).  
-- If videos from that channel disappear, the extension is working properly.  
-- If videos are not hidden, try updating or reinstalling the extension and check for missing images or code.  
-- You can also manually add channel names to the list and press the "Save" button to block them (the names must match exactly).  
-- The list can be viewed by clicking the extension icon.  
-- Removing names from the list will unblock them (a browser refresh is required).  
-- If the extension doesn’t work, refreshing the page should fix it.
+- Press the red × button next to the channel name to hide all videos from that channel  
+  (Blocking from the channel page or currently playing videos is not yet implemented)  
+- If videos are not hidden, try refreshing your browser or checking for missing images  
+- You can also manually add channel names to the list  
+  (The name must match exactly)  
+- You can check the list from the extension’s settings page  
+- If you remove a name from the list, videos from that channel will be shown again (browser refresh required)  
+- If the extension sometimes does not work, refreshing the browser usually fixes it
+
 ---
 
-### Additional feature implementation ✨
+### Additional Features ✨
 
-Features personally implemented as “would be nice to have”:
+Features implemented based on “it would be nice to have” ideas.
+
 <details>
 <summary>Show details</summary>
 
-- **Import and export the list**  
-  - The export button outputs the list as a JSON file.  
-  - The import button completely replaces the list using a JSON file.  
-  - The official Channel Blocker sometimes loses the list, so regular backups are recommended (this extension has not shown this issue so far).  
-- **Toggle to enable/disable the extension**  
-  - Click the extension icon and press the red "Blocker:ON" button to switch to gray "Blocker:OFF," disabling the blocking feature.  
-  - No page refresh is needed to apply changes (though it might take a few seconds).  
-- **"Remove Last" button**  
-  - This appears when clicking the extension icon.  
-  - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
-  - Helps counter rare cases where wrong videos get added to the list on the homepage.  
+- **Import and Export List**  
+  - The export button outputs the list as a JSON file  
+  - The import button completely replaces the list using a JSON file  
+  - The official Channel Blocker sometimes loses the list, so regular backups are recommended (this extension has not shown this issue so far)  
+- **Extension Toggle**  
+  - Click the extension icon and press the red "Blocker:ON" button to switch to gray "Blocker:OFF," disabling the blocking feature  
+  - No page refresh is needed to apply changes (though it might take a few seconds)  
+- **"Remove Last" Button**  
+  - This appears when clicking the extension icon  
+  - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes  
+  - Helps counter rare cases where wrong videos get added to the list on the homepage  
 - **Video Title Filter**  
+  - If you set a keyword, all video titles containing that keyword will be hidden  
   - Each keyword is limited to 30 characters  
-  - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
-  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).  
-  - Videos can be hidden based on AND conditions of three keywords (keyword sets).    
-  - Up to 1000 keyword sets can be registered.  
-  - For example, if a keyword set contains "clip," "sashisuseso," and "GTA":  
-    - "My <u>clip</u> video collection" → displayed  
-    - "<u>GTA clip</u> collection" → displayed  
+  - This filter applies only to video titles (not channel names)  
+  - You can also hide videos using AND conditions with up to three keywords (keyword sets)  
+  - Up to 1000 keyword sets can be registered  
+  - Example: If a keyword set contains "clip", "sashisuseso", and "GTA":  
+    - "My <u>clip</u> video collection" → shown  
+    - "<u>GTA clip</u> collection" → shown  
+    - "<u>sashisuseso clip</u> collection" → shown  
     - "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
-- **Error message popups**  
-  - If clicking × would add a different channel by mistake, an error popup appears.  
-  - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.  
-  - This is likely caused by layout glitches; refreshing the browser is recommended.  
-  - When a channel is successfully added, a "Blocked: channel name" popup confirms it.  
+- **Error Message Popups**  
+  - If clicking × would add a different channel by mistake, an error popup appears  
+  - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs  
+  - This is likely caused by layout glitches; refreshing the browser is recommended  
+  - When a channel is successfully added, a "Blocked: channel name" popup confirms it  
 - **Language Switching**  
-  - Language can now be switched from the settings page.  
-  - Implemented: Japanese, English
+  - Language can be switched from the settings page  
+  - Supported: Japanese, English  
 - **Edit Button for Lists**  
-  - Each list can now be renamed from the settings page.  
-  - To save changes, click the Save button. To cancel, click the Cancel button.  
+  - Each list can be renamed from the settings page  
+  - To save changes, click the Save button. To cancel, click the Cancel button  
 
 </details>
 
@@ -326,10 +330,10 @@ Features personally implemented as “would be nice to have”:
 This software is distributed under the [MIT License](LICENSE).  
 For details, please see the included LICENSE file.
 
-**Super Simplified:**
-- Use it freely at your own risk!
-- Don’t remove the author’s name or the license from the code.
-- No crying if it breaks or has bugs.
+Super simplified:
+- Use it freely at your own risk
+- Don’t remove the author’s name or the license from the code
+- No crying if it breaks or has bugs
 
 ## Disclaimer
 
@@ -340,14 +344,14 @@ All use is at the user's own risk.
 ## Planned Features (Not Implemented, and No Promises)
 
 - Add × button to channel pages and video playback pages  
-- Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
-- Make installation easier by publishing in the Chrome Web Store.
+- Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off  
+- Make installation easier by publishing in the Chrome Web Store
 
 ---
 
 ## Contact 📬
 I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps.  
- Feel free to use Discussions or open an issue on this GitHub page.
+Feel free to use Discussions or open an issue on this GitHub page.
 
 📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
