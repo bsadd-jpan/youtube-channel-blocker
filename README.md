@@ -3,7 +3,7 @@
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
 
-チャンネル名の非表示リストや動画タイトルフィルターを用いて、見たくない動画を検索や関連動画、ホームページから非表示にできます。  
+チャンネル名の非表示リストや動画タイトルフィルターを用いて、検索ページや関連動画、ホームページから興味のない動画を非表示にできます。  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
 
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
