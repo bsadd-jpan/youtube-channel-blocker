@@ -132,35 +132,107 @@ document.addEventListener('DOMContentLoaded', () => {
   tabDonationBtn.addEventListener('click', () => switchTab('donation'));
 
   // 非表示リスト描画
-  function renderBlockList(filter = '') {
-    chrome.storage.local.get('blockedChannels', (result) => {
-      getLang((lang) => {
-        const list = result.blockedChannels || [];
-        const filtered = list.filter(name => name.toLowerCase().includes(filter.toLowerCase()));
-        blockListContainer.innerHTML = '';
+function renderBlockList(filter = '') {
+  chrome.storage.local.get('blockedChannels', (result) => {
+    getLang((lang) => {
+      const list = result.blockedChannels || [];
+      const filtered = list.filter(name => name.toLowerCase().includes(filter.toLowerCase()));
+      blockListContainer.innerHTML = '';
 
-        if (filtered.length === 0) {
-          const li = document.createElement('li');
-          li.textContent = texts[lang].noMatch;
-          blockListContainer.appendChild(li);
-          return;
-        }
+      if (filtered.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = texts[lang].noMatch;
+        blockListContainer.appendChild(li);
+        return;
+      }
+      filtered.forEach(name => {
+        const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.justifyContent = 'space-between';
+        li.style.alignItems = 'center';
 
-        filtered.forEach(name => {
-          const li = document.createElement('li');
-          li.textContent = name;
+        // 左側：チャンネル名 or 編集用input
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
 
-          const btn = document.createElement('button');
-          btn.textContent = texts[lang].removeBtn;
-          btn.className = 'removeBtn';
-          btn.addEventListener('click', () => removeChannel(name));
+        // 編集ボタン
+        const editBtn = document.createElement('button');
+        editBtn.textContent = lang === 'en' ? 'Edit' : '編集';
+        editBtn.className = 'editBtn';
+        editBtn.style.marginLeft = '8px';
 
-          li.appendChild(btn);
-          blockListContainer.appendChild(li);
+        let editing = false;
+
+        editBtn.addEventListener('click', () => {
+          if (editing) return;
+          editing = true;
+          // inputとボタン群を生成
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = name;
+          input.style.flex = '1';
+          input.maxLength = 100;
+
+          const saveBtn = document.createElement('button');
+          saveBtn.textContent = lang === 'en' ? 'Save' : '保存';
+          saveBtn.className = 'saveBtn';
+
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = lang === 'en' ? 'Cancel' : 'キャンセル';
+          cancelBtn.className = 'cancelBtn';
+
+          // 入力欄とボタンを置き換え
+          li.replaceChild(input, nameSpan);
+          btnWrapper.replaceChild(saveBtn, editBtn);
+          btnWrapper.insertBefore(cancelBtn, saveBtn);
+
+          saveBtn.onclick = () => {
+            const newName = input.value.trim();
+            if (!newName || newName === name) {
+              cancelBtn.onclick();
+              return;
+            }
+            chrome.storage.local.get('blockedChannels', (result) => {
+              let list = result.blockedChannels || [];
+              const idx = list.indexOf(name);
+              if (idx !== -1) {
+                list[idx] = newName;
+                chrome.storage.local.set({ blockedChannels: list }, () => {
+                  renderBlockList(searchInput.value);
+                  getLang(lang => showStatus(lang === 'en' ? 'Channel name edited' : 'チャンネル名を編集しました', 'green'));
+                });
+              }
+            });
+          };
+          cancelBtn.onclick = () => {
+            li.replaceChild(nameSpan, input);
+            btnWrapper.replaceChild(editBtn, saveBtn);
+            btnWrapper.removeChild(cancelBtn);
+            editing = false;
+          };
         });
+
+        // Removeボタン
+        const btn = document.createElement('button');
+        btn.textContent = texts[lang].removeBtn;
+        btn.className = 'removeBtn';
+        btn.addEventListener('click', () => removeChannel(name));
+
+        // ボタンを右端に配置
+        const btnWrapper = document.createElement('span');
+        btnWrapper.style.display = 'flex';
+        btnWrapper.style.gap = '8px';
+        btnWrapper.appendChild(editBtn);
+        btnWrapper.appendChild(btn);
+
+        li.appendChild(nameSpan);
+        li.appendChild(btnWrapper);
+        blockListContainer.appendChild(li);
       });
     });
-  }
+  });
+}
+  
 
   function removeChannel(name) {
     chrome.storage.local.get('blockedChannels', (result) => {
@@ -175,39 +247,123 @@ document.addEventListener('DOMContentLoaded', () => {
 
   searchInput.addEventListener('input', () => renderBlockList(searchInput.value));
 
-  function renderKeywordList(filter = '') {
-    chrome.storage.local.get('titleKeywordSets', (result) => {
-      getLang((lang) => {
-        const list = result.titleKeywordSets || [];
-        const filtered = list.filter(set => {
-          const combined = set.join(' ').toLowerCase();
-          return combined.includes(filter.toLowerCase());
+  // --- 動画タイトルフィルターリスト描画 ---
+function renderKeywordList(filter = '') {
+  chrome.storage.local.get('titleKeywordSets', (result) => {
+    getLang((lang) => {
+      const list = result.titleKeywordSets || [];
+      const filtered = list.filter(set => {
+        const combined = set.join(' ').toLowerCase();
+        return combined.includes(filter.toLowerCase());
+      });
+
+      keywordListContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = texts[lang].noMatchKeywords;
+        keywordListContainer.appendChild(li);
+        return;
+      }
+
+      filtered.forEach(set => {
+        const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.justifyContent = 'space-between';
+        li.style.alignItems = 'center';
+
+        // キーワードセット表示 or 編集用input群
+        const setSpan = document.createElement('span');
+        setSpan.textContent = set.join(' ');
+
+        // 編集ボタン
+        const editBtn = document.createElement('button');
+        editBtn.textContent = lang === 'en' ? 'Edit' : '編集';
+        editBtn.className = 'editBtn';
+        editBtn.style.marginLeft = '8px';
+
+        let editing = false;
+
+        editBtn.addEventListener('click', () => {
+          if (editing) return;
+          editing = true;
+          // input群とボタン群を生成
+          const inputs = set.map(word => {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = word;
+            input.style.width = '80px';
+            input.maxLength = 30;
+            input.style.marginRight = '4px';
+            return input;
+          });
+
+          const saveBtn = document.createElement('button');
+          saveBtn.textContent = lang === 'en' ? 'Save' : '保存';
+          saveBtn.className = 'saveBtn';
+
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = lang === 'en' ? 'Cancel' : 'キャンセル';
+          cancelBtn.className = 'cancelBtn';
+
+          // 入力欄とボタンを置き換え
+          li.replaceChild(
+            (() => {
+              const wrapper = document.createElement('span');
+              inputs.forEach(input => wrapper.appendChild(input));
+              return wrapper;
+            })(),
+            setSpan
+          );
+          btnWrapper.replaceChild(saveBtn, editBtn);
+          btnWrapper.insertBefore(cancelBtn, saveBtn);
+
+          saveBtn.onclick = () => {
+            const newSet = inputs.map(input => input.value.trim()).filter(Boolean);
+            if (newSet.length === 0 || JSON.stringify(newSet) === JSON.stringify(set)) {
+              cancelBtn.onclick();
+              return;
+            }
+            chrome.storage.local.get('titleKeywordSets', (result) => {
+              let list = result.titleKeywordSets || [];
+              const idx = list.findIndex(s => JSON.stringify(s) === JSON.stringify(set));
+              if (idx !== -1) {
+                list[idx] = newSet;
+                chrome.storage.local.set({ titleKeywordSets: list }, () => {
+                  renderKeywordList(keywordSearchInput.value);
+                  getLang(lang => showStatus(lang === 'en' ? 'Keyword set edited' : 'キーワードセットを編集しました', 'green'));
+                });
+              }
+            });
+          };
+          cancelBtn.onclick = () => {
+            li.replaceChild(setSpan, li.firstChild);
+            btnWrapper.replaceChild(editBtn, saveBtn);
+            btnWrapper.removeChild(cancelBtn);
+            editing = false;
+          };
         });
 
-        keywordListContainer.innerHTML = '';
+        // Removeボタン
+        const btn = document.createElement('button');
+        btn.textContent = texts[lang].removeBtnKeyword;
+        btn.className = 'removeBtn';
+        btn.addEventListener('click', () => removeKeywordSet(set));
 
-        if (filtered.length === 0) {
-          const li = document.createElement('li');
-          li.textContent = texts[lang].noMatchKeywords;
-          keywordListContainer.appendChild(li);
-          return;
-        }
+        // ボタンを右端に配置
+        const btnWrapper = document.createElement('span');
+        btnWrapper.style.display = 'flex';
+        btnWrapper.style.gap = '8px';
+        btnWrapper.appendChild(editBtn);
+        btnWrapper.appendChild(btn);
 
-        filtered.forEach(set => {
-          const li = document.createElement('li');
-          li.textContent = set.join(' ');
-
-          const btn = document.createElement('button');
-          btn.textContent = texts[lang].removeBtnKeyword;
-          btn.className = 'removeBtn';
-          btn.addEventListener('click', () => removeKeywordSet(set));
-
-          li.appendChild(btn);
-          keywordListContainer.appendChild(li);
-        });
+        li.appendChild(setSpan);
+        li.appendChild(btnWrapper);
+        keywordListContainer.appendChild(li);
       });
     });
-  }
+  });
+}
 
   function removeKeywordSet(targetSet) {
     chrome.storage.local.get('titleKeywordSets', (result) => {
