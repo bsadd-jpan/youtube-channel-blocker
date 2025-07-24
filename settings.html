@@ -19,6 +19,8 @@
         <li><button id="tab-list" class="tab active">非表示リスト</button></li>
         <li><button id="tab-keywords" class="tab">動画タイトルフィルター</button></li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
+        <li><button id="tab-language" class="tab">表示言語</button></li>
+        <li><button id="tab-donation" class="tab">💛 寄付</button></li>
       </ul>
     </nav>
 
@@ -60,6 +62,31 @@
           </div>
           <input type="file" id="fileInput" accept="application/json" style="display:none;" />
           <div id="status" role="status" aria-live="polite"></div>
+        </section>
+
+        <!-- 表示言語 -->
+        <section id="section-language" class="tab-content">
+          <h2>表示言語</h2>
+          <p>UIに使用する言語を選択してください：</p>
+          <label>
+            <input type="radio" name="language" value="ja" id="lang-ja" />
+            日本語
+          </label><br />
+          <label>
+            <input type="radio" name="language" value="en" id="lang-en" />
+            English
+          </label>
+        </section>
+
+        <!-- 💛 寄付セクション -->
+        <section id="section-donation" class="tab-content">
+          <h2>開発者を応援する</h2>
+          <p>この拡張機能が役に立ったと感じたら、寄付をご検討ください。</p>
+          <a href="https://www.paypal.com/ncp/payment/RK4KLRRWNYXLU" target="_blank"
+             style="display:inline-block;padding:10px 20px;background:#FFD140;color:#000;
+                    font-weight:bold;text-decoration:none;border-radius:5px;">
+            PayPalで寄付
+          </a>
         </section>
       </div>
     </main>
