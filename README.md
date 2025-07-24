@@ -140,8 +140,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 - ~~拡張機能の詳細設定を追加~~
 - ×ボタンのUIやポップアップの改善
 - ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- 詳細ページでリストの編集ボタンを追加
-- 詳細ページにも言語ボタン追加
+- ~~詳細ページでリストの編集ボタンを追加~~
+- ~~詳細ページにも言語ボタン追加~~
 - インストール等がやりやすいようにストアにも出したい
 ---
 
@@ -282,8 +282,8 @@ All use is at the user's own risk.
 - ~~Add advanced settings to the extension~~
 - Improve the UI of the × button and popup
 - Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
-- Add block list editing buttons on detailed settings page.
-- Add a language switch button to the details settings page.
+- ~~Add block list editing buttons on detailed settings page.~~
+- ~~Add a language switch button to the details settings page.~~
 - Make installation easier by publishing in the Chrome Web Store.
 
 ---
