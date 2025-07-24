@@ -9,11 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabListBtn = document.getElementById('tab-list');
   const tabKeywordsBtn = document.getElementById('tab-keywords');
   const tabImportExportBtn = document.getElementById('tab-import-export');
+  const tabLanguageBtn = document.getElementById('tab-language'); // 追加
+  const tabDonationBtn = document.getElementById('tab-donation');
 
   // セクション
   const sectionList = document.getElementById('section-list');
   const sectionKeywords = document.getElementById('section-keywords');
   const sectionImportExport = document.getElementById('section-import-export');
+  const sectionLanguage = document.getElementById('section-language'); // 追加
+  const sectionDonation = document.getElementById('section-donation');
 
   // 非表示リスト用要素
   const blockListContainer = document.getElementById('blockListContainer');
@@ -29,13 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('keyword3'),
   ];
 
-  // エクスポート・インポート用要素（分離ボタン対応）
+  // エクスポート・インポート用要素
   const exportChannelsBtn = document.getElementById('exportChannelsBtn');
   const importChannelsBtn = document.getElementById('importChannelsBtn');
   const exportKeywordsBtn = document.getElementById('exportKeywordsBtn');
   const importKeywordsBtn = document.getElementById('importKeywordsBtn');
   const fileInput = document.getElementById('fileInput');
   const status = document.getElementById('status');
+
+  // 言語選択要素
+  const langRadioJa = document.getElementById('lang-ja');
+  const langRadioEn = document.getElementById('lang-en');
 
   let currentImportTarget = ''; // "channels" or "keywords"
 
@@ -75,19 +83,44 @@ document.addEventListener('DOMContentLoaded', () => {
   // 言語取得
   function getLang(callback) {
     chrome.storage.local.get('language', (result) => {
-      callback(result.language === 'en' ? 'en' : 'ja');
+      const lang = result.language === 'en' ? 'en' : 'ja';
+      callback(lang);
     });
   }
+
+  // 言語切替イベント
+  function setLanguage(lang) {
+    chrome.storage.local.set({ language: lang }, () => {
+      renderBlockList();
+      renderKeywordList();
+    });
+  }
+
+  langRadioJa.addEventListener('change', () => setLanguage('ja'));
+  langRadioEn.addEventListener('change', () => setLanguage('en'));
+
+  // 言語UI初期化
+  getLang((lang) => {
+    if (lang === 'en') {
+      langRadioEn.checked = true;
+    } else {
+      langRadioJa.checked = true;
+    }
+  });
 
   // タブ切替関数
   function switchTab(to) {
     tabListBtn.classList.toggle('active', to === 'list');
     tabKeywordsBtn.classList.toggle('active', to === 'keywords');
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
+    tabLanguageBtn.classList.toggle('active', to === 'language');
+    tabDonationBtn.classList.toggle('active', to === 'donation');
 
     sectionList.style.display = to === 'list' ? 'block' : 'none';
     sectionKeywords.style.display = to === 'keywords' ? 'block' : 'none';
     sectionImportExport.style.display = to === 'importExport' ? 'block' : 'none';
+    sectionLanguage.style.display = to === 'language' ? 'block' : 'none';
+    sectionDonation.style.display = to === 'donation' ? 'block' : 'none';
 
     clearStatus();
   }
@@ -95,8 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
   tabListBtn.addEventListener('click', () => switchTab('list'));
   tabKeywordsBtn.addEventListener('click', () => switchTab('keywords'));
   tabImportExportBtn.addEventListener('click', () => switchTab('importExport'));
+  tabLanguageBtn.addEventListener('click', () => switchTab('language'));
+  tabDonationBtn.addEventListener('click', () => switchTab('donation'));
 
-  // 非表示チャンネルリスト描画
+  // 非表示リスト描画
   function renderBlockList(filter = '') {
     chrome.storage.local.get('blockedChannels', (result) => {
       getLang((lang) => {
@@ -127,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // チャンネル削除
   function removeChannel(name) {
     chrome.storage.local.get('blockedChannels', (result) => {
       let list = result.blockedChannels || [];
@@ -139,10 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // チャンネル検索
   searchInput.addEventListener('input', () => renderBlockList(searchInput.value));
 
-  // キーワードNGリスト描画
   function renderKeywordList(filter = '') {
     chrome.storage.local.get('titleKeywordSets', (result) => {
       getLang((lang) => {
@@ -177,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // キーワードセット削除
   function removeKeywordSet(targetSet) {
     chrome.storage.local.get('titleKeywordSets', (result) => {
       let list = result.titleKeywordSets || [];
@@ -195,13 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // キーワード検索
   keywordSearchInput.addEventListener('input', () => renderKeywordList(keywordSearchInput.value));
 
-  // キーワード入力に文字数制限とエラーメッセージ表示を追加
   keywordInputs.forEach(input => {
-    input.setAttribute('maxlength', '30'); // HTML属性でも制限
-
+    input.setAttribute('maxlength', '30');
     input.addEventListener('input', () => {
       if (input.value.length > 30) {
         input.value = input.value.slice(0, 30);
@@ -210,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 新規キーワードセット追加
   addKeywordBtn.addEventListener('click', () => {
     const newKeywords = keywordInputs.map(input => input.value.trim()).filter(Boolean);
     if (newKeywords.length === 0) return;
@@ -236,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // エクスポート
   exportChannelsBtn.addEventListener('click', () => {
     getLang(lang => {
       chrome.storage.local.get('blockedChannels', (result) => {
@@ -257,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // インポート
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
     fileInput.click();
@@ -304,24 +329,23 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   });
 
-  // ステータス表示
   function showStatus(msg, type) {
-  status.textContent = msg;
-  status.classList.remove('success', 'error');
-  if (type === 'green') {
-    status.classList.add('success');
-  } else {
-    status.classList.add('error');
+    status.textContent = msg;
+    status.classList.remove('success', 'error');
+    if (type === 'green') {
+      status.classList.add('success');
+    } else {
+      status.classList.add('error');
+    }
+    status.style.display = 'block';
+    setTimeout(clearStatus, 3000);
   }
-  status.style.display = 'block';
-  setTimeout(clearStatus, 3000);
-}
 
-function clearStatus() {
-  status.textContent = '';
-  status.classList.remove('success', 'error');
-  status.style.display = 'none';
-}
+  function clearStatus() {
+    status.textContent = '';
+    status.classList.remove('success', 'error');
+    status.style.display = 'none';
+  }
 
   function downloadJSON(data, filename) {
     const blob = new Blob([data], { type: 'application/json' });
@@ -339,4 +363,74 @@ function clearStatus() {
   renderBlockList();
   renderKeywordList();
   switchTab('list');
+
+  function applyUIText(lang) {
+  // タブ
+  tabListBtn.textContent = lang === 'en' ? 'Block List' : '非表示リスト';
+  tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : '動画タイトルフィルター';
+  tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
+  tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '表示言語';
+  tabDonationBtn.textContent = lang === 'en' ? '💛 Donate' : '💛 寄付';
+
+  // セクション見出し・ラベルなど
+  document.querySelector('#section-list h2').textContent = lang === 'en' ? 'Blocked Channel List' : '非表示リスト（チャンネル名）';
+  searchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
+
+  document.querySelector('#section-keywords h2').textContent = lang === 'en' ? 'Video Title Filter List' : '動画タイトルフィルターリスト';
+  document.getElementById('keyword1').placeholder = lang === 'en' ? 'Keyword 1' : 'キーワード1';
+  document.getElementById('keyword2').placeholder = lang === 'en' ? 'Keyword 2' : 'キーワード2';
+  document.getElementById('keyword3').placeholder = lang === 'en' ? 'Keyword 3' : 'キーワード3';
+  addKeywordBtn.textContent = lang === 'en' ? 'Add' : '追加';
+  keywordSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
+
+  document.querySelector('#section-import-export h2').textContent = lang === 'en' ? 'Export / Import' : 'エクスポート／インポート';
+  document.querySelector('#section-import-export h3:nth-of-type(1)').textContent = lang === 'en' ? 'Channel List' : 'チャンネルリスト';
+  exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
+  importChannelsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+
+  const h3Elements = document.querySelectorAll('#section-import-export h3');
+  if (h3Elements.length >= 2) {
+    h3Elements[0].textContent = lang === 'en' ? 'Channel List' : 'チャンネルリスト';
+    h3Elements[1].textContent = lang === 'en' ? 'Title Filters' : '動画タイトルフィルター';
+  } else {
+    // console.warn('Expected at least 2 h3 elements under #section-import-export');
+  }
+  exportKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
+  importKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+
+  document.querySelector('#section-language h2').textContent = lang === 'en' ? 'Language Setting' : '表示言語';
+  document.querySelector('#section-language p').textContent = lang === 'en'
+    ? 'Choose the language to use for the UI:'
+    : 'UIに使用する言語を選択してください：';
+
+  document.querySelector('#section-donation h2').textContent = lang === 'en'
+    ? 'Support the Developer'
+    : '開発者を応援する';
+  document.querySelector('#section-donation p').textContent = lang === 'en'
+    ? 'If you found this extension useful, please consider donating.'
+    : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
+  document.querySelector('#section-donation a').textContent = lang === 'en'
+    ? 'Donate via PayPal'
+    : 'PayPalで寄付';
+}
+
+// 言語変更時にも反映
+function setLanguage(lang) {
+  chrome.storage.local.set({ language: lang }, () => {
+    applyUIText(lang);       // ★ UIに反映
+    renderBlockList();
+    renderKeywordList();
+  });
+}
+
+// 初期描画に追加（langRadioの下あたり）
+getLang((lang) => {
+  if (lang === 'en') {
+    langRadioEn.checked = true;
+  } else {
+    langRadioJa.checked = true;
+  }
+  applyUIText(lang); // ★ 初期UI反映
+});
+
 });
