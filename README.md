@@ -25,7 +25,9 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 
 1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
 2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
-3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。
+3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
+
+[インストールの共通手順へ](#インストールの共通手順)
 
 ---
 
@@ -37,6 +39,8 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 3. ダウンロードしたファイルを、任意の場所で解凍してください。  
 
 ※更新があった場合は、手動で再度ダウンロード・解凍が必要です。
+
+[インストールの共通手順へ](#インストールの共通手順)
 
 ---
 
@@ -57,9 +61,11 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
     git clone <URL>
     ```
 
-最新版を取得（更新）🔄 
+[インストールの共通手順へ](#インストールの共通手順)
 
-Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します（クローンしたフォルダに移動して、プル）：
+#### 補足：Gitで最新版を取得（更新）🔄 
+
+Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します。
 
   ```bash
   cd C:\Users\[PCのユーザー名]\Desktop\youtube-channel-blocker
@@ -82,18 +88,23 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ### 使い方🔴
 
-- 動画のチャンネル名の横にある赤い×ボタンから、そのチャンネルの動画を非表示にできます（チャンネルページや再生している動画からの非表示は未実装）  
-- 非表示にならなかったら、ブラウザの更新やインストールのやり直し、画像やコードの不足がないかを確認してみてください  
-- 自分で名前をリストに追加して、「保存」ボタンを押すことでも非表示にできます（※名前が完全一致していること）  
-- リストは拡張機能のアイコンをクリックすると確認できます  
-- リストから名前を消すと戻せます（ブラウザの更新が必要）  
-- 動作しないときはページの更新で直るはずです
+- チャンネル名横の赤い×ボタンを押せば、そのチャンネルの動画をすべて非表示にできます  
+  （チャンネルページや再生している動画からの非表示は未実装）  
+- 非表示にならなかったら、ブラウザの更新や画像の不足等を確認してみてください  
+- 自分で名前をリストに追加することも可能です  
+  （※名前が完全一致していること）  
+- リストは拡張機能の設定画面等から確認できます  
+- リストから名前を消すと戻せます（要ブラウザの更新）  
+- 動作しないときはブラウザの更新で大体直るはずです
 
 ---
 
-### 追加実装✨
+### 追加実装 ✨
 
-個人的な「こんな機能あると良いなあ」で**実装済み**のやつを箇条書き
+個人的な「こんな機能あると良いなあ」で実装済みのやつを箇条書き
+
+<details>
+<summary>詳細を表示</summary>
 
 - **リストのインポート・エクスポート**  
   - エキスポートボタンではjsonファイルとしてリストを出力  
@@ -108,35 +119,42 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策  
 - **動画タイトルフィルター**  
   - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
-  - 1つのキーワードの文字数制限は30文字 
-  - 対象は動画タイトルのみ（チャンネル名は対象外）   
-  - 3つのキーワードのAND条件（キーワードセット）でも非表示可能
-  - キーワードセットは最大1000個   
-  - キーワード設定の例：「切り抜き」と「さしすせそ」と「GTA」を1つのキーワードセットに入れた場合 
+  - 1つのキーワードの文字数制限は30文字  
+  - 対象は動画タイトルのみ（チャンネル名は対象外）  
+  - 3つのキーワードのAND条件（キーワードセット）でも非表示可能  
+  - キーワードセットは最大1000個  
+  - キーワード設定の例：「切り抜き」と「さしすせそ」と「GTA」を1つのキーワードセットに入れた場合  
     - 「私の<u>切り抜き</u>動画集」→表示される  
     - 「<u>GTA切り抜き</u>集」→表示される  
     - 「<u>さしすせそ切り抜き</u>集」→表示される  
-    - 「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示になる
-- **エラーメッセージのポップアップ**
-  - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ
-  - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）
-  - レイアウト崩れによるものだと思うので、ブラウザの更新等を推奨
-  - エラーメッセージではないが、×ボタンでリストに追加したときは「Blocked: チャンネル名」とポップアップするので間違いがないか要確認
-- **言語切り替え機能**
-  - 設定ページからも表示する言語を切り替え可能
-  - 切り替えは英語と日本語
-- **リストの編集ボタン**
-  - 設定ページから、各リストを編集して名前を変更することが可能
-  - 編集後に保存したい場合は保存ボタンを、キャンセルしたい場合はキャンセルボタンを押下
+    - 「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示になる  
+
+- **エラーメッセージのポップアップ**  
+  - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ  
+  - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）  
+  - レイアウト崩れによるものだと思うので、ブラウザの更新等を推奨  
+  - エラーメッセージではないが、×ボタンでリストに追加したときは「Blocked: チャンネル名」とポップアップするので間違いがないか要確認  
+
+- **言語切り替え機能**  
+  - 設定ページからも表示する言語を切り替え可能  
+  - 切り替えは英語と日本語  
+
+- **リストの編集ボタン**  
+  - 設定ページから、各リストを編集して名前を変更することが可能  
+  - 編集後に保存したい場合は保存ボタンを、キャンセルしたい場合はキャンセルボタンを押下  
+
+</details>
 
 ---
 
 ### 注意 ⚠️
 
-- 理論上ブロックできる最大件数：約34,000件🧮（最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
-- 大体の不具合はブラウザの更新で直ります（細かい不具合への対処は困難）🔧
-- 処理の関係上、一瞬で非表示にするのは困難です（処理が遅い時はサムネが見えることも）🙈  
-- 本家と同じく突然リストが消える可能性があるので、リストは定期的にバックアップを推奨します（現時点でその現象は確認出来てませんが）💾  
+- 理論上ブロックできる最大件数：約34,000件🧮  
+  （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
+- 大体の不具合はブラウザの更新で直ります🔧
+- 処理の関係上、一瞬で非表示にするのは困難です🙈    
+- 本家と同じく突然リストが消える可能性があるので、定期的にバックアップを推奨💾   
+  （現時点でその現象は確認出来てませんが）
 - 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません 
 
 ---
@@ -160,14 +178,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ## 実装予定（未実装・確実にやるとは言わない）  
 
 - チャンネルページや動画再生ページに×ボタン追加  
-- ~~動画タイトルからキーワード非表示~~
-- ~~×ボタンで非表示にしたチャンネル名を一時的にポップアップ（間違い防止。１つだけ戻すボタンも追加したい。）~~  
-- ~~拡張機能の詳細設定を追加~~
-- ×ボタンのUIやポップアップの改善
 - ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- ~~詳細ページでリストの編集ボタンを追加~~
-- ~~詳細ページにも言語ボタン追加~~
-- インストール等がやりやすいようにストアにも出したい
+- インストール等がやりやすいようにストアに公開したい
 ---
 
 ## 連絡 📬
@@ -178,7 +190,6 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
 
 ---
-
 
 ## English
 
@@ -260,8 +271,10 @@ To update to the newest version via Git, run the following command inside the fo
 ### Additional feature implementation ✨
 
 Features personally implemented as “would be nice to have”:
+<details>
+<summary>Show details</summary>
 
-- **Import and export the list** 
+- **Import and export the list**  
   - The export button outputs the list as a JSON file.  
   - The import button completely replaces the list using a JSON file.  
   - The official Channel Blocker sometimes loses the list, so regular backups are recommended (this extension has not shown this issue so far).  
@@ -271,28 +284,30 @@ Features personally implemented as “would be nice to have”:
 - **"Remove Last" button**  
   - This appears when clicking the extension icon.  
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
-  - Helps counter rare cases where wrong videos get added to the list on the homepage.
-
+  - Helps counter rare cases where wrong videos get added to the list on the homepage.  
 - **Video Title Filter**  
-  - Each keyword is limited to 30 characters
+  - Each keyword is limited to 30 characters  
   - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
-  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).
+  - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).  
   - Videos can be hidden based on AND conditions of three keywords (keyword sets).    
   - Up to 1000 keyword sets can be registered.  
   - For example, if a keyword set contains "clip," "sashisuseso," and "GTA":  
     - "My <u>clip</u> video collection" → displayed  
     - "<u>GTA clip</u> collection" → displayed  
     - "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
-- **rror message popups**
-    - If clicking × would add a different channel by mistake, an error popup appears.
-    - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.
-    - This is likely caused by layout glitches; refreshing the browser is recommended.
-    - When a channel is successfully added, a "Blocked: channel name" popup confirms it.
-- **Language Switching**
-  - Language can now be switched from the settings page.
-- **Edit Button for Lists**
-  - Each list can now be renamed from the settings page.
-  - To save changes, click the Save button. To cancel, click the Cancel button.
+- **Error message popups**  
+  - If clicking × would add a different channel by mistake, an error popup appears.  
+  - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.  
+  - This is likely caused by layout glitches; refreshing the browser is recommended.  
+  - When a channel is successfully added, a "Blocked: channel name" popup confirms it.  
+- **Language Switching**  
+  - Language can now be switched from the settings page.  
+  - Implemented: Japanese, English
+- **Edit Button for Lists**  
+  - Each list can now be renamed from the settings page.  
+  - To save changes, click the Save button. To cancel, click the Cancel button.  
+
+</details>
 
 ---
 
@@ -325,13 +340,7 @@ All use is at the user's own risk.
 ## Planned Features (Not Implemented, and No Promises)
 
 - Add × button to channel pages and video playback pages  
-- ~~Hide keywords from video titles~~
-- ~~Temporarily show the blocked channel name in a popup after clicking × (to avoid mistakes; add an undo button for the last action)~~
-- ~~Add advanced settings to the extension~~
-- Improve the UI of the × button and popup
 - Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
-- ~~Add block list editing buttons on detailed settings page.~~
-- ~~Add a language switch button to the details settings page.~~
 - Make installation easier by publishing in the Chrome Web Store.
 
 ---
