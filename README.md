@@ -18,7 +18,7 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 #### Gitを使わない場合 📦 
 1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。）   
 
-Releaseを作成しました。ここから、zip形式またはtar.gz形式で必要なファイルをダウンロードできます。  
+Releaseを作成しました。コードをコピペすることなく、zip形式またはtar.gz形式で必要なファイルをダウンロードできます。  
 ※更新されたときは手動でダウンロードしなおす必要あり。
 1. 下記のURLからファイルをダウンロード（Source codeと書かれたリンクをクリック）する。 
 
