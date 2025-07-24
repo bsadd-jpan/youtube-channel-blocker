@@ -16,7 +16,15 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 ### インストール 🛠️
 
 #### Gitを使わない場合 📦 
-1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
+1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。）   
+
+Releaseを作成しました。コードをコピペすることなく、zip形式またはtar.gz形式で必要なファイルをダウンロードできます。  
+※更新されたときは手動でダウンロードしなおす必要あり。
+1. 下記のURLからファイルをダウンロード（Source codeと書かれたリンクをクリック）する。 
+
+https://github.com/bsadd-jpan/youtube-channel-blocker/releases
+
+2. 入手したファイルを任意の場所で解凍する。
 
 #### Gitを使う場合 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -57,7 +65,7 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ### 使い方🔴
 
-- 動画のチャンネル名の横にある赤い×ボタンを押します（チャンネルページや再生している動画からの非表示は未実装）  
+- 動画のチャンネル名の横にある赤い×ボタンから、そのチャンネルの動画を非表示にできます（チャンネルページや再生している動画からの非表示は未実装）  
 - 非表示にならなかったら、ブラウザの更新やインストールのやり直し、画像やコードの不足がないかを確認してみてください  
 - 自分で名前をリストに追加して、「保存」ボタンを押すことでも非表示にできます（※名前が完全一致していること）  
 - リストは拡張機能のアイコンをクリックすると確認できます  
@@ -140,8 +148,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 - ~~拡張機能の詳細設定を追加~~
 - ×ボタンのUIやポップアップの改善
 - ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- 詳細ページでリストの編集ボタンを追加
-- 詳細ページにも言語ボタン追加
+- ~~詳細ページでリストの編集ボタンを追加~~
+- ~~詳細ページにも言語ボタン追加~~
 - インストール等がやりやすいようにストアにも出したい
 ---
 
@@ -160,7 +168,17 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ### Installation 🛠️
 
 If you do not use Git 📦 
-1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).
+1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).  
+
+A release has been created. You can download the necessary files in ZIP or tar.gz format from the link below.
+※ Please note that you will need to manually re-download the files when updates are released.
+
+1. Visit the following URL and click on the link labeled “Source code” to download the archive.  
+
+https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+
+2. Extract the contents to any location of your choice.
+
 
 If you use Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
@@ -168,7 +186,6 @@ If you use Git 📦
   ```bash
   git --version
   ```
-
 3. Open the GitHub page of this repository and click the green [Code] button.
 4. Click the clipboard icon 📋 next to the HTTPS URL to copy it.
 5. Open a terminal (or command prompt) at your preferred location.\
@@ -282,8 +299,8 @@ All use is at the user's own risk.
 - ~~Add advanced settings to the extension~~
 - Improve the UI of the × button and popup
 - Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
-- Add block list editing buttons on detailed settings page.
-- Add a language switch button to the details settings page.
+- ~~Add block list editing buttons on detailed settings page.~~
+- ~~Add a language switch button to the details settings page.~~
 - Make installation easier by publishing in the Chrome Web Store.
 
 ---
