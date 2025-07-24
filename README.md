@@ -97,6 +97,12 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）
   - レイアウト崩れによるものだと思うので、ブラウザの更新等を推奨
   - エラーメッセージではないが、×ボタンでリストに追加したときは「Blocked: チャンネル名」とポップアップするので間違いがないか要確認
+- **言語切り替え機能**
+  - 設定ページからも表示する言語を切り替え可能
+  - 切り替えは英語と日本語
+- **リストの編集ボタン**
+  - 設定ページから、各リストを編集して名前を変更することが可能
+  - 編集後に保存したい場合は保存ボタンを、キャンセルしたい場合はキャンセルボタンを押下
 
 ---
 
@@ -134,8 +140,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 - ~~拡張機能の詳細設定を追加~~
 - ×ボタンのUIやポップアップの改善
 - ショート動画は勝手に再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- 詳細ページでリストの編集ボタンを追加
-- 詳細ページにも言語ボタン追加
+- ~~詳細ページでリストの編集ボタンを追加~~
+- ~~詳細ページにも言語ボタン追加~~
 - インストール等がやりやすいようにストアにも出したい
 ---
 
@@ -207,19 +213,19 @@ To update to the newest version via Git, run the following command inside the fo
 
 Features personally implemented as “would be nice to have”:
 
-- Import and export the list  
+- **Import and export the list** 
   - The export button outputs the list as a JSON file.  
   - The import button completely replaces the list using a JSON file.  
   - The official Channel Blocker sometimes loses the list, so regular backups are recommended (this extension has not shown this issue so far).  
-- Toggle to enable/disable the extension  
+- **Toggle to enable/disable the extension**  
   - Click the extension icon and press the red "Blocker:ON" button to switch to gray "Blocker:OFF," disabling the blocking feature.  
   - No page refresh is needed to apply changes (though it might take a few seconds).  
-- "Remove Last" button  
+- **"Remove Last" button**  
   - This appears when clicking the extension icon.  
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes.  
   - Helps counter rare cases where wrong videos get added to the list on the homepage.
 
-- Video Title Filter  
+- **Video Title Filter**  
   - Each keyword is limited to 30 characters
   - This filter applies only to video titles and does not affect channel names (for example, if "clip" is a keyword, channels with names containing "clip" will still be shown).  
   - If only one keyword is used, all video titles containing that keyword will be hidden (e.g., if the keyword is "clip," all titles containing "clip" will be hidden).
@@ -229,11 +235,16 @@ Features personally implemented as “would be nice to have”:
     - "My <u>clip</u> video collection" → displayed  
     - "<u>GTA clip</u> collection" → displayed  
     - "Funny <u>GTA</u> moments [<u>sashisuseso</u>/<u>clip</u>]" → hidden  
-- Error message popups
+- **rror message popups**
     - If clicking × would add a different channel by mistake, an error popup appears.
     - The message "Error: (ChannelA) ≠ (ChannelB)" is shown, and no addition occurs.
     - This is likely caused by layout glitches; refreshing the browser is recommended.
     - When a channel is successfully added, a "Blocked: channel name" popup confirms it.
+- **Language Switching**
+  - Language can now be switched from the settings page.
+- **Edit Button for Lists**
+  - Each list can now be renamed from the settings page.
+  - To save changes, click the Save button. To cancel, click the Cancel button.
 
 ---
 
@@ -271,8 +282,8 @@ All use is at the user's own risk.
 - ~~Add advanced settings to the extension~~
 - Improve the UI of the × button and popup
 - Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off.
-- Add block list editing buttons on detailed settings page.
-- Add a language switch button to the details settings page.
+- ~~Add block list editing buttons on detailed settings page.~~
+- ~~Add a language switch button to the details settings page.~~
 - Make installation easier by publishing in the Chrome Web Store.
 
 ---
