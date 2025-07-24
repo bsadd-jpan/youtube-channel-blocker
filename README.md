@@ -15,18 +15,32 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 
 ### インストール 🛠️
 
-#### Gitを使わない場合 📦 
-1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。）   
+### Gitを使わない場合のインストール方法 📦
 
-Releaseを作成しました。コードをコピペすることなく、zip形式またはtar.gz形式で必要なファイルをダウンロードできます。  
-※更新されたときは手動でダウンロードしなおす必要あり。
-1. 下記のURLからファイルをダウンロード（Source codeと書かれたリンクをクリック）する。 
+Gitを使用しない場合、次の2通りの方法でインストールできます。
 
-https://github.com/bsadd-jpan/youtube-channel-blocker/releases
+---
 
-2. 入手したファイルを任意の場所で解凍する。
+#### 1. 手動でコピペする方法
 
-#### Gitを使う場合 📦 
+1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
+2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
+3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。
+
+---
+
+#### 2. Release から zip / tar.gz をダウンロードする方法
+
+1. 以下のURLから「Release」ページへアクセスします：  
+   👉 https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+2. ページ内の **「Source code（zip）」または「Source code（tar.gz）」** と書かれたリンクをクリックし、ファイルをダウンロードします。  
+3. ダウンロードしたファイルを、任意の場所で解凍してください。  
+
+※更新があった場合は、手動で再度ダウンロード・解凍が必要です。
+
+---
+
+### Gitを使う場合のインストール方法 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
 2. インストール確認：
    ```bash
@@ -52,7 +66,10 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
   git pull
   ```
 
-#### インストールの共通手順
+---
+
+### インストールの共通手順
+フォルダとソースコードが準備できたら、以下の手順を行います。
 1. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
    - `icon48.png`  
    - `icon128.png`    
@@ -167,20 +184,32 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 
 ### Installation 🛠️
 
-If you do not use Git 📦 
-1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).  
+### Installation without Git 📦
 
-A release has been created. You can download the necessary files in ZIP or tar.gz format from the link below.
-※ Please note that you will need to manually re-download the files when updates are released.
+If you do not use Git, there are two ways to install the extension.
 
-1. Visit the following URL and click on the link labeled “Source code” to download the archive.  
+---
 
-https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+#### 1. Manual Copy Method
 
-2. Extract the contents to any location of your choice.
+1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
+2. From the GitHub repository, manually copy the necessary files (HTML, CSS, JavaScript, manifest, etc.) into the folder.  
+3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
 
+---
 
-If you use Git 📦 
+#### 2. Download from Release (zip / tar.gz)
+
+1. Visit the following URL to access the "Release" page:  
+   👉 https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+2. On the page, click the **"Source code (zip)"** or **"Source code (tar.gz)"** link to download the archive.  
+3. Extract the contents to any location on your system.
+
+※ Please note that you will need to manually re-download and extract the files if the extension is updated.
+
+---
+
+### Installation with Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
 2. Confirm the installation by running:
   ```bash
@@ -204,7 +233,9 @@ To update to the newest version via Git, run the following command inside the fo
   git pull
   ```
 
-#### Common installation steps
+---
+
+### Common installation steps
 1. Prepare two PNG images for the icons, rename them as follows, and place them in the folder:  
    - `icon48.png`  
    - `icon128.png`  
