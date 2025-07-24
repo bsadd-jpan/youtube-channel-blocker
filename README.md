@@ -16,7 +16,15 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 ### インストール 🛠️
 
 #### Gitを使わない場合 📦 
-1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。） 
+1. 「youtube-channel-blocker」フォルダを作成し、各ファイルのコピペを繰り返して、必要なコードやファイルをフォルダの中に入れます（動作にはgitignoreやREADME、LICENSEは不要です。）   
+
+Releaseを作成しました。コードをコピペすることなく、zip形式またはtar.gz形式で必要なファイルをダウンロードできます。  
+※更新されたときは手動でダウンロードしなおす必要あり。
+1. 下記のURLからファイルをダウンロード（Source codeと書かれたリンクをクリック）する。 
+
+https://github.com/bsadd-jpan/youtube-channel-blocker/releases
+
+2. 入手したファイルを任意の場所で解凍する。
 
 #### Gitを使う場合 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -160,7 +168,17 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ### Installation 🛠️
 
 If you do not use Git 📦 
-1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).
+1. Create a folder named youtube-channel-blocker and manually copy all necessary files into it (gitignore, README, LICENSE files are not required for operation).  
+
+A release has been created. You can download the necessary files in ZIP or tar.gz format from the link below.
+※ Please note that you will need to manually re-download the files when updates are released.
+
+1. Visit the following URL and click on the link labeled “Source code” to download the archive.  
+
+https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+
+2. Extract the contents to any location of your choice.
+
 
 If you use Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
@@ -168,7 +186,6 @@ If you use Git 📦
   ```bash
   git --version
   ```
-
 3. Open the GitHub page of this repository and click the green [Code] button.
 4. Click the clipboard icon 📋 next to the HTTPS URL to copy it.
 5. Open a terminal (or command prompt) at your preferred location.\
