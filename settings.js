@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     h3Elements[0].textContent = lang === 'en' ? 'Channel List' : 'チャンネルリスト';
     h3Elements[1].textContent = lang === 'en' ? 'Title Filters' : '動画タイトルフィルター';
   } else {
-    console.warn('Expected at least 2 h3 elements under #section-import-export');
+    // console.warn('Expected at least 2 h3 elements under #section-import-export');
   }
   exportKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
