@@ -183,8 +183,8 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 ---
 
 ## 連絡 📬
-不具合以外にもインストール手順に従って問題なく動いたか等についてコメントいただけると嬉しいです。  
-本GitHubのページではDiscussionやissueも開放しております。
+不具合だけではなく、インストール手順に従って問題なく動いたか等についても、ブログやXでコメントいただけると嬉しいです。  
+本GitHubのページはDiscussionやissueも開放しているので、そちらからでもどうぞ。
 
 📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
