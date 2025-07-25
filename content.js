@@ -97,15 +97,20 @@ function createBlockButton(channelName, runBlocker) {
 
     chrome.storage.local.get(['blockedChannels'], (result) => {
       const updatedList = result.blockedChannels || [];
-      if (!updatedList.includes(channelName)) {
-        updatedList.push(channelName);
-        chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-          console.log(`Blocked: ${channelName}`);
-          runBlocker();
-
-          showPopup(event, channelName);
-        });
+      if (updatedList.includes(channelName)) {
+        return;
       }
+      if (updatedList.length >= 10000) {
+        showErrorPopup(event, 'Error: Block list limit (10000) reached');
+        return;
+      }
+      updatedList.push(channelName);
+      chrome.storage.local.set({ blockedChannels: updatedList }, () => {
+        console.log(`Blocked: ${channelName}`);
+        runBlocker();
+
+        showPopup(event, channelName);
+      });
     });
   });
   return btn;
@@ -147,6 +152,24 @@ function isTitleBlocked(title, keywordSets) {
 }
 
 /**
+ * チャンネル名がキーワードセットのAND条件にマッチしているか判定
+ * @param {string} channelName
+ * @param {string[][]} keywordSets
+ * @returns {boolean}
+ */
+function isChannelBlocked(channelName, keywordSets) {
+  const nameLower = channelName.toLowerCase();
+
+  for (const keywords of keywordSets) {
+    if (keywords.length === 0) continue;
+    // キーワードセット内の全てを含むか（単語1つの場合はその単語を含むか）
+    const allIncluded = keywords.every(kw => nameLower.includes(kw.toLowerCase()));
+    if (allIncluded) return true;
+  }
+  return false;
+}
+
+/**
  * チャンネル名の要素とボタン挿入位置を指定して処理
  * @param {Element} item
  * @param {string[]} blockList
@@ -154,9 +177,10 @@ function isTitleBlocked(title, keywordSets) {
  * @param {string|null} insertBeforeElemSelector
  * @param {string} blockParentSelectors
  * @param {Function} runBlocker
- * @param {string[][]} keywordSets
+ * @param {string[][]} channelKeywordSets
+ * @param {string[][]} titleKeywordSets
  */
-function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker, keywordSets) {
+function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker, channelKeywordSets, titleKeywordSets) {
   // プレイリスト特有のタグがあれば処理スキップ
   if (item.querySelector('yt-collection-thumbnail-view-model')) {
     return; // プレイリストなので除外
@@ -190,14 +214,23 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
   });
 
   // チャンネル名ブロック判定
-  applyBlockDisplay(item, channelName, blockList, blockParentSelectors);
+  if (isChannelBlocked(channelName, channelKeywordSets)) {
+    const parent = item.closest(blockParentSelectors);
+    if (parent) {
+      parent.style.display = 'none';
+      return;
+    } else {
+      item.style.display = 'none';
+      return;
+    }
+  }
 
   // 動画タイトルキーワードANDブロック判定
   const titleElem = item.querySelector('#video-title, h3 a, #title, yt-formatted-string#description-text, ytd-video-renderer #video-title, yt-formatted-string#video-title');
   if (!titleElem) return;
 
   const titleText = titleElem.textContent || '';
-  if (isTitleBlocked(titleText, keywordSets)) {
+  if (isTitleBlocked(titleText, titleKeywordSets)) {
     const parent = item.closest(blockParentSelectors);
     if (parent) {
       parent.style.display = 'none';
@@ -211,7 +244,7 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
 function runBlocker() {
-  chrome.storage.local.get(['blockerEnabled', 'blockedChannels', 'titleKeywordSets'], (result) => {
+  chrome.storage.local.get(['blockerEnabled', 'blockedChannels', 'channelKeywordSets', 'titleKeywordSets'], (result) => {
     if (result.blockerEnabled === false) {
       console.log('Blocker is disabled');
       clearBlocks();
@@ -220,12 +253,19 @@ function runBlocker() {
 
     const blockList = result.blockedChannels || [];
 
-    // キーワードセットは最大1000件、各セットは最大3語
-    let keywordSetsRaw = result.titleKeywordSets || [];
-    if (keywordSetsRaw.length > 1000) {
-      keywordSetsRaw = keywordSetsRaw.slice(0, 1000);
+    // チャンネル名フィルター用キーワードセットは最大1000件、各セットは最大3語
+    let channelKeywordSetsRaw = result.channelKeywordSets || [];
+    if (channelKeywordSetsRaw.length > 1000) {
+      channelKeywordSetsRaw = channelKeywordSetsRaw.slice(0, 1000);
     }
-    const keywordSets = keywordSetsRaw.map(set => set.slice(0, 3));
+    const channelKeywordSets = channelKeywordSetsRaw.map(set => set.slice(0, 3));
+
+    // タイトルフィルター用キーワードセットは最大1000件、各セットは最大3語
+    let titleKeywordSetsRaw = result.titleKeywordSets || [];
+    if (titleKeywordSetsRaw.length > 1000) {
+      titleKeywordSetsRaw = titleKeywordSetsRaw.slice(0, 1000);
+    }
+    const titleKeywordSets = titleKeywordSetsRaw.map(set => set.slice(0, 3));
 
     // ホーム画面の動画
     document.querySelectorAll('#dismissible').forEach(item => {
@@ -235,7 +275,8 @@ function runBlocker() {
         null,
         'ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
         runBlocker,
-        keywordSets
+        channelKeywordSets,
+        titleKeywordSets
       );
     });
 
@@ -247,7 +288,8 @@ function runBlocker() {
         null,
         'ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer',
         runBlocker,
-        keywordSets
+        channelKeywordSets,
+        titleKeywordSets
       );
     });
 
@@ -259,10 +301,11 @@ function runBlocker() {
     //     'ytd-channel-name #text',
     //     null,
     //     'ytd-compact-video-renderer',
-    //     runBlocker
+    //     runBlocker,
+    //     channelKeywordSets,
+    //     titleKeywordSets
     //   );
     // });
-
 
     // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {
@@ -272,7 +315,8 @@ function runBlocker() {
         'yt-img-shadow',
         'ytd-video-renderer',
         runBlocker,
-        keywordSets
+        channelKeywordSets,
+        titleKeywordSets
       );
     });
 
@@ -284,7 +328,8 @@ function runBlocker() {
         null,
         'ytd-channel-renderer',
         runBlocker,
-        keywordSets
+        channelKeywordSets,
+        titleKeywordSets
       );
     });
   });
