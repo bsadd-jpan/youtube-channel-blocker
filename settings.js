@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const importChannelsBtn = document.getElementById('importChannelsBtn');
   const exportKeywordsBtn = document.getElementById('exportKeywordsBtn');
   const importKeywordsBtn = document.getElementById('importKeywordsBtn');
+  const exportChannelKeywordsBtn = document.getElementById('exportChannelKeywordsBtn');
+  const importChannelKeywordsBtn = document.getElementById('importChannelKeywordsBtn');
   const fileInput = document.getElementById('fileInput');
   const status = document.getElementById('status');
 
@@ -65,8 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
       addedKeyword: 'キーワードセットを追加しました',
       exportList: 'チャンネル名ブロックリストをエクスポートしました',
       exportKeywords: '動画タイトルフィルターをエクスポートしました',
+      exportChannelKeywords: 'チャンネルフィルターをエクスポートしました',
       importList: 'チャンネル名ブロックリストをインポートしました',
       importKeywords: '動画タイトルフィルターをインポートしました',
+      importChannelKeywords: 'チャンネルフィルターをインポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '解除',
       removeBtnKeyword: '解除',
@@ -80,8 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
       addedKeyword: 'Keyword set added',
       exportList: 'Exported channel block list',
       exportKeywords: 'Exported title keyword NG list',
+      exportChannelKeywords: 'Exported channel filter set',
       importList: 'Imported channel block list',
       importKeywords: 'Imported title keyword NG list',
+      importChannelKeywords: 'Imported channel filter set',
       importError: 'Import failed (invalid file format)',
       removeBtn: 'Remove',
       removeBtnKeyword: 'Remove',
@@ -330,8 +336,6 @@ channelFilterInputs.forEach(input => {
 
 channelFilterSearchInput.addEventListener('input', () => renderChannelFilterList(channelFilterSearchInput.value));
 
-
-  // 非表示リスト描画
 // 非表示リスト描画
 function renderBlockList(filter = '') {
   chrome.storage.local.get('blockedChannels', (result) => {
@@ -668,6 +672,16 @@ function renderKeywordList(filter = '') {
     });
   });
 
+  exportChannelKeywordsBtn.addEventListener('click', () => {
+    getLang(lang => {
+      chrome.storage.local.get('channelKeywordSets', (result) => {
+        const data = JSON.stringify(result.channelKeywordSets || [], null, 2);
+        downloadJSON(data, 'channel_keyword_ng_backup.json');
+        showStatus(texts[lang].exportChannelKeywords, 'green');
+      });
+    });
+  });
+
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
     fileInput.click();
@@ -675,6 +689,11 @@ function renderKeywordList(filter = '') {
 
   importKeywordsBtn.addEventListener('click', () => {
     currentImportTarget = 'keywords';
+    fileInput.click();
+  });
+
+  importChannelKeywordsBtn.addEventListener('click', () => {
+    currentImportTarget = 'channelKeywords';
     fileInput.click();
   });
 
@@ -711,6 +730,15 @@ function renderKeywordList(filter = '') {
             chrome.storage.local.set({ titleKeywordSets: json }, () => {
               renderKeywordList(keywordSearchInput.value);
               showStatus(texts[lang].importKeywords, 'green');
+            });
+          }else if (currentImportTarget === 'channelKeywords') {
+            if (!Array.isArray(json) || json.some(set => !Array.isArray(set) || set.some(w => typeof w !== 'string'))) {
+              showStatus(texts[lang].importError, 'red');
+              return;
+            }
+            chrome.storage.local.set({ channelKeywordSets: json }, () => {
+              renderChannelFilterList(channelFilterSearchInput.value);
+              showStatus(texts[lang].importChannelKeywords, 'green');
             });
           }
         });
