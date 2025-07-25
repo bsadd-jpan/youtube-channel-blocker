@@ -31,14 +31,12 @@
         <!-- 非表示リスト -->
         <section id="section-list" class="tab-content active">
           <h2>非表示リスト（チャンネル名）</h2>
-          <input type="text" id="searchInput" placeholder="検索..." />
-
           <!-- ここに追加フォームを挿入 -->
           <div style="margin: 8px 0;">
             <input id="blockChannelInput" type="text" placeholder="チャンネル名" maxlength="100">
             <button id="addBlockChannelBtn">追加</button>
           </div>
-
+          <input type="text" id="searchInput" placeholder="検索..." />
           <ul id="blockListContainer"></ul>
         </section>
 
@@ -57,13 +55,13 @@
 
         <section id="section-channel-filter" style="display:none">
           <h2>チャンネルフィルターリスト</h2>
-          <input id="channelFilterSearchInput" type="text" placeholder="検索...">
           <div style="margin: 8px 0;">
             <input id="channelFilter1" type="text" placeholder="キーワード1" maxlength="30">
             <input id="channelFilter2" type="text" placeholder="キーワード2" maxlength="30">
             <input id="channelFilter3" type="text" placeholder="キーワード3" maxlength="30">
             <button id="addChannelFilterBtn">追加</button>
           </div>
+          <input id="channelFilterSearchInput" type="text" placeholder="検索...">
           <ul id="channelFilterListContainer"></ul>
         </section>
 
