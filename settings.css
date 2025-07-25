@@ -194,3 +194,99 @@ body, html {
 .tab-content.active {
   display: block;
 }
+
+/* --- チャンネルフィルター用のスタイル追加 --- */
+#channelFilterSearchInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#channelFilterListContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#channelFilterListContainer li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+#channelFilterListContainer li:last-child {
+  border-bottom: none;
+}
+
+#addChannelFilterBtn {
+  background-color: #eee;
+  color: #333;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+#addChannelFilterBtn:hover {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.editBtn, .saveBtn, .cancelBtn {
+  background-color: #eee;
+  color: #333;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+
+.editBtn:hover, .saveBtn:hover, .cancelBtn:hover {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+/* サイドバーのタブボタン統一（チャンネルフィルタータブも含める） */
+#sidebar ul li button.tab,
+#tab-channel-filter.tab {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  border-left: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#sidebar ul li button.tab:hover,
+#tab-channel-filter.tab:hover {
+  background-color: #f1f1f1;
+}
+
+#sidebar ul li button.tab.active,
+#tab-channel-filter.tab.active {
+  background-color: #eaf6fb;
+  border-left: 4px solid #007bff;
+  color: #007bff;
+  font-weight: bold;
+}

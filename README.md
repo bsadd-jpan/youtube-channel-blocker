@@ -1,9 +1,9 @@
-# YouTube Channel Blocker（v0.2.2）
+# YouTube Channel Blocker（v0.3.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
 
-チャンネル名の非表示リストや動画タイトルフィルターを用いて、検索ページや関連動画、ホームから興味のない動画を非表示にできます。  
+チャンネル名の非表示リストやキーワードフィルターを用いて、興味のない動画を非表示にできます。  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
 
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
@@ -120,8 +120,8 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - 拡張機能のアイコンを押すと表示  
   - ×ボタンを押したときにでてくる「Blocked:チャンネル名」というポップアップとあわせて、誤入力をすぐに挽回可能  
   - トップページで偶に違う動画がリストに入ってしまう現象を確認しているので、その対策  
-- **動画タイトルフィルター**  
-  - キーワードを1つ設定すると、そのキーワードを含むすべての動画タイトルが非表示  
+- **タイトルフィルター**  
+  - キーワードを含むすべての動画タイトルが非表示  
   - 1つのキーワードの文字数制限は30文字  
   - 対象は動画タイトルのみ（チャンネル名は対象外）  
   - 3つのキーワードのAND条件（キーワードセット）でも非表示可能  
@@ -146,13 +146,17 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - 設定ページから、各リストを編集して名前を変更することが可能  
   - 編集後に保存したい場合は保存ボタンを、キャンセルしたい場合はキャンセルボタンを押下  
 
+- **チャンネルフィルター**
+  - キーワードを含むすべてのチャンネル名が非表示 
+  - 1つのキーワードの文字数制限は10文字
+  - それ以外は、タイトルフィルターと同様
 </details>
 
 ---
 
 ### 注意 ⚠️
 
-- 理論上ブロックできる最大件数：約34,000件🧮  
+- 理論上非表示にできる最大件数：約10,000件🧮  
   （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
 - 大体の不具合（というか、処理速度が原因のやつ）はブラウザの更新で直ります🔧
 - 処理の関係上、サムネを一瞬で非表示にするのは困難です🙈    
@@ -195,7 +199,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 ---
 
 ## English
-
+(Machine Translation)
 ### Installation 🛠️
 
 ### Installation without Git 📦
@@ -297,8 +301,8 @@ Features implemented based on “it would be nice to have” ideas.
   - This appears when clicking the extension icon  
   - Combined with the “Blocked: channel name” popup shown after pressing ×, this allows quick undo of mistakes  
   - Helps counter rare cases where wrong videos get added to the list on the homepage  
-- **Video Title Filter**  
-  - If you set a keyword, all video titles containing that keyword will be hidden  
+- **Title Filter**  
+  - All video titles containing the specified keywords will be hidden
   - Each keyword is limited to 30 characters  
   - This filter applies only to video titles (not channel names)  
   - You can also hide videos using AND conditions with up to three keywords (keyword sets)  
@@ -319,6 +323,10 @@ Features implemented based on “it would be nice to have” ideas.
 - **Edit Button for Lists**  
   - Each list can be renamed from the settings page  
   - To save changes, click the Save button. To cancel, click the Cancel button  
+- **Channel Filter**
+  - All channel names containing the specified keywords will be hidden  
+  - Each keyword must be 10 characters or fewer  
+  - Other rules are the same as the Title Filter
 
 </details>
 
@@ -326,7 +334,7 @@ Features implemented based on “it would be nice to have” ideas.
 
 ### Notes ⚠️
 
-- The maximum theoretical number of blockable channels is about 34,000 🧮  
+- The maximum theoretical number of channels that can be hidden is about 10,000. 🧮  
 - Most issues can be fixed by refreshing the browser 🔧  
 - Immediate hiding is difficult; thumbnails may briefly appear 🙈  
 - Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
