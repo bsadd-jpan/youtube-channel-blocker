@@ -525,7 +525,7 @@ function renderKeywordList(filter = '') {
   tabListBtn.textContent = lang === 'en' ? 'Block List' : '非表示リスト';
   tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : '動画タイトルフィルター';
   tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
-  tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '表示言語';
+  tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
   tabDonationBtn.textContent = lang === 'en' ? '💛 Donate' : '💛 寄付';
 
   // セクション見出し・ラベルなど

@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       settings: '設定',
       blockerOn: 'Blocker: ON',
       blockerOff: 'Blocker: OFF',
-      langSwitch: 'Language(言語): 日本語',
+      langSwitch: '言語（Language）: 日本語',
       saved: '保存しました',
       saveFailed: '保存に失敗しました',
       listEmpty: 'リストは空です',

@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v0.2.0）
+# YouTube Channel Blocker（v0.2.1）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 A simple Chrome extension to block unwanted YouTube channels.
@@ -38,7 +38,7 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 2. ページ内の **「Source code（zip）」または「Source code（tar.gz）」** と書かれたリンクをクリックし、ファイルをダウンロードします。  
 3. ダウンロードしたファイルを、任意の場所で解凍してください。  
 
-※更新があった場合は、手動で再度ダウンロード・解凍が必要です。
+※Releaseが更新されるのは大きな変更があったときのみです。誤字脱字やレイアウトの修正などの軽微な変更では更新されないので注意してください。
 
 [インストールの共通手順へ](#インストールの共通手順)
 
@@ -63,15 +63,6 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 
 [インストールの共通手順へ](#インストールの共通手順)
 
-#### 補足：Gitで最新版を取得（更新）🔄 
-
-Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します。
-
-  ```bash
-  cd C:\Users\[PCのユーザー名]\Desktop\youtube-channel-blocker
-  git pull
-  ```
-
 ---
 
 ### インストールの共通手順
@@ -83,6 +74,20 @@ Gitを使って、新しいバージョンに更新したい場合は同じフ�
 3. 右上の「デベロッパーモード」を ON にします  
 4. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
 5. これで拡張機能が読み込まれ、すぐに使用できます
+
+---
+
+#### 補足：最新版を取得（更新）🔄 
+
+Gitを使って、新しいバージョンに更新したい場合は同じフォルダ内で次のコマンドを実行します。
+
+```bash
+cd C:\Users\[PCのユーザー名]\Desktop\youtube-channel-blocker
+git pull
+```
+Gitを使ってない場合は、必要なファイルの再ダウンロードを行ってください。
+
+その後、Chromeの拡張機能の管理ページ（パズルのピースみたいなアイコンをクリック）からYouTube Channel Blockerの「ページを更新」ボタンを押してください。  
 
 ---
 
@@ -214,7 +219,7 @@ If you do not use Git, there are two ways to install the extension.
 2. On the page, click the **"Source code (zip)"** or **"Source code (tar.gz)"** link to download the archive.  
 3. Extract the contents to any location on your system.
 
-※ Please note that you will need to manually re-download and extract the files if the extension is updated.
+Note: Releases are only updated for significant changes. Minor changes such as typos or layout adjustments will not trigger a release update. Please keep this in mind.
 
 ---
 
@@ -234,14 +239,6 @@ If you do not use Git, there are two ways to install the extension.
   git clone <URL>
   ```
 
-Updating to the latest version 🔄 
-
-To update to the newest version via Git, run the following command inside the folder(e.g., your Desktop):
-  ```bash
-  cd C:\Users\[YourUserName]\Desktop\youtube-channel-blocker
-  git pull
-  ```
-
 ---
 
 ### Common installation steps
@@ -252,6 +249,20 @@ To update to the newest version via Git, run the following command inside the fo
 3. Enable "Developer mode" using the toggle at the top right.  
 4. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
 5. The extension will be loaded and ready to use immediately.
+
+---
+
+#### Updating to the Latest Version 🔄
+
+If you use Git, run the following commands inside the same folder to update to the newest version:
+
+```bash
+cd C:\Users\[YourUserName]\Desktop\youtube-channel-blocker
+git pull
+```
+If you do not use Git, please re-download the necessary files.  
+
+After that, go to the Chrome extensions management page (click the puzzle piece icon), and click the "Reload" button for YouTube Channel Blocker.
 
 ---
 
