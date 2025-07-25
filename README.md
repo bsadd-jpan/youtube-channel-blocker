@@ -39,6 +39,7 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 3. ダウンロードしたファイルを、任意の場所で解凍してください。  
 
 ※更新があった場合は、手動で再度ダウンロード・解凍が必要です。
+※Releaseが更新されるのは大きな変更があったときのみです。誤字脱字やレイアウト修正などの軽微な変更では更新されないので注意してください。
 
 [インストールの共通手順へ](#インストールの共通手順)
 
@@ -214,7 +215,9 @@ If you do not use Git, there are two ways to install the extension.
 2. On the page, click the **"Source code (zip)"** or **"Source code (tar.gz)"** link to download the archive.  
 3. Extract the contents to any location on your system.
 
-※ Please note that you will need to manually re-download and extract the files if the extension is updated.
+Note: 
+- Please note that you will need to manually re-download and extract the files if the extension is updated.
+- Releases are only updated for significant changes. Minor changes such as typos or layout adjustments will not trigger a release update. Please keep this in mind.
 
 ---
 
