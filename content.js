@@ -213,7 +213,19 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
     hoveredChannelName = channelName;
   });
 
-  // チャンネル名ブロック判定
+  // リストからチャンネル名完全一致で非表示
+  if (blockList.includes(channelName)) {
+    const parent = item.closest(blockParentSelectors);
+    if (parent) {
+      parent.style.display = 'none';
+      return;
+    } else {
+      item.style.display = 'none';
+      return;
+    }
+  }
+
+  // チャンネル名キーワードセットによるブロック判定（AND条件）
   if (isChannelBlocked(channelName, channelKeywordSets)) {
     const parent = item.closest(blockParentSelectors);
     if (parent) {
