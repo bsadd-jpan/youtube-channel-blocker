@@ -142,7 +142,8 @@ body, html {
 }
 
 #exportChannelsBtn, #importChannelsBtn,
-#exportKeywordsBtn, #importKeywordsBtn {
+#exportKeywordsBtn, #importKeywordsBtn,
+#exportChannelKeywordsBtn, #importChannelKeywordsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
@@ -156,7 +157,8 @@ body, html {
 }
 
 #exportChannelsBtn:hover, #importChannelsBtn:hover,
-#exportKeywordsBtn:hover, #importKeywordsBtn:hover {
+#exportKeywordsBtn:hover, #importKeywordsBtn:hover,
+#exportChannelKeywordsBtn:hover, #importChannelKeywordsBtn:hover {
   background-color: #0056b3;
 }
 
