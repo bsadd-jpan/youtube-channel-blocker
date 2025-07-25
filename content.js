@@ -157,6 +157,10 @@ function isTitleBlocked(title, keywordSets) {
  * @param {string[][]} keywordSets
  */
 function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSelector, blockParentSelectors, runBlocker, keywordSets) {
+  // プレイリスト特有のタグがあれば処理スキップ
+  if (item.querySelector('yt-collection-thumbnail-view-model')) {
+    return; // プレイリストなので除外
+  }
   const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
 
