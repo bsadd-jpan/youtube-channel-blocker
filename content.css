@@ -1,17 +1,24 @@
+#text-container {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
 .block-btn {
-  flex-shrink: 0; /* ボタンが縮まらない */
-  margin-left: 6px;
-  cursor: pointer;
+  flex-shrink: 0;
+  /* margin-right: 8px; */
   background: transparent;
   border: none;
   color: red;
+  cursor: pointer;
 }
 
-.channel-name {
+yt-formatted-string#text {
+  display: inline-block !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 1; /* 多少縮むけど表示される */
-  display: inline-block;
-  vertical-align: middle;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: inherit !important;
 }
