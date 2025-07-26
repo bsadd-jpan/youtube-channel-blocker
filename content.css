@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 
-yt-formatted-string#text {
+/* yt-formatted-string#text {
   display: inline-block !important;
   white-space: nowrap;
   overflow: hidden;
@@ -21,4 +21,4 @@ yt-formatted-string#text {
   visibility: visible !important;
   opacity: 1 !important;
   color: inherit !important;
-}
+} */

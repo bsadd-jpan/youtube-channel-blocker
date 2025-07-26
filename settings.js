@@ -820,7 +820,7 @@ function renderKeywordList(filter = '') {
 
   // ★ エクスポート・インポートセクション
   document.querySelector('#section-import-export h2').textContent = lang === 'en' ? 'Export / Import' : 'エクスポート／インポート';
-  document.querySelector('#section-import-export p').textContent = lang === 'en' ? '⚠️ We recommend backing up your data regularly.' : '⚠️ 定期的なバックアップを推奨します。';
+  document.querySelector('#section-import-export p').textContent = lang === 'en' ? '💡 We recommend backing up your data regularly.' : '💡 定期的なバックアップを推奨します。';
   document.querySelector('#section-import-export h3:nth-of-type(1)').textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
   exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importChannelsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
