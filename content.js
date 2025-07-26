@@ -360,6 +360,19 @@ function runBlocker() {
         titleKeywordSets
       );
     });
+
+    // チャンネルページ
+    document.querySelectorAll('yt-dynamic-text-view-model').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        '[role="text"]',
+        null,
+        null,
+        runBlocker,
+        channelKeywordSets,
+        titleKeywordSets
+      );
+    });
   });
 }
 
