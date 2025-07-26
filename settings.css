@@ -141,9 +141,8 @@ body, html {
   background-color: #c0392b;
 }
 
-#exportChannelsBtn, #importChannelsBtn,
-#exportKeywordsBtn, #importKeywordsBtn,
-#exportChannelKeywordsBtn, #importChannelKeywordsBtn {
+/* 非表示チャンネルリスト関連（青系） */
+#exportChannelsBtn, #importChannelsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
@@ -156,10 +155,49 @@ body, html {
   transition: background 0.3s ease;
 }
 
-#exportChannelsBtn:hover, #importChannelsBtn:hover,
-#exportKeywordsBtn:hover, #importKeywordsBtn:hover,
-#exportChannelKeywordsBtn:hover, #importChannelKeywordsBtn:hover {
+#exportChannelsBtn:hover, #importChannelsBtn:hover {
   background-color: #0056b3;
+}
+
+/* 動画タイトルNGフィルター関連（緑系） */
+#exportKeywordsBtn, #importKeywordsBtn {
+  margin-top: 20px;
+  margin-right: 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+#exportKeywordsBtn:hover, #importKeywordsBtn:hover {
+  background-color: #1e7e34;
+}
+
+/* チャンネルフィルター関連（赤系） */
+#exportChannelKeywordsBtn, #importChannelKeywordsBtn {
+  margin-top: 20px;
+  margin-right: 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+#exportChannelKeywordsBtn:hover, #importChannelKeywordsBtn:hover {
+  background-color: #a71d2a;
+}
+
+#section-import-export div {
+  text-align: center;
+  margin-bottom: 20px; /* 各グループに余白 */
 }
 
 /* ステータスメッセージ */
@@ -315,6 +353,11 @@ body, html {
 }
 
 #section-language p,
-#section-donation p {
+#section-donation p,
+#section-import-export p {
   font-size: 1.2em;
+}
+
+#section-import-export h3 {
+  font-size: 1.4em;
 }
