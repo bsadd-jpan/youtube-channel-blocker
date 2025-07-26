@@ -6,7 +6,14 @@
 
 A simple Chrome extension to block unwanted YouTube channels.  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.  
-📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).
+📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).  
+
+
+⚠️ チャンネルページや再生している動画からの非表示は未実装でした──だが今は違う！（ｷﾞｭｯ）  
+（編集用ブランチでショート動画の×ボタンと一緒に機能テスト中。近日リリース予定）  
+
+⚠️ Hiding channels from their own pages or while playing videos used to be missing — but not anymore!   
+Currently testing it in the dev branch along with the × button for Shorts. Coming soon!
 
 ---
 
@@ -93,7 +100,6 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 ### 使い方🔴
 
 - チャンネル名横の赤い×ボタンを押せば、そのチャンネルの動画をすべて非表示にできます  
-  （チャンネルページや再生している動画からの非表示は未実装）  
 - 非表示にならなかったら、ブラウザの更新やコードの確認等を行ってみてください  
 - 自分で名前をリストに追加することも可能です  
 - リストは拡張機能の設定画面等から確認できます    
