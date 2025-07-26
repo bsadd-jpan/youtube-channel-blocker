@@ -215,6 +215,9 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
 
   // リストからチャンネル名完全一致で非表示
   if (blockList.includes(channelName)) {
+    if(blockParentSelectors==null){
+      return; // blockParentSelectors（第５引数）がnullの場合は非表示にしない
+    }
     const parent = item.closest(blockParentSelectors);
     if (parent) {
       parent.style.display = 'none';
@@ -339,6 +342,19 @@ function runBlocker() {
         'ytd-channel-name #text, #channel-name a, ytd-channel-name a',
         null,
         'ytd-channel-renderer',
+        runBlocker,
+        channelKeywordSets,
+        titleKeywordSets
+      );
+    });
+
+    // 動画再生ページ
+    document.querySelectorAll('ytd-video-owner-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        'ytd-channel-name #text',
+        null,
+        null,
         runBlocker,
         channelKeywordSets,
         titleKeywordSets
