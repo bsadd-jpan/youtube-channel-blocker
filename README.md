@@ -1,12 +1,11 @@
 # YouTube Channel Blocker（v0.3.2）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
-A simple Chrome extension to block unwanted YouTube channels.
-
 チャンネル名の非表示リストやキーワードフィルターを用いて、興味のない動画を非表示にできます。  
-Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.
-
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
+
+A simple Chrome extension to block unwanted YouTube channels.  
+Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.  
 📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).
 
 ---
@@ -27,7 +26,7 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
 3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
 
-[インストールの共通手順へ](#インストールの共通手順)
+[インストールの共通手順へ進む](#インストールの共通手順)
 
 ---
 
@@ -40,7 +39,7 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 
 ※Releaseが更新されるのは大きな変更があったときのみです。誤字脱字やレイアウトの修正などの軽微な変更では更新されないので注意してください。
 
-[インストールの共通手順へ](#インストールの共通手順)
+[インストールの共通手順へ進む](#インストールの共通手順)
 
 ---
 
@@ -61,7 +60,7 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
     git clone <URL>
     ```
 
-[インストールの共通手順へ](#インストールの共通手順)
+[インストールの共通手順へ進む](#インストールの共通手順)
 
 ---
 
@@ -95,7 +94,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 - チャンネル名横の赤い×ボタンを押せば、そのチャンネルの動画をすべて非表示にできます  
   （チャンネルページや再生している動画からの非表示は未実装）  
-- 非表示にならなかったら、ブラウザの更新や画像の確認等を行ってみてください  
+- 非表示にならなかったら、ブラウザの更新やコードの確認等を行ってみてください  
 - 自分で名前をリストに追加することも可能です  
 - リストは拡張機能の設定画面等から確認できます    
 - たまに動作しないときがありますが、ブラウザの更新で大体直るはずです
