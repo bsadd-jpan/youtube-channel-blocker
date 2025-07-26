@@ -155,7 +155,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ### 注意 ⚠️
 
-- 理論上非表示にできる最大件数：約10,000件🧮  
+- 理論上非表示にできる最大件数：10,000件🧮  
   （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
 - 大体の不具合（というか、処理速度が原因のやつ）はブラウザの更新で直ります🔧
 - 処理の関係上、サムネを一瞬で非表示にするのは困難です🙈    
@@ -333,7 +333,7 @@ Features implemented based on “it would be nice to have” ideas.
 
 ### Notes ⚠️
 
-- The maximum theoretical number of channels that can be hidden is about 10,000. 🧮  
+- The maximum theoretical number of channels that can be hidden is 10,000. 🧮  
 - Most issues can be fixed by refreshing the browser 🔧  
 - Immediate hiding is difficult; thumbnails may briefly appear 🙈  
 - Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
