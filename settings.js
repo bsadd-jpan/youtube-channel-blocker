@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ja: {
       noMatch: '該当するチャンネルはありません。',
       noMatchKeywords: '該当するキーワードセットはありません。',
-      removed: 'チャンネルをリストから解除しました',
-      removedKeyword: 'キーワードセットをリストから解除しました',
+      removed: 'チャンネルをリストから削除しました',
+      removedKeyword: 'キーワードセットをリストから削除しました',
       addedKeyword: 'キーワードセットを追加しました',
       exportList: 'チャンネル名ブロックリストをエクスポートしました',
       exportKeywords: '動画タイトルフィルターをエクスポートしました',
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
       importKeywords: '動画タイトルフィルターをインポートしました',
       importChannelKeywords: 'チャンネルフィルターをインポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
-      removeBtn: '解除',
-      removeBtnKeyword: '解除',
+      removeBtn: '削除',
+      removeBtnKeyword: '削除',
       keywordTooLong: 'キーワードは30文字以内で入力してください。',
     },
     en: {
@@ -217,8 +217,8 @@ function renderChannelFilterList(filter = '') {
             })(),
             setSpan
           );
-          btnWrapper.replaceChild(saveBtn, editBtn);
-          btnWrapper.insertBefore(cancelBtn, saveBtn);
+          btnWrapper.replaceChild(cancelBtn, editBtn);
+          btnWrapper.insertBefore(saveBtn, cancelBtn);
 
           saveBtn.onclick = () => {
             const newSet = inputs.map(input => input.value.trim()).filter(Boolean);
@@ -248,7 +248,7 @@ function renderChannelFilterList(filter = '') {
 
         // Removeボタン
         const btn = document.createElement('button');
-        btn.textContent = lang === 'en' ? 'Remove' : '解除';
+        btn.textContent = lang === 'en' ? 'Remove' : '削除';
         btn.className = 'removeBtn';
         btn.addEventListener('click', () => removeChannelKeywordSet(set));
 
@@ -279,7 +279,7 @@ function removeChannelKeywordSet(targetSet) {
     });
     chrome.storage.local.set({ channelKeywordSets: list }, () => {
       renderChannelFilterList(channelFilterSearchInput.value);
-      getLang(lang => showStatus(lang === 'en' ? 'Channel keyword set removed' : 'チャンネルフィルターセットを解除しました', 'green'));
+      getLang(lang => showStatus(lang === 'en' ? 'Channel keyword set removed' : 'チャンネルフィルターセットを削除しました', 'green'));
     });
   });
 }
@@ -388,8 +388,8 @@ function renderBlockList(filter = '') {
 
           // 入力欄とボタンを置き換え
           li.replaceChild(input, nameSpan);
-          btnWrapper.replaceChild(saveBtn, editBtn);
-          btnWrapper.insertBefore(cancelBtn, saveBtn);
+          btnWrapper.replaceChild(cancelBtn, editBtn);
+          btnWrapper.insertBefore(saveBtn, cancelBtn);
 
           saveBtn.onclick = () => {
             const newName = input.value.trim();
@@ -548,8 +548,8 @@ function renderKeywordList(filter = '') {
             })(),
             setSpan
           );
-          btnWrapper.replaceChild(saveBtn, editBtn);
-          btnWrapper.insertBefore(cancelBtn, saveBtn);
+          btnWrapper.replaceChild(cancelBtn, editBtn);
+          btnWrapper.insertBefore(saveBtn, cancelBtn);
 
           saveBtn.onclick = () => {
             const newSet = inputs.map(input => input.value.trim()).filter(Boolean);
@@ -787,44 +787,47 @@ function renderKeywordList(filter = '') {
 
   function applyUIText(lang) {
   // タブ
-  tabListBtn.textContent = lang === 'en' ? 'Block List' : '非表示リスト';
-  tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : '動画タイトルフィルター';
+  tabListBtn.textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
+  tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
+  tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : 'タイトルNGフィルター';
   tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
   tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
   tabDonationBtn.textContent = lang === 'en' ? '💛 Donate' : '💛 寄付';
-  tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルフィルター';
+  
 
   // セクション見出し・ラベルなど
-  document.querySelector('#section-list h2').textContent = lang === 'en' ? 'Blocked Channel List' : '非表示リスト（チャンネル名）';
+  document.querySelector('#section-list h2').textContent = lang === 'en' ? 'Blocked Channel List' : '非表示チャンネルリスト';
   searchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
 
-  document.querySelector('#section-keywords h2').textContent = lang === 'en' ? 'Video Title Filter List' : '動画タイトルフィルターリスト';
-  document.getElementById('keyword1').placeholder = lang === 'en' ? 'Keyword 1' : 'キーワード1';
-  document.getElementById('keyword2').placeholder = lang === 'en' ? 'Keyword 2' : 'キーワード2';
-  document.getElementById('keyword3').placeholder = lang === 'en' ? 'Keyword 3' : 'キーワード3';
-  addKeywordBtn.textContent = lang === 'en' ? 'Add' : '追加';
-  keywordSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
-
   // ★ チャンネルフィルタータブ・セクション
-  tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルフィルター';
+  tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
   document.querySelector('#section-channel-filter h2').textContent = lang === 'en'
     ? 'Channel Filter List'
-    : 'チャンネルフィルターリスト';
+    : 'チャンネルNGフィルター';
   document.getElementById('channelFilter1').placeholder = lang === 'en' ? 'Keyword 1' : 'キーワード1';
   document.getElementById('channelFilter2').placeholder = lang === 'en' ? 'Keyword 2' : 'キーワード2';
   document.getElementById('channelFilter3').placeholder = lang === 'en' ? 'Keyword 3' : 'キーワード3';
   addChannelFilterBtn.textContent = lang === 'en' ? 'Add' : '追加';
   channelFilterSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
 
+  // タイトルフィルタータブ・セクション
+  document.querySelector('#section-keywords h2').textContent = lang === 'en' ? 'Title Filter List' : 'タイトルNGフィルター';
+  document.getElementById('keyword1').placeholder = lang === 'en' ? 'Keyword 1' : 'キーワード1';
+  document.getElementById('keyword2').placeholder = lang === 'en' ? 'Keyword 2' : 'キーワード2';
+  document.getElementById('keyword3').placeholder = lang === 'en' ? 'Keyword 3' : 'キーワード3';
+  addKeywordBtn.textContent = lang === 'en' ? 'Add' : '追加';
+  keywordSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
+
+  // ★ エクスポート・インポートセクション
   document.querySelector('#section-import-export h2').textContent = lang === 'en' ? 'Export / Import' : 'エクスポート／インポート';
-  document.querySelector('#section-import-export h3:nth-of-type(1)').textContent = lang === 'en' ? 'Channel List' : 'チャンネルリスト';
+  document.querySelector('#section-import-export h3:nth-of-type(1)').textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
   exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importChannelsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
   const h3Elements = document.querySelectorAll('#section-import-export h3');
   if (h3Elements.length >= 2) {
-    h3Elements[0].textContent = lang === 'en' ? 'Channel List' : 'チャンネルリスト';
-    h3Elements[1].textContent = lang === 'en' ? 'Title Filters' : '動画タイトルフィルター';
+    h3Elements[0].textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
+    h3Elements[1].textContent = lang === 'en' ? 'Title Filters' : '動画タイトルNGフィルター';
   } else {
     // console.warn('Expected at least 2 h3 elements under #section-import-export');
   }

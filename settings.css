@@ -27,7 +27,7 @@ body, html {
 #sidebar {
   background-color: #ffffff;
   border-right: 1px solid #ddd;
-  width: 220px;
+  width: 260px;
   padding-top: 20px;
 }
 
@@ -302,4 +302,19 @@ body, html {
 #channelFilter1, #channelFilter2, #channelFilter3 {
   height: 24px !important;
   /* width: 300px !important; */
+}
+
+#section-language label {
+  font-size: 1.0rem; /* 例えば 1.5rem や 18px なども可 */
+}
+
+/* 表示言語と寄付セクションの文字サイズを調整 */
+#section-language h2,
+#section-donation h2 {
+  font-size: 1.6em;
+}
+
+#section-language p,
+#section-donation p {
+  font-size: 1.2em;
 }

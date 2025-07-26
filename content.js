@@ -84,7 +84,8 @@ function createBlockButton(channelName, runBlocker) {
   btn.style.border = 'none';
   btn.style.background = 'transparent';
   btn.style.cursor = 'pointer';
-  btn.style.marginRight = '8px';
+  btn.style.marginRight = '4px';
+  btn.style.fontSize = '16px';
   btn.addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
