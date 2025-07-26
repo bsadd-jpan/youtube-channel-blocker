@@ -1,0 +1,17 @@
+.block-btn {
+  flex-shrink: 0; /* ボタンが縮まらない */
+  margin-left: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: red;
+}
+
+.channel-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1; /* 多少縮むけど表示される */
+  display: inline-block;
+  vertical-align: middle;
+}
