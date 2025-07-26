@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // エクスポート・インポート用要素
   const exportChannelsBtn = document.getElementById('exportChannelsBtn');
   const importChannelsBtn = document.getElementById('importChannelsBtn');
-  const exportKeywordsBtn = document.getElementById('exportKeywordsBtn');
-  const importKeywordsBtn = document.getElementById('importKeywordsBtn');
+  const exportTitleKeywordsBtn = document.getElementById('exportTitleKeywordsBtn');
+  const importTitleKeywordsBtn = document.getElementById('importTitleKeywordsBtn');
   const exportChannelKeywordsBtn = document.getElementById('exportChannelKeywordsBtn');
   const importChannelKeywordsBtn = document.getElementById('importChannelKeywordsBtn');
   const fileInput = document.getElementById('fileInput');
@@ -65,12 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
       removed: 'チャンネルをリストから削除しました',
       removedKeyword: 'キーワードセットをリストから削除しました',
       addedKeyword: 'キーワードセットを追加しました',
-      exportList: 'チャンネル名ブロックリストをエクスポートしました',
-      exportKeywords: '動画タイトルフィルターをエクスポートしました',
-      exportChannelKeywords: 'チャンネルフィルターをエクスポートしました',
-      importList: 'チャンネル名ブロックリストをインポートしました',
-      importKeywords: '動画タイトルフィルターをインポートしました',
-      importChannelKeywords: 'チャンネルフィルターをインポートしました',
+      exportList: 'チャンネルNGフィルターをエクスポートしました',
+      exportKeywords: '動画タイトルNGフィルターをエクスポートしました',
+      exportChannelKeywords: 'チャンネルNGフィルターをエクスポートしました',
+      importList: 'チャンネルNGフィルターをインポートしました',
+      importKeywords: '動画タイトルNGフィルターをインポートしました',
+      importChannelKeywords: 'チャンネルNGフィルターをインポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '削除',
       removeBtnKeyword: '削除',
@@ -662,7 +662,7 @@ function renderKeywordList(filter = '') {
     });
   });
 
-  exportKeywordsBtn.addEventListener('click', () => {
+  exportTitleKeywordsBtn.addEventListener('click', () => {
     getLang(lang => {
       chrome.storage.local.get('titleKeywordSets', (result) => {
         const data = JSON.stringify(result.titleKeywordSets || [], null, 2);
@@ -687,7 +687,7 @@ function renderKeywordList(filter = '') {
     fileInput.click();
   });
 
-  importKeywordsBtn.addEventListener('click', () => {
+  importTitleKeywordsBtn.addEventListener('click', () => {
     currentImportTarget = 'keywords';
     fileInput.click();
   });
@@ -822,18 +822,25 @@ function renderKeywordList(filter = '') {
   document.querySelector('#section-import-export h2').textContent = lang === 'en' ? 'Export / Import' : 'エクスポート／インポート';
   document.querySelector('#section-import-export p').textContent = lang === 'en' ? '💡 We recommend backing up your data regularly.' : '💡 定期的なバックアップを推奨します。';
   document.querySelector('#section-import-export h3:nth-of-type(1)').textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
+
+  const h3Elements = document.querySelectorAll('#section-import-export h3');
+  h3Elements[0].textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
+  h3Elements[1].textContent = lang === 'en' ? 'Channel Filter List' : 'チャンネルNGフィルター';
+  h3Elements[2].textContent = lang === 'en' ? 'Title Filter List' : 'タイトルNGフィルター';
+
+  // 非表示リストのエクスポート・インポートボタン
   exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importChannelsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
-  const h3Elements = document.querySelectorAll('#section-import-export h3');
-  if (h3Elements.length >= 2) {
-    h3Elements[0].textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
-    h3Elements[1].textContent = lang === 'en' ? 'Title Filters' : '動画タイトルNGフィルター';
-  } else {
-    // console.warn('Expected at least 2 h3 elements under #section-import-export');
-  }
-  exportKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
-  importKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+  // チャンネルNGフィルターのエクスポート・インポートボタン
+  exportChannelKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
+  importChannelKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+
+  // タイトルNGフィルターのエクスポート・インポートボタン
+  exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
+  importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+
+  
 
   document.querySelector('#section-language h2').textContent = lang === 'en' ? 'Language Setting' : '表示言語';
   document.querySelector('#section-language p').textContent = lang === 'en'
