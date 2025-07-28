@@ -23,7 +23,7 @@ Coming soon!
 
 ### Gitを使わない場合のインストール方法 📦
 
-Gitを使用しない場合、次の2通りの方法でインストールできます。
+Gitを使用しない場合、次の3通りの方法でインストールできます。
 
 ---
 
@@ -50,6 +50,16 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 
 ---
 
+#### 3. ストアから入手する方法
+
+1. 以下のURLから、拡張機能のストアページへアクセスします：  
+   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
+2. 「Chromeに追加」を押してください。  
+
+インストールの共通手順を行う必要はありません。
+
+---
+
 ### Gitを使う場合のインストール方法 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
 2. インストール確認：
@@ -72,14 +82,11 @@ Gitを使用しない場合、次の2通りの方法でインストールでき�
 ---
 
 ### インストールの共通手順
-フォルダとソースコードが準備できたら、以下の手順を行います。
-1. アイコン用に適当なPNG形式の画像を2つ用意し、それぞれ名前を以下のように変更してフォルダ内に置きます：  
-   - `icon48.png`  
-   - `icon128.png`    
-2. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
-3. 右上の「デベロッパーモード」を ON にします  
-4. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
-5. これで拡張機能が読み込まれ、すぐに使用できます
+フォルダとソースコードが準備できたら、以下の手順を行います。  
+1. ブラウザのURLバーに `chrome://extensions/` と入力し、拡張機能ページを開きます  
+2. 右上の「デベロッパーモード」を ON にします  
+3. 左上の「パッケージ化されていない拡張機能を読み込む」をクリックし、「youtube-channel-blocker」フォルダを選択します  
+4. これで拡張機能が読み込まれ、すぐに使用できます
 
 ---
 
@@ -208,7 +215,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ### Installation without Git 📦
 
-If you do not use Git, there are two ways to install the extension.
+If you do not use Git, there are three ways to install the extension.
 
 ---
 
@@ -217,6 +224,8 @@ If you do not use Git, there are two ways to install the extension.
 1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
 2. From the GitHub repository, manually copy the necessary files (HTML, CSS, JavaScript, manifest, etc.) into the folder.  
 3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
+   
+[Common installation steps](#common-installation-steps)
 
 ---
 
@@ -229,7 +238,21 @@ If you do not use Git, there are two ways to install the extension.
 
 Note: Releases are only updated for significant changes. Minor changes such as typos or layout adjustments will not trigger a release update. Please keep this in mind.
 
+[Common installation steps](#common-installation-steps)
+
 ---
+
+#### 3. How to Get It from the Chrome Web Store
+
+1. Visit the extension's store page using the link below:  
+   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
+2. Click **“Add to Chrome.”**
+
+There is no need to follow the Common installation steps.
+
+
+---
+
 
 ### Installation with Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
@@ -246,17 +269,15 @@ Note: Releases are only updated for significant changes. Minor changes such as t
   cd C:\Users\[YourUserName]\Desktop\
   git clone <URL>
   ```
+[Common installation steps](#common-installation-steps)
 
 ---
 
-### Common installation steps
-1. Prepare two PNG images for the icons, rename them as follows, and place them in the folder:  
-   - `icon48.png`  
-   - `icon128.png`  
-2. Open your browser and navigate to `chrome://extensions/` in the URL bar.  
-3. Enable "Developer mode" using the toggle at the top right.  
-4. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
-5. The extension will be loaded and ready to use immediately.
+### Common installation steps 
+1. Open your browser and navigate to `chrome://extensions/` in the URL bar.  
+2. Enable "Developer mode" using the toggle at the top right.  
+3. Click "Load unpacked" (top left) and select the `youtube-channel-blocker` folder.  
+4. The extension will be loaded and ready to use immediately.
 
 ---
 
