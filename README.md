@@ -27,13 +27,13 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 
 ---
 
-#### 1. 手動でコピペする方法
+#### 1. ストアから入手する方法
 
-1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
-2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
-3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
+1. 以下のURLから、拡張機能のストアページへアクセスします：  
+   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
+2. 「Chromeに追加」を押してください。  
 
-[インストールの共通手順へ進む](#インストールの共通手順)
+インストールの共通手順を行う必要はありません。
 
 ---
 
@@ -50,13 +50,13 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 
 ---
 
-#### 3. ストアから入手する方法
+#### 3. 手動でコピペする方法
 
-1. 以下のURLから、拡張機能のストアページへアクセスします：  
-   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
-2. 「Chromeに追加」を押してください。  
+1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
+2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
+3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
 
-インストールの共通手順を行う必要はありません。
+[インストールの共通手順へ進む](#インストールの共通手順)
 
 ---
 
@@ -219,13 +219,13 @@ If you do not use Git, there are three ways to install the extension.
 
 ---
 
-#### 1. Manual Copy Method
+#### 1. How to Get It from the Chrome Web Store
 
-1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
-2. From the GitHub repository, manually copy the necessary files (HTML, CSS, JavaScript, manifest, etc.) into the folder.  
-3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
-   
-[Common installation steps](#common-installation-steps)
+1. Visit the extension's store page using the link below:  
+   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
+2. Click **“Add to Chrome.”**
+
+There is no need to follow the Common installation steps.
 
 ---
 
@@ -242,14 +242,13 @@ Note: Releases are only updated for significant changes. Minor changes such as t
 
 ---
 
-#### 3. How to Get It from the Chrome Web Store
+#### 3. Manual Copy Method
 
-1. Visit the extension's store page using the link below:  
-   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
-2. Click **“Add to Chrome.”**
-
-There is no need to follow the Common installation steps.
-
+1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
+2. From the GitHub repository, manually copy the necessary files (HTML, CSS, JavaScript, manifest, etc.) into the folder.  
+3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
+   
+[Common installation steps](#common-installation-steps)
 
 ---
 
