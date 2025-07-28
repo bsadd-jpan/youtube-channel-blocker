@@ -310,7 +310,7 @@ function runBlocker() {
     });
 
     // 関連動画サイドバー:ショート動画用
-    // 動作が不安定なので保留
+    // 動作が不安定なのでテストバージョン
     document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
       processItemGeneric(
         item, blockList,
