@@ -1,11 +1,11 @@
-# YouTube Channel Blocker（v0.3.2）
+# YouTube Channel Blocker（v1.0.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、興味のない動画を非表示にできます。  
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
 
 ⚠️ チャンネルページや再生している動画からの非表示は未実装でした....だが今は違う！  
-（近日リリース予定）  
+（書きたかっただけ）  
 
 
 A simple Chrome extension to block unwanted YouTube channels.  
