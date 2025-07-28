@@ -17,8 +17,8 @@
     <nav id="sidebar">
       <ul>
         <li><button id="tab-list" class="tab active">非表示リスト</button></li>
-        <li><button id="tab-keywords" class="tab">動画タイトルフィルター</button></li>
-        <button id="tab-channel-filter" class="tab">チャンネルフィルター</button>
+        <li><button id="tab-channel-filter" class="tab">チャンネルNGフィルター</button></li>
+        <li><button id="tab-keywords" class="tab">動画タイトルNGフィルター</button></li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
         <li><button id="tab-donation" class="tab">💛 寄付</button></li>
@@ -30,59 +30,60 @@
       <div class="card">
         <!-- 非表示リスト -->
         <section id="section-list" class="tab-content active">
-          <h2>非表示リスト（チャンネル名）</h2>
+          <h2>非表示チャンネルリスト</h2>
           <!-- ここに追加フォームを挿入 -->
+          <input type="text" id="searchInput" placeholder="検索..." />
           <div style="margin: 8px 0;">
             <input id="blockChannelInput" type="text" placeholder="チャンネル名" maxlength="100">
             <button id="addBlockChannelBtn">追加</button>
           </div>
-          <input type="text" id="searchInput" placeholder="検索..." />
           <ul id="blockListContainer"></ul>
         </section>
 
         <!-- 動画タイトルフィルター -->
         <section id="section-keywords" class="tab-content">
           <h2>動画タイトルフィルターリスト</h2>
+          <input type="text" id="keywordSearchInput" placeholder="検索..." />
           <div class="keyword-inputs" style="margin-bottom: 12px;">
             <input type="text" id="keyword1" placeholder="キーワード1" />
             <input type="text" id="keyword2" placeholder="キーワード2" />
             <input type="text" id="keyword3" placeholder="キーワード3" />
             <button id="addKeywordBtn">追加</button>
-          </div>
-          <input type="text" id="keywordSearchInput" placeholder="検索..." />
+          </div>          
           <ul id="keywordListContainer"></ul>
         </section>
 
         <section id="section-channel-filter" style="display:none">
           <h2>チャンネルフィルターリスト</h2>
+          <input id="channelFilterSearchInput" type="text" placeholder="検索...">
           <div style="margin: 8px 0;">
             <input id="channelFilter1" type="text" placeholder="キーワード1" maxlength="30">
             <input id="channelFilter2" type="text" placeholder="キーワード2" maxlength="30">
             <input id="channelFilter3" type="text" placeholder="キーワード3" maxlength="30">
             <button id="addChannelFilterBtn">追加</button>
           </div>
-          <input id="channelFilterSearchInput" type="text" placeholder="検索...">
           <ul id="channelFilterListContainer"></ul>
         </section>
 
         <!-- エクスポート／インポート -->
         <section id="section-import-export" class="tab-content">
           <h2>エクスポート／インポート</h2>
+          <p style="margin-bottom: 2em;">定期的なバックアップを推奨します。</p>
           <div>
-            <h3>チャンネルリスト</h3>
+            <h3>チャンネル非表示リスト</h3>
             <button id="exportChannelsBtn">エクスポート</button>
             <button id="importChannelsBtn">インポート</button>
           </div>
           <div>
-            <h3>動画タイトルフィルター</h3>
-            <button id="exportKeywordsBtn">エクスポート</button>
-            <button id="importKeywordsBtn">インポート</button>
-          </div>
-          <div>
-            <h3>チャンネルフィルター</h3>
+            <h3>チャンネルNGフィルター</h3>
             <button id="exportChannelKeywordsBtn">エクスポート</button>
             <button id="importChannelKeywordsBtn">インポート</button>
           </div>
+          <div>
+            <h3>タイトルNGフィルター</h3>
+            <button id="exportTitleKeywordsBtn">エクスポート</button>
+            <button id="importTitleKeywordsBtn">インポート</button>
+          </div>          
           <input type="file" id="fileInput" accept="application/json" style="display:none;" />
           <div id="status" role="status" aria-live="polite"></div>
         </section>

@@ -84,7 +84,8 @@ function createBlockButton(channelName, runBlocker) {
   btn.style.border = 'none';
   btn.style.background = 'transparent';
   btn.style.cursor = 'pointer';
-  btn.style.marginRight = '8px';
+  btn.style.marginRight = '4px';
+  btn.style.fontSize = '16px';
   btn.addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -215,6 +216,9 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
 
   // リストからチャンネル名完全一致で非表示
   if (blockList.includes(channelName)) {
+    if(blockParentSelectors==null){
+      return; // blockParentSelectors（第５引数）がnullの場合は非表示にしない
+    }
     const parent = item.closest(blockParentSelectors);
     if (parent) {
       parent.style.display = 'none';
@@ -306,18 +310,18 @@ function runBlocker() {
     });
 
     // 関連動画サイドバー:ショート動画用
-    // 動作が不安定なので保留
-    // document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
-    //   processItemGeneric(
-    //     item, blockList,
-    //     'ytd-channel-name #text',
-    //     null,
-    //     'ytd-compact-video-renderer',
-    //     runBlocker,
-    //     channelKeywordSets,
-    //     titleKeywordSets
-    //   );
-    // });
+    // 動作が不安定なのでテストバージョン
+    document.querySelectorAll('ytd-compact-video-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        'ytd-channel-name #text',
+        null,
+        'ytd-compact-video-renderer',
+        runBlocker,
+        channelKeywordSets,
+        titleKeywordSets
+      );
+    });
 
     // 検索結果動画
     document.querySelectorAll('ytd-video-renderer').forEach(item => {
@@ -339,6 +343,32 @@ function runBlocker() {
         'ytd-channel-name #text, #channel-name a, ytd-channel-name a',
         null,
         'ytd-channel-renderer',
+        runBlocker,
+        channelKeywordSets,
+        titleKeywordSets
+      );
+    });
+
+    // 動画再生ページ
+    document.querySelectorAll('ytd-video-owner-renderer').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        'ytd-channel-name #text',
+        null,
+        null,
+        runBlocker,
+        channelKeywordSets,
+        titleKeywordSets
+      );
+    });
+
+    // チャンネルページ
+    document.querySelectorAll('yt-dynamic-text-view-model').forEach(item => {
+      processItemGeneric(
+        item, blockList,
+        '[role="text"]',
+        null,
+        null,
         runBlocker,
         channelKeywordSets,
         titleKeywordSets

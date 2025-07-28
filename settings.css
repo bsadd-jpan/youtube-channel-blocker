@@ -27,7 +27,7 @@ body, html {
 #sidebar {
   background-color: #ffffff;
   border-right: 1px solid #ddd;
-  width: 220px;
+  width: 260px;
   padding-top: 20px;
 }
 
@@ -141,25 +141,53 @@ body, html {
   background-color: #c0392b;
 }
 
-#exportChannelsBtn, #importChannelsBtn,
-#exportKeywordsBtn, #importKeywordsBtn,
-#exportChannelKeywordsBtn, #importChannelKeywordsBtn {
+/* エクスポートボタン（赤） */
+#exportChannelsBtn,
+#exportTitleKeywordsBtn,
+#exportChannelKeywordsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #dc3545; /* 赤 */
   color: #fff;
   border: none;
   border-radius: 6px;
   transition: background 0.3s ease;
 }
 
-#exportChannelsBtn:hover, #importChannelsBtn:hover,
-#exportKeywordsBtn:hover, #importKeywordsBtn:hover,
-#exportChannelKeywordsBtn:hover, #importChannelKeywordsBtn:hover {
+#exportChannelsBtn:hover,
+#exportTitleKeywordsBtn:hover,
+#exportChannelKeywordsBtn:hover {
+  background-color: #b02a37;
+}
+
+/* インポートボタン（青） */
+#importChannelsBtn,
+#importTitleKeywordsBtn,
+#importChannelKeywordsBtn {
+  margin-top: 20px;
+  margin-right: 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff; /* 青 */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+#importChannelsBtn:hover,
+#importTitleKeywordsBtn:hover,
+#importChannelKeywordsBtn:hover {
   background-color: #0056b3;
+}
+
+#section-import-export div {
+  text-align: center;
+  margin-bottom: 20px; /* 各グループに余白 */
 }
 
 /* ステータスメッセージ */
@@ -302,4 +330,24 @@ body, html {
 #channelFilter1, #channelFilter2, #channelFilter3 {
   height: 24px !important;
   /* width: 300px !important; */
+}
+
+#section-language label {
+  font-size: 1.0rem; /* 例えば 1.5rem や 18px なども可 */
+}
+
+/* 表示言語と寄付セクションの文字サイズを調整 */
+#section-language h2,
+#section-donation h2 {
+  font-size: 1.6em;
+}
+
+#section-language p,
+#section-donation p,
+#section-import-export p {
+  font-size: 1.2em;
+}
+
+#section-import-export h3 {
+  font-size: 1.4em;
 }
