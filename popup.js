@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // UIテキスト更新
   function updateUIText(lang) {
+    document.getElementById('title').textContent = lang === 'ja' ? '非表示にするチャンネル名' : 'Blocked Channels';
     removeLastBtn.textContent = texts[lang].removeLast;
     exportBtn.textContent = texts[lang].export;
     importBtn.textContent = texts[lang].import;
