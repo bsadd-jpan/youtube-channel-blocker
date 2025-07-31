@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.0.1）
+# YouTube Channel Blocker（v1.1.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、興味のない動画を非表示にできます。  
@@ -102,6 +102,8 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 その後、Chromeの拡張機能の管理ページ（パズルのピースみたいなアイコンをクリック）からYouTube Channel Blockerの「ページを更新」ボタンを押してください。  
 
+ストアからインストールした場合は勝手に更新にされるようです（タイミングはよくわからず、いつの間にか勝手に更新されてる）。
+
 ---
 
 ### 使い方🔴
@@ -172,7 +174,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
 - 大体の不具合（というか、処理速度が原因のやつ）はブラウザの更新で直ります🔧
 - 処理の関係上、サムネを一瞬で非表示にするのは困難です🙈    
-- 本家と同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
+- 本家Channel Blockerと同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
   （現時点でその現象は確認出来てませんが）
 - 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません 
 
@@ -195,9 +197,13 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 すべての使用は利用者自身の責任において行われるものとします。
 
 ## 実装予定（未実装・確実にやるとは言わない）  
-- ショート動画は勝手に次々と再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- インストール等がやりやすいようにストアに公開
+- ショート動画は勝手に不快なサムネが表示されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
+- プレイリストの表示/非表示トグル
+- コメントの非表示リスト（チャンネルの非表示リストは名前で、コメントはIDなので、どう実装するか考え中）
 - ホワイトリストの追加（どの条件よりも強力に表示するリスト）
+- 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
+- 全リストのエキスポートボタン
+
 ---
 
 ## 連絡 📬
@@ -292,6 +298,8 @@ If you do not use Git, please re-download the necessary files.
 
 After that, go to the Chrome extensions management page (click the puzzle piece icon), and click the "Reload" button for YouTube Channel Blocker.
 
+If you install from the store, it seems that updates are applied automatically (the timing is unclear, but it updates by itself before you notice).
+
 ---
 
 ### How to use 🔴
@@ -361,7 +369,7 @@ Features implemented based on “it would be nice to have” ideas.
 - The maximum theoretical number of channels that can be hidden is 10,000. 🧮  
 - Most issues can be fixed by refreshing the browser 🔧  
 - Immediate hiding is difficult; thumbnails may briefly appear 🙈  
-- Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
+Like the original Channel Blocker, there is a possibility that the list may suddenly disappear, so regular backups are recommended 💾
 - Development is not active, but comments or pull requests might be addressed ✍️  
 
 ---
@@ -384,9 +392,12 @@ All use is at the user's own risk.
 
 ## Planned Features (Not Implemented, and No Promises)
 
-- Add × button to channel pages and video playback pages  
-- Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off  
-- Make installation easier by publishing in the Chrome Web Store
+- Add a toggle to show/hide Shorts videos because they often display unpleasant thumbnails and volume adjustment is difficult (personal opinion).
+- Add a toggle to show/hide playlists.
+- Implement a block list for comments (channel block list uses names, but comments use IDs, so implementation is still under consideration).
+- Add a whitelist (a list that overrides all other conditions to always show).
+- Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
+- Add an export button for all lists.
 
 ---
 

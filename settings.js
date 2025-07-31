@@ -190,12 +190,12 @@ function renderChannelFilterList(filter = '') {
           if (editing) return;
           editing = true;
           // input群とボタン群を生成
-          const inputs = set.map(word => {
+          const inputs = [0,1,2].map(i => {
             const input = document.createElement('input');
             input.type = 'text';
-            input.value = word;
+            input.value = set[i] || '';
             input.style.width = '80px';
-            input.maxLength = 30;
+            input.maxLength = 10;
             input.style.marginRight = '4px';
             return input;
           });
@@ -521,10 +521,10 @@ function renderKeywordList(filter = '') {
           if (editing) return;
           editing = true;
           // input群とボタン群を生成
-          const inputs = set.map(word => {
+          const inputs = [0, 1, 2].map(i => {
             const input = document.createElement('input');
             input.type = 'text';
-            input.value = word;
+            input.value = set[i] || '';
             input.style.width = '80px';
             input.maxLength = 30;
             input.style.marginRight = '4px';
@@ -850,12 +850,25 @@ function renderKeywordList(filter = '') {
   document.querySelector('#section-donation h2').textContent = lang === 'en'
     ? 'Support the Developer'
     : '開発者を応援する';
-  document.querySelector('#section-donation p').textContent = lang === 'en'
+  document.querySelector('#donation-message-1').textContent = lang === 'en'
+  ? 'Thank you for checking out this page!'
+  : 'このページを見ていただきありがとうございます！';
+
+  document.querySelector('#donation-message-2').textContent = lang === 'en'
     ? 'If you found this extension useful, please consider donating.'
     : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
-  document.querySelector('#section-donation a').textContent = lang === 'en'
+  document.querySelector('#donation-message-3').textContent = lang === 'en'
+    ? 'Ko-fi allows donations with a nickname (anonymous).'
+    : 'Ko-fiはニックネーム（匿名）での寄付が可能です。';
+
+  document.querySelector('#paypal-button').textContent = lang === 'en'
     ? 'Donate via PayPal'
     : 'PayPalで寄付';
+
+  document.querySelector('#kofi-button').textContent = lang === 'en'
+    ? 'Donate via Ko-fi'
+    : 'Ko-fiで寄付';
+
 }
 
 // 言語変更時にも反映
