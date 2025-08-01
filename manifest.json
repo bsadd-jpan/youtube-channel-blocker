@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Channel Blocker",
   "version": "1.1.0",
-  "description": "特定のチャンネルの動画を非表示にします (Block videos from specific channels.)",
+  "description": "特定のチャンネルをおすすめから非表示にします",
   "permissions": ["storage"],
   "content_scripts": [
     {
@@ -20,5 +20,11 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "options_page": "settings.html"
+  "options_page": "settings.html",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-channel-blocker@yourdomain.dev",
+      "strict_min_version": "109.0"
+    }
+  }
 }
