@@ -20,6 +20,7 @@
         <li><button id="tab-channel-filter" class="tab">チャンネルNGフィルター</button></li>
         <li><button id="tab-keywords" class="tab">動画タイトルNGフィルター</button></li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
+        <li><button id="tab-hide-shorts" class="tab">表示／非表示切替</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
         <li><button id="tab-donation" class="tab">💛 寄付</button></li>
       </ul>
@@ -63,6 +64,15 @@
             <button id="addChannelFilterBtn">追加</button>
           </div>
           <ul id="channelFilterListContainer"></ul>
+        </section>
+
+        <!-- セクション（コンテンツ） -->
+        <section id="section-hide-shorts" style="display:none; padding: 1em;">
+          <h2>表示／非表示切替</h2>
+          <label>
+            <input type="checkbox" id="hideShortsCheckbox">
+            <span id="hideShortsCheckboxLabel">ショート動画を非表示にする</span>
+          </label>
         </section>
 
         <!-- エクスポート／インポート -->

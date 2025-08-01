@@ -332,20 +332,26 @@ body, html {
   /* width: 300px !important; */
 }
 
-#section-language label {
-  font-size: 1.0rem; /* 例えば 1.5rem や 18px なども可 */
+#section-language label,
+#section-hide-shorts label {
+  font-size: 1.5rem; /* 例えば 1.5rem や 18px なども可 */
 }
 
-/* 表示言語と寄付セクションの文字サイズを調整 */
+/* 各タブページのタイトルの文字サイズを調整 */
+#section-list h2,
+#section-keywords h2,
+#section-channel-filter h2,
+#section-hide-shorts h2,
+#section-import-export h2,
 #section-language h2,
 #section-donation h2 {
-  font-size: 1.6em;
+  font-size: 2.0em;
 }
 
 #section-language p,
 #section-donation p,
 #section-import-export p {
-  font-size: 1.2em;
+  font-size: 1.5em;
 }
 
 #section-import-export h3 {

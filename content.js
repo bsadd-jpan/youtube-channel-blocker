@@ -170,6 +170,31 @@ function isChannelBlocked(channelName, keywordSets) {
   return false;
 }
 
+let hideShortsFlag = true;
+
+/**
+ * hideShortsFlagの状態をストレージから取得して反映する
+ * @param {Function} callback - 読み込み完了後に呼ばれる関数
+ */
+function loadHideShortsFlag(callback) {
+  chrome.storage.local.get(['hideShortsFlag'], (result) => {
+    hideShortsFlag = !!result.hideShortsFlag;
+    // hideShortsFlag = true;
+    if (callback) callback();
+  });
+}
+
+/**
+ * hideShortsFlagの状態を切り替えてストレージに保存し、runBlockerを再実行
+ */
+function toggleHideShortsFlag() {
+  hideShortsFlag = !hideShortsFlag;
+  chrome.storage.local.set({ hideShortsFlag }, () => {
+    console.log(`hideShortsFlag is now ${hideShortsFlag}`);
+    runBlocker();
+  });
+}
+
 /**
  * チャンネル名の要素とボタン挿入位置を指定して処理
  * @param {Element} item
@@ -257,15 +282,40 @@ function processItemGeneric(item, blockList, channelSelector, insertBeforeElemSe
 }
 
 /**
+ * 指定した子要素セレクタを持つ要素を探し、その親要素を非表示にする関数
+ * 
+ * 使い方例：
+ *  - href属性が"/shorts/"で始まる要素の場合： 'a[href^="/shorts/"]'
+ *  - idが"text"の場合： '#text'
+ *  - クラス名が"my-class"の場合： '.my-class'
+ *  - タグ名が"h3"の場合： 'h3'
+ * 
+ * @param {string} childSelector - 非表示判定の基準となる子要素のCSSセレクタ（例：'#id名', '.class名', 'a[href^="/shorts/"]'など）
+ * @param {string} parentSelector - 非表示にしたい親要素のCSSセレクタ（例：'ytd-rich-shelf-renderer'など）
+ */
+function hideParentByChildSelector(childSelector, parentSelector) {
+  document.querySelectorAll(childSelector).forEach(childElem => {
+    const parent = childElem.closest(parentSelector);
+    if (parent) {
+      parent.style.display = 'none';
+    }
+  });
+}
+
+
+/**
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
 function runBlocker() {
-  chrome.storage.local.get(['blockerEnabled', 'blockedChannels', 'channelKeywordSets', 'titleKeywordSets'], (result) => {
+  chrome.storage.local.get(['blockerEnabled', 'blockedChannels', 'channelKeywordSets', 'titleKeywordSets', 'hideShortsFlag'], (result) => {
     if (result.blockerEnabled === false) {
       console.log('Blocker is disabled');
       clearBlocks();
       return;
     }
+
+    console.log(hideShortsFlag)
+    // hideShortsFlag = !!result.hideShortsFlag;
 
     const blockList = result.blockedChannels || [];
 
@@ -282,6 +332,13 @@ function runBlocker() {
       titleKeywordSetsRaw = titleKeywordSetsRaw.slice(0, 1000);
     }
     const titleKeywordSets = titleKeywordSetsRaw.map(set => set.slice(0, 3));
+
+    if (hideShortsFlag) {
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-rich-shelf-renderer');
+      hideParentByChildSelector('a[href^="/shorts/"]', 'grid-shelf-view-model');
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-video-renderer');
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-compact-video-renderer');
+    }
 
     // ホーム画面の動画
     document.querySelectorAll('#dismissible').forEach(item => {
@@ -427,4 +484,17 @@ function onMutations() {
 }
 
 // 初回実行
-runBlocker();
+loadHideShortsFlag(() => {
+  runBlocker();
+});
+
+// runBlocker();
+
+// 即時反映用のメッセージリスナー
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//   if (message.type === 'updateHideShortsFlag') {
+//     hideShortsFlag = !!message.value;
+//     runBlocker();  // 即時反映
+//   }
+// });
+

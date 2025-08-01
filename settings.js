@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabChannelFilterBtn = document.getElementById('tab-channel-filter'); // ★追加
   const tabImportExportBtn = document.getElementById('tab-import-export');
   const tabLanguageBtn = document.getElementById('tab-language'); // 追加
+  const tabHideShortsBtn = document.getElementById('tab-hide-shorts');  // 新規追加
   const tabDonationBtn = document.getElementById('tab-donation');
 
   // セクション
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionChannelFilter = document.getElementById('section-channel-filter'); // ★追加
   const sectionImportExport = document.getElementById('section-import-export');
   const sectionLanguage = document.getElementById('section-language'); // 追加
+  const sectionHideShorts = document.getElementById('section-hide-shorts'); // 新規追加
   const sectionDonation = document.getElementById('section-donation');
 
   // チャンネルフィルターリスト用要素
@@ -129,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabKeywordsBtn.classList.toggle('active', to === 'keywords');
     tabChannelFilterBtn.classList.toggle('active', to === 'channelFilter'); // ★追加
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
+    tabHideShortsBtn.classList.toggle('active', to === 'hideShorts');  // 追加
     tabLanguageBtn.classList.toggle('active', to === 'language');
     tabDonationBtn.classList.toggle('active', to === 'donation');
 
@@ -136,11 +139,34 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionKeywords.style.display = to === 'keywords' ? 'block' : 'none';
     sectionChannelFilter.style.display = to === 'channelFilter' ? 'block' : 'none'; // ★追加
     sectionImportExport.style.display = to === 'importExport' ? 'block' : 'none';
+    sectionHideShorts.style.display = to === 'hideShorts' ? 'block' : 'none';  // 追加
     sectionLanguage.style.display = to === 'language' ? 'block' : 'none';
     sectionDonation.style.display = to === 'donation' ? 'block' : 'none';
 
     clearStatus();
   }
+
+  // タブボタンのクリックイベント追加
+tabHideShortsBtn.addEventListener('click', () => switchTab('hideShorts'));
+
+// hideShortsFlagの切り替え用のUI制御を追加
+const hideShortsCheckbox = document.getElementById('hideShortsCheckbox');
+
+hideShortsCheckbox.addEventListener('change', () => {
+  const checked = hideShortsCheckbox.checked;
+  chrome.storage.local.set({ hideShortsFlag: checked });
+  getLang(lang => showStatus(
+    checked
+      ? (lang === 'en' ? 'Hide Shorts enabled' : 'ショート動画非表示を有効にしました')
+      : (lang === 'en' ? 'Hide Shorts disabled' : 'ショート動画非表示を無効にしました'),
+    'green'
+  ));
+});
+
+// ページロード時に設定を読み込んで反映
+chrome.storage.local.get('hideShortsFlag', (result) => {
+  hideShortsCheckbox.checked = !!result.hideShortsFlag;
+});
 
   tabListBtn.addEventListener('click', () => switchTab('list'));
   tabKeywordsBtn.addEventListener('click', () => switchTab('keywords'));
@@ -791,6 +817,7 @@ function renderKeywordList(filter = '') {
   tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
   tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : 'タイトルNGフィルター';
   tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
+  tabHideShortsBtn.textContent = lang === 'en' ? 'Show/Hide Toggle' : '表示／非表示切替';
   tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
   tabDonationBtn.textContent = lang === 'en' ? '💛 Donate' : '💛 寄付';
   
@@ -840,7 +867,12 @@ function renderKeywordList(filter = '') {
   exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
-  
+  document.querySelector('#section-hide-shorts h2').textContent = lang === 'en'
+    ? 'Show/Hide Toggle'
+    : '表示／非表示切替';
+  document.querySelector('#hideShortsCheckboxLabel').textContent = lang === 'en'
+    ? 'Hide Shorts'
+    : 'ショート動画を非表示にする';
 
   document.querySelector('#section-language h2').textContent = lang === 'en' ? 'Language Setting' : '表示言語';
   document.querySelector('#section-language p').textContent = lang === 'en'
