@@ -170,7 +170,7 @@ function isChannelBlocked(channelName, keywordSets) {
   return false;
 }
 
-let hideShortsFlag = true;
+// let hideShortsFlag = true;
 
 /**
  * hideShortsFlagの状態をストレージから取得して反映する

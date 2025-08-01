@@ -164,6 +164,10 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - キーワードを含むすべてのチャンネル名が非表示 
   - 1つのキーワードの文字数制限は10文字
   - それ以外は、タイトルフィルターと同様
+- **ショート動画抹消機能**
+  - ショート動画は問答無用で非表示に
+  - ~~ゴミみたいなサムネのクソショート動画を消せます~~
+  - 設定ページの「表示/非表示切替」から可能
 </details>
 
 ---
@@ -197,12 +201,12 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 すべての使用は利用者自身の責任において行われるものとします。
 
 ## 実装予定（未実装・確実にやるとは言わない）  
-- ショート動画は勝手に不快なサムネが表示されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
 - プレイリストの表示/非表示トグル
 - コメントの非表示リスト（チャンネルの非表示リストは名前で、コメントはIDなので、どう実装するか考え中）
 - ホワイトリストの追加（どの条件よりも強力に表示するリスト）
 - 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
 - 全リストのエキスポートボタン
+- 特にチャンネルページで×ボタン小さいのなんとかしたい
 
 ---
 
@@ -359,6 +363,10 @@ Features implemented based on “it would be nice to have” ideas.
   - All channel names containing the specified keywords will be hidden  
   - Each keyword must be 10 characters or fewer  
   - Other rules are the same as the Title Filter
+- **Aggressive Shorts Removal**
+  - Shorts videos are ruthlessly and completely hidden
+  - ~~Get rid of trashy, obnoxious Shorts with garbage thumbnails~~
+  - Can be toggled from the "Show/Hide Toggle" section in the settings page
 
 </details>
 
@@ -391,13 +399,12 @@ The author shall not be held liable for any damages or issues arising from the u
 All use is at the user's own risk.
 
 ## Planned Features (Not Implemented, and No Promises)
-
-- Add a toggle to show/hide Shorts videos because they often display unpleasant thumbnails and volume adjustment is difficult (personal opinion).
 - Add a toggle to show/hide playlists.
 - Implement a block list for comments (channel block list uses names, but comments use IDs, so implementation is still under consideration).
 - Add a whitelist (a list that overrides all other conditions to always show).
 - Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
 - Add an export button for all lists.
+- Especially on the channel page, want to do something about the × button being too small
 
 ---
 
