@@ -184,7 +184,9 @@ hideShortsButton.addEventListener('click', () => {
 
 // ページロード時に設定を読み込んで反映
 chrome.storage.local.get('hideShortsFlag', (result) => {
-  updateButtonState(!!result.hideShortsFlag, lang);
+  getLang(lang => {
+    updateButtonState(!!result.hideShortsFlag, lang);
+  });
 });
 
 
@@ -891,9 +893,11 @@ function renderKeywordList(filter = '') {
   document.querySelector('#section-hide-shorts h2').textContent = lang === 'en'
     ? 'Show/Hide Toggle'
     : '表示／非表示切替';
-  document.querySelector('#hideShortsCheckboxLabel').textContent = lang === 'en'
-    ? 'Hide Shorts'
-    : 'ショート動画を非表示にする';
+  // ボタンのテキスト切り替え
+    chrome.storage.local.get('hideShortsFlag', (result) => {
+    const enabled = !!result.hideShortsFlag;
+    updateButtonState(enabled, lang);
+  });
 
   document.querySelector('#section-language h2').textContent = lang === 'en' ? 'Language Setting' : '表示言語';
   document.querySelector('#section-language p').textContent = lang === 'en'
