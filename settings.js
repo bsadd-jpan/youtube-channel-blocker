@@ -149,24 +149,44 @@ document.addEventListener('DOMContentLoaded', () => {
   // タブボタンのクリックイベント追加
 tabHideShortsBtn.addEventListener('click', () => switchTab('hideShorts'));
 
-// hideShortsFlagの切り替え用のUI制御を追加
-const hideShortsCheckbox = document.getElementById('hideShortsCheckbox');
+// hideShortsFlagの切り替え用のUI制御を追加（ボタンバージョン）
+const hideShortsButton = document.getElementById('hideShortsButton');
 
-hideShortsCheckbox.addEventListener('change', () => {
-  const checked = hideShortsCheckbox.checked;
-  chrome.storage.local.set({ hideShortsFlag: checked });
-  getLang(lang => showStatus(
-    checked
-      ? (lang === 'en' ? 'Hide Shorts enabled' : 'ショート動画非表示を有効にしました')
-      : (lang === 'en' ? 'Hide Shorts disabled' : 'ショート動画非表示を無効にしました'),
-    'green'
-  ));
+// ボタンの状態を更新
+function updateButtonState(enabled, lang) {
+  hideShortsButton.classList.toggle('on', enabled);
+  hideShortsButton.classList.toggle('off', !enabled);
+
+  hideShortsButton.textContent = lang === 'en'
+    ? (enabled ? 'Shorts Filter: ON' : 'Shorts Filter: OFF')
+    : (enabled ? 'ショート動画フィルター：有効' : 'ショート動画フィルター：無効');
+}
+
+// ボタンクリックでトグル
+hideShortsButton.addEventListener('click', () => {
+  chrome.storage.local.get('hideShortsFlag', (result) => {
+    const current = !!result.hideShortsFlag;
+    const next = !current;
+
+    chrome.storage.local.set({ hideShortsFlag: next }, () => {
+      getLang(lang => {
+        updateButtonState(next, lang);
+        showStatus(
+          next
+            ? (lang === 'en' ? 'Hide Shorts enabled' : 'ショート動画非表示を有効にしました')
+            : (lang === 'en' ? 'Hide Shorts disabled' : 'ショート動画非表示を無効にしました'),
+          'green'
+        );
+      });
+    });
+  });
 });
 
 // ページロード時に設定を読み込んで反映
 chrome.storage.local.get('hideShortsFlag', (result) => {
-  hideShortsCheckbox.checked = !!result.hideShortsFlag;
+  updateButtonState(!!result.hideShortsFlag, lang);
 });
+
 
   tabListBtn.addEventListener('click', () => switchTab('list'));
   tabKeywordsBtn.addEventListener('click', () => switchTab('keywords'));
@@ -867,6 +887,7 @@ function renderKeywordList(filter = '') {
   exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
+  // 表示/非表示
   document.querySelector('#section-hide-shorts h2').textContent = lang === 'en'
     ? 'Show/Hide Toggle'
     : '表示／非表示切替';
@@ -879,6 +900,7 @@ function renderKeywordList(filter = '') {
     ? 'Choose the language to use for the UI:'
     : 'UIに使用する言語を選択してください：';
 
+  // 寄付セクション
   document.querySelector('#section-donation h2').textContent = lang === 'en'
     ? 'Support the Developer'
     : '開発者を応援する';
