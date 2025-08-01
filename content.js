@@ -334,10 +334,11 @@ function runBlocker() {
     const titleKeywordSets = titleKeywordSetsRaw.map(set => set.slice(0, 3));
 
     if (hideShortsFlag) {
-      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-rich-shelf-renderer');
-      hideParentByChildSelector('a[href^="/shorts/"]', 'grid-shelf-view-model');
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-rich-shelf-renderer'); // ホーム画面の「ショート動画」や「おすすめショート」
+      hideParentByChildSelector('a[href^="/shorts/"]', 'grid-shelf-view-model'); // 検索画面の「最新のショート」や「ショート」
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-reel-shelf-renderer'); // 関連動画の「この動画をリミックスした～」
       hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-video-renderer');
-      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-compact-video-renderer');
+      hideParentByChildSelector('a[href^="/shorts/"]', 'ytd-compact-video-renderer'); // 関連動画のショート動画（素）
     }
 
     // ホーム画面の動画
