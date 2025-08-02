@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabChannelFilterBtn = document.getElementById('tab-channel-filter'); // ★追加
   const tabImportExportBtn = document.getElementById('tab-import-export');
   const tabLanguageBtn = document.getElementById('tab-language'); // 追加
+  const tabHideShortsBtn = document.getElementById('tab-hide-shorts');  // 新規追加
   const tabDonationBtn = document.getElementById('tab-donation');
 
   // セクション
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionChannelFilter = document.getElementById('section-channel-filter'); // ★追加
   const sectionImportExport = document.getElementById('section-import-export');
   const sectionLanguage = document.getElementById('section-language'); // 追加
+  const sectionHideShorts = document.getElementById('section-hide-shorts'); // 新規追加
   const sectionDonation = document.getElementById('section-donation');
 
   // チャンネルフィルターリスト用要素
@@ -129,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabKeywordsBtn.classList.toggle('active', to === 'keywords');
     tabChannelFilterBtn.classList.toggle('active', to === 'channelFilter'); // ★追加
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
+    tabHideShortsBtn.classList.toggle('active', to === 'hideShorts');  // 追加
     tabLanguageBtn.classList.toggle('active', to === 'language');
     tabDonationBtn.classList.toggle('active', to === 'donation');
 
@@ -136,11 +139,56 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionKeywords.style.display = to === 'keywords' ? 'block' : 'none';
     sectionChannelFilter.style.display = to === 'channelFilter' ? 'block' : 'none'; // ★追加
     sectionImportExport.style.display = to === 'importExport' ? 'block' : 'none';
+    sectionHideShorts.style.display = to === 'hideShorts' ? 'block' : 'none';  // 追加
     sectionLanguage.style.display = to === 'language' ? 'block' : 'none';
     sectionDonation.style.display = to === 'donation' ? 'block' : 'none';
 
     clearStatus();
   }
+
+  // タブボタンのクリックイベント追加
+tabHideShortsBtn.addEventListener('click', () => switchTab('hideShorts'));
+
+// hideShortsFlagの切り替え用のUI制御を追加（ボタンバージョン）
+const hideShortsButton = document.getElementById('hideShortsButton');
+
+// ボタンの状態を更新
+function updateButtonState(enabled, lang) {
+  hideShortsButton.classList.toggle('on', enabled);
+  hideShortsButton.classList.toggle('off', !enabled);
+
+  hideShortsButton.textContent = lang === 'en'
+    ? (enabled ? 'Shorts Filter: ON' : 'Shorts Filter: OFF')
+    : (enabled ? 'ショート動画フィルター：有効' : 'ショート動画フィルター：無効');
+}
+
+// ボタンクリックでトグル
+hideShortsButton.addEventListener('click', () => {
+  chrome.storage.local.get('hideShortsFlag', (result) => {
+    const current = !!result.hideShortsFlag;
+    const next = !current;
+
+    chrome.storage.local.set({ hideShortsFlag: next }, () => {
+      getLang(lang => {
+        updateButtonState(next, lang);
+        showStatus(
+          next
+            ? (lang === 'en' ? 'Hide Shorts enabled' : 'ショート動画非表示を有効にしました')
+            : (lang === 'en' ? 'Hide Shorts disabled' : 'ショート動画非表示を無効にしました'),
+          'green'
+        );
+      });
+    });
+  });
+});
+
+// ページロード時に設定を読み込んで反映
+chrome.storage.local.get('hideShortsFlag', (result) => {
+  getLang(lang => {
+    updateButtonState(!!result.hideShortsFlag, lang);
+  });
+});
+
 
   tabListBtn.addEventListener('click', () => switchTab('list'));
   tabKeywordsBtn.addEventListener('click', () => switchTab('keywords'));
@@ -190,12 +238,12 @@ function renderChannelFilterList(filter = '') {
           if (editing) return;
           editing = true;
           // input群とボタン群を生成
-          const inputs = set.map(word => {
+          const inputs = [0,1,2].map(i => {
             const input = document.createElement('input');
             input.type = 'text';
-            input.value = word;
+            input.value = set[i] || '';
             input.style.width = '80px';
-            input.maxLength = 30;
+            input.maxLength = 10;
             input.style.marginRight = '4px';
             return input;
           });
@@ -521,10 +569,10 @@ function renderKeywordList(filter = '') {
           if (editing) return;
           editing = true;
           // input群とボタン群を生成
-          const inputs = set.map(word => {
+          const inputs = [0, 1, 2].map(i => {
             const input = document.createElement('input');
             input.type = 'text';
-            input.value = word;
+            input.value = set[i] || '';
             input.style.width = '80px';
             input.maxLength = 30;
             input.style.marginRight = '4px';
@@ -791,6 +839,7 @@ function renderKeywordList(filter = '') {
   tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
   tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : 'タイトルNGフィルター';
   tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
+  tabHideShortsBtn.textContent = lang === 'en' ? 'Show/Hide Toggle' : '表示／非表示切替';
   tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
   tabDonationBtn.textContent = lang === 'en' ? '💛 Donate' : '💛 寄付';
   
@@ -840,22 +889,44 @@ function renderKeywordList(filter = '') {
   exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
-  
+  // 表示/非表示
+  document.querySelector('#section-hide-shorts h2').textContent = lang === 'en'
+    ? 'Show/Hide Toggle'
+    : '表示／非表示切替';
+  // ボタンのテキスト切り替え
+    chrome.storage.local.get('hideShortsFlag', (result) => {
+    const enabled = !!result.hideShortsFlag;
+    updateButtonState(enabled, lang);
+  });
 
   document.querySelector('#section-language h2').textContent = lang === 'en' ? 'Language Setting' : '表示言語';
   document.querySelector('#section-language p').textContent = lang === 'en'
     ? 'Choose the language to use for the UI:'
     : 'UIに使用する言語を選択してください：';
 
+  // 寄付セクション
   document.querySelector('#section-donation h2').textContent = lang === 'en'
     ? 'Support the Developer'
     : '開発者を応援する';
-  document.querySelector('#section-donation p').textContent = lang === 'en'
+  document.querySelector('#donation-message-1').textContent = lang === 'en'
+  ? 'Thank you for checking out this page!'
+  : 'このページを見ていただきありがとうございます！';
+
+  document.querySelector('#donation-message-2').textContent = lang === 'en'
     ? 'If you found this extension useful, please consider donating.'
     : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
-  document.querySelector('#section-donation a').textContent = lang === 'en'
+  document.querySelector('#donation-message-3').textContent = lang === 'en'
+    ? 'Ko-fi allows donations with a nickname (anonymous).'
+    : 'Ko-fiはニックネーム（匿名）での寄付が可能です。';
+
+  document.querySelector('#paypal-button').textContent = lang === 'en'
     ? 'Donate via PayPal'
     : 'PayPalで寄付';
+
+  document.querySelector('#kofi-button').textContent = lang === 'en'
+    ? 'Donate via Ko-fi'
+    : 'Ko-fiで寄付';
+
 }
 
 // 言語変更時にも反映

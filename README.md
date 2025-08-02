@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.0.1）
+# YouTube Channel Blocker（v1.1.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、興味のない動画を非表示にできます。  
@@ -13,11 +13,12 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).  
 
 ⚠️ Hiding channels from their own pages or while playing videos used to be missing ... but not anymore!   
-Coming soon!
 
 ---
 
 ## 日本語
+
+---
 
 ### インストール 🛠️
 
@@ -25,17 +26,13 @@ Coming soon!
 
 Gitを使用しない場合、次の3通りの方法でインストールできます。
 
----
-
 #### 1. ストアから入手する方法
 
 1. 以下のURLから、拡張機能のストアページへアクセスします：  
    👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
 2. 「Chromeに追加」を押してください。  
 
-インストールの共通手順を行う必要はありません。
-
----
+下記のインストールの共通手順を行う必要はありません。
 
 #### 2. Release から zip / tar.gz をダウンロードする方法
 
@@ -48,8 +45,6 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 
 [インストールの共通手順へ進む](#インストールの共通手順)
 
----
-
 #### 3. 手動でコピペする方法
 
 1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
@@ -57,8 +52,6 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
 
 [インストールの共通手順へ進む](#インストールの共通手順)
-
----
 
 ### Gitを使う場合のインストール方法 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -101,6 +94,8 @@ git pull
 Gitを使ってない場合は、必要なファイルの再ダウンロードを行ってください。
 
 その後、Chromeの拡張機能の管理ページ（パズルのピースみたいなアイコンをクリック）からYouTube Channel Blockerの「ページを更新」ボタンを押してください。  
+
+ストアからインストールした場合は勝手に更新にされるようです（タイミングはよくわからず、いつの間にか勝手に更新されてる）。
 
 ---
 
@@ -162,6 +157,10 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - キーワードを含むすべてのチャンネル名が非表示 
   - 1つのキーワードの文字数制限は10文字
   - それ以外は、タイトルフィルターと同様
+- **ショート動画抹消機能**
+  - ショート動画は問答無用で非表示に
+  - ~~ゴミみたいなサムネのクソショート動画を消せます~~
+  - 設定ページの「表示/非表示切替」から可能
 </details>
 
 ---
@@ -172,7 +171,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
 - 大体の不具合（というか、処理速度が原因のやつ）はブラウザの更新で直ります🔧
 - 処理の関係上、サムネを一瞬で非表示にするのは困難です🙈    
-- 本家と同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
+- 本家Channel Blockerと同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
   （現時点でその現象は確認出来てませんが）
 - 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません 
 
@@ -195,9 +194,13 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 すべての使用は利用者自身の責任において行われるものとします。
 
 ## 実装予定（未実装・確実にやるとは言わない）  
-- ショート動画は勝手に次々と再生されて音量調整も難しい好ましくないコンテンツ（個人の感想）なので、表示・非表示を切り替えるトグルを追加
-- インストール等がやりやすいようにストアに公開
+- プレイリストの表示/非表示ボタン
+- コメントの非表示リスト（多分、新しくコメント用リストを作る）
 - ホワイトリストの追加（どの条件よりも強力に表示するリスト）
+- 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
+- 全リストのエキスポートボタン
+- 特にチャンネルページで×ボタン小さいのなんとかしたい
+
 ---
 
 ## 連絡 📬
@@ -211,6 +214,9 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ## English
 (Machine Translation)
+
+---
+
 ### Installation 🛠️
 
 ### Installation without Git 📦
@@ -227,8 +233,6 @@ If you do not use Git, there are three ways to install the extension.
 
 There is no need to follow the Common installation steps.
 
----
-
 #### 2. Download from Release (zip / tar.gz)
 
 1. Visit the following URL to access the "Release" page:  
@@ -240,8 +244,6 @@ Note: Releases are only updated for significant changes. Minor changes such as t
 
 [Common installation steps](#common-installation-steps)
 
----
-
 #### 3. Manual Copy Method
 
 1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
@@ -249,9 +251,6 @@ Note: Releases are only updated for significant changes. Minor changes such as t
 3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
    
 [Common installation steps](#common-installation-steps)
-
----
-
 
 ### Installation with Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
@@ -291,6 +290,8 @@ git pull
 If you do not use Git, please re-download the necessary files.  
 
 After that, go to the Chrome extensions management page (click the puzzle piece icon), and click the "Reload" button for YouTube Channel Blocker.
+
+If you install from the store, it seems that updates are applied automatically (the timing is unclear, but it updates by itself before you notice).
 
 ---
 
@@ -351,6 +352,10 @@ Features implemented based on “it would be nice to have” ideas.
   - All channel names containing the specified keywords will be hidden  
   - Each keyword must be 10 characters or fewer  
   - Other rules are the same as the Title Filter
+- **Aggressive Shorts Removal**
+  - Shorts videos are ruthlessly and completely hidden
+  - ~~Get rid of trashy, obnoxious Shorts with garbage thumbnails~~
+  - Can be toggled from the "Show/Hide Toggle" section in the settings page
 
 </details>
 
@@ -361,7 +366,7 @@ Features implemented based on “it would be nice to have” ideas.
 - The maximum theoretical number of channels that can be hidden is 10,000. 🧮  
 - Most issues can be fixed by refreshing the browser 🔧  
 - Immediate hiding is difficult; thumbnails may briefly appear 🙈  
-- Like the official version, the block list may disappear suddenly; regular backups are recommended 💾  
+Like the original Channel Blocker, there is a possibility that the list may suddenly disappear, so regular backups are recommended 💾
 - Development is not active, but comments or pull requests might be addressed ✍️  
 
 ---
@@ -383,10 +388,12 @@ The author shall not be held liable for any damages or issues arising from the u
 All use is at the user's own risk.
 
 ## Planned Features (Not Implemented, and No Promises)
-
-- Add × button to channel pages and video playback pages  
-- Shorts videos are undesirable content (personal opinion) because they autoplay one after another and make volume control difficult, so a toggle has been added to switch their display on or off  
-- Make installation easier by publishing in the Chrome Web Store
+- Add a toggle to show/hide playlists.
+- Hidden comment list (probably a new list specifically for comments).
+- Add a whitelist (a list that overrides all other conditions to always show).
+- Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
+- Add an export button for all lists.
+- Especially on the channel page, want to do something about the × button being too small
 
 ---
 

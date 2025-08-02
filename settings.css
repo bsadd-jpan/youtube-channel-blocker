@@ -321,6 +321,25 @@ body, html {
   font-weight: bold;
 }
 
+/* 表示/非表示切り替えのボタン設定 */
+.toggle-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.toggle-button.on {
+  background-color: #4caf50; /* 緑 */
+}
+
+.toggle-button.off {
+  background-color: #aaa; /* グレー */
+}
+
 #blockChannelInput {
   height: 24px !important;
   /* width: 300px !important; */
@@ -332,20 +351,26 @@ body, html {
   /* width: 300px !important; */
 }
 
-#section-language label {
-  font-size: 1.0rem; /* 例えば 1.5rem や 18px なども可 */
+#section-language label,
+#section-hide-shorts label {
+  font-size: 1.2rem; /* 例えば 1.5rem や 18px なども可 */
 }
 
-/* 表示言語と寄付セクションの文字サイズを調整 */
+/* 各タブページのタイトルの文字サイズを調整 */
+#section-list h2,
+#section-keywords h2,
+#section-channel-filter h2,
+#section-hide-shorts h2,
+#section-import-export h2,
 #section-language h2,
 #section-donation h2 {
-  font-size: 1.6em;
+  font-size: 2.0em;
 }
 
 #section-language p,
 #section-donation p,
 #section-import-export p {
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 
 #section-import-export h3 {
