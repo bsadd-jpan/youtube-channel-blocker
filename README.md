@@ -13,11 +13,12 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).  
 
 ⚠️ Hiding channels from their own pages or while playing videos used to be missing ... but not anymore!   
-Coming soon!
 
 ---
 
 ## 日本語
+
+---
 
 ### インストール 🛠️
 
@@ -25,17 +26,13 @@ Coming soon!
 
 Gitを使用しない場合、次の3通りの方法でインストールできます。
 
----
-
 #### 1. ストアから入手する方法
 
 1. 以下のURLから、拡張機能のストアページへアクセスします：  
    👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
 2. 「Chromeに追加」を押してください。  
 
-インストールの共通手順を行う必要はありません。
-
----
+下記のインストールの共通手順を行う必要はありません。
 
 #### 2. Release から zip / tar.gz をダウンロードする方法
 
@@ -48,8 +45,6 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 
 [インストールの共通手順へ進む](#インストールの共通手順)
 
----
-
 #### 3. 手動でコピペする方法
 
 1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
@@ -57,8 +52,6 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
 
 [インストールの共通手順へ進む](#インストールの共通手順)
-
----
 
 ### Gitを使う場合のインストール方法 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -201,8 +194,8 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 すべての使用は利用者自身の責任において行われるものとします。
 
 ## 実装予定（未実装・確実にやるとは言わない）  
-- プレイリストの表示/非表示トグル
-- コメントの非表示リスト（チャンネルの非表示リストは名前で、コメントはIDなので、どう実装するか考え中）
+- プレイリストの表示/非表示ボタン
+- コメントの非表示リスト（多分、新しくコメント用リストを作る）
 - ホワイトリストの追加（どの条件よりも強力に表示するリスト）
 - 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
 - 全リストのエキスポートボタン
@@ -221,6 +214,9 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ## English
 (Machine Translation)
+
+---
+
 ### Installation 🛠️
 
 ### Installation without Git 📦
@@ -237,8 +233,6 @@ If you do not use Git, there are three ways to install the extension.
 
 There is no need to follow the Common installation steps.
 
----
-
 #### 2. Download from Release (zip / tar.gz)
 
 1. Visit the following URL to access the "Release" page:  
@@ -250,8 +244,6 @@ Note: Releases are only updated for significant changes. Minor changes such as t
 
 [Common installation steps](#common-installation-steps)
 
----
-
 #### 3. Manual Copy Method
 
 1. Create a folder named `youtube-channel-blocker` anywhere on your system.  
@@ -259,9 +251,6 @@ Note: Releases are only updated for significant changes. Minor changes such as t
 3. Files like `README.md`, `.gitignore`, and `LICENSE` are not required for the extension to work and can be omitted.
    
 [Common installation steps](#common-installation-steps)
-
----
-
 
 ### Installation with Git 📦 
 1. Download and install Git from the official website following the instructions (available for Windows/Mac/Linux).
@@ -400,7 +389,7 @@ All use is at the user's own risk.
 
 ## Planned Features (Not Implemented, and No Promises)
 - Add a toggle to show/hide playlists.
-- Implement a block list for comments (channel block list uses names, but comments use IDs, so implementation is still under consideration).
+- Hidden comment list (probably a new list specifically for comments).
 - Add a whitelist (a list that overrides all other conditions to always show).
 - Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
 - Add an export button for all lists.
