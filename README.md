@@ -26,18 +26,22 @@ Hide videos you don’t want to see from search, recommendations, and the homepa
 
 Gitを使用しない場合、次の3通りの方法でインストールできます。
 
-#### 1. ストアから入手する方法
+---
+
+### 1. ストアから入手する方法
 
 1. 以下のURLから、拡張機能のストアページへアクセスします：  
-   👉 https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
+  https://chromewebstore.google.com/detail/youtube-channel-blocker/hodicblhehhpcjpjchgmkeganonkmbal  
 2. 「Chromeに追加」を押してください。  
 
 下記のインストールの共通手順を行う必要はありません。
 
-#### 2. Release から zip / tar.gz をダウンロードする方法
+---
+
+### 2. Release から zip / tar.gz をダウンロードする方法
 
 1. 以下のURLから「Release」ページへアクセスします：  
-   👉 https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
+  https://github.com/bsadd-jpan/youtube-channel-blocker/releases  
 2. ページ内の **「Source code（zip）」または「Source code（tar.gz）」** と書かれたリンクをクリックし、ファイルをダウンロードします。  
 3. ダウンロードしたファイルを、任意の場所で解凍してください。  
 
@@ -45,13 +49,17 @@ Gitを使用しない場合、次の3通りの方法でインストールでき�
 
 [インストールの共通手順へ進む](#インストールの共通手順)
 
-#### 3. 手動でコピペする方法
+---
+
+### 3. 手動でコピペする方法
 
 1. 任意の場所に「youtube-channel-blocker」フォルダを作成します。  
 2. GitHub上のソースコードから、必要なファイル（HTML／CSS／JavaScript／manifestなど）を一つずつコピーして、作成したフォルダに貼り付けます。  
 3. `README.md`、`.gitignore`、`LICENSE` などは動作に必要ありませんので省略して構いません。  
 
 [インストールの共通手順へ進む](#インストールの共通手順)
+
+---
 
 ### Gitを使う場合のインストール方法 📦 
 1. [Git公式サイト](https://git-scm.com/) からインストーラーをダウンロードし、指示に従ってインストールします（Windows/Mac/Linux対応）  
@@ -119,7 +127,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 - **リストのインポート・エクスポート**  
   - エキスポートボタンではjsonファイルとしてリストを出力  
   - インポートボタンではjsonファイルを入力することで、リストを完全に置換  
-  - 本家Channel Blockerは時々リストが消える現象があったので、この拡張機能も定期的なバックアップを推奨（この拡張機能でリストが消える現象は現時点では未確認）  
+  - 本家Channel Blockerは時々リストが消える現象があったので、定期的なバックアップを推奨（この拡張機能でリストが消える現象は現時点では未確認）  
 - **拡張機能の動作トグル**  
   - 拡張機能のアイコンから、赤い「Blocker:ON」を押すと「Blocker:OFF」と灰色になって、非表示が無効化  
   - ボタンを押したら更新不要で反映（反映が遅いことがあるので注意）  
@@ -157,7 +165,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - キーワードを含むすべてのチャンネル名が非表示 
   - 1つのキーワードの文字数制限は10文字
   - それ以外は、タイトルフィルターと同様
-- **ショート動画抹消機能**
+- **ショート動画~~ぶっ殺し~~抹消機能**
   - ショート動画は問答無用で非表示に
   - ~~ゴミみたいなサムネのクソショート動画を消せます~~
   - 設定ページの「表示/非表示切替」から可能
