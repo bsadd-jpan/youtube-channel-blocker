@@ -4,12 +4,28 @@
 チャンネル名の非表示リストやキーワードフィルターを用いて、特定のチャンネルの動画を非表示にできます。  
 📖 このREADMEには[日本語](#日本語) と [英語](#english) の説明が含まれています。  
 
+Channel Blockerのリスト（.save）→YouTube Channel Blockerのリスト(.json)と変換するhtmlを公開しました。
+https://github.com/bsadd-jpan/CB2YCB
 
+これは拡張機能には実装しません（使用が限定的のため）。
+あと、仕様が違うのでキーワードリストは無理でした。
+
+使い方はブログのコメントにあります。
+https://physx.hatenablog.com/entry/2025/07/28/170000
 
 A simple Chrome extension to block unwanted YouTube channels.  
 Hide videos you don’t want to see from search, recommendations, and the homepage with channel block lists and title filters.  
 
 📖 This README includes instructions in both [Japanese](#日本語) and [English](#english).    
+
+I’ve released an HTML tool that converts Channel Blocker lists (.save) into YouTube Channel Blocker lists (.json):
+https://github.com/bsadd-jpan/CB2YCB
+
+This will not be implemented in the extension itself, since its use is limited.
+Also, because the specifications are different, keyword lists cannot be converted.
+
+Instructions for use can be found in the comments on my blog:
+https://physx.hatenablog.com/entry/2025/07/28/170000
 
 ---
 
