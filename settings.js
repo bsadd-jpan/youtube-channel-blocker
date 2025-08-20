@@ -351,10 +351,10 @@ addChannelFilterBtn.addEventListener('click', () => {
       return;
     }
 
-    if (list.length >= 1000) {
+    if (list.length >= 5000) {
       getLang(lang => showStatus(lang === 'en'
-        ? 'Channel filter set limit (1000) reached'
-        : 'チャンネルフィルターセット上限(1000)に達しました', 'red'));
+        ? 'Channel filter set limit (5000) reached'
+        : 'チャンネルフィルターセット上限(5000)に達しました', 'red'));
       return;
     }
 
@@ -686,8 +686,8 @@ function renderKeywordList(filter = '') {
         return;
       }
 
-      if (list.length >= 1000) {
-        getLang(lang => showStatus('キーワード上限(1000)に達しました', 'red'));
+      if (list.length >= 5000) {
+        getLang(lang => showStatus('キーワード上限(5000)に達しました', 'red'));
         return;
       }
 

@@ -1,18 +1,23 @@
+/* コメント投稿者名とボタンを横並びに */
 #text-container {
   display: flex !important;
   align-items: center;
   gap: 6px;
 }
 
-.block-btn {
+/* チャンネルブロック用ボタン */
+.block-btn,
+.block-user-btn {
   flex-shrink: 0;
-  /* margin-right: 8px; */
   background: transparent;
   border: none;
   color: red;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
 }
 
+/* 投稿者名を省略表示する場合（必要に応じて） */
 /* yt-formatted-string#text {
   display: inline-block !important;
   white-space: nowrap;
