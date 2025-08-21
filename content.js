@@ -161,7 +161,7 @@ function createBlockCommentButton(commentText) {
 /**
  * コメントを投稿ユーザー単位でブロック
  * @param {Element} item - コメント要素
- * @param {string[]} blockedUsers - 非表示にするユーザー名リスト
+ * @param {string[]} blockedComments - 非表示にするユーザー名リスト
  * @param {string} userSelector - ユーザー名の要素セレクタ
  * @param {string|null} buttonContainerSelector - ブロックボタンを置く場所
  * @param {string|null} parentSelector - 非表示対象の親要素（nullなら item）
@@ -169,7 +169,7 @@ function createBlockCommentButton(commentText) {
  */
 function processCommentUserBlock(
   item,
-  blockedUsers,
+  blockedComments,
   userSelector,
   buttonContainerSelector,
   parentSelector,
@@ -184,7 +184,7 @@ function processCommentUserBlock(
   const parent = parentSelector ? item.closest(parentSelector) : item;
 
   // ブロックユーザーなら即非表示
-  if (blockedUsers.includes(userName)) {
+  if (blockedComments.includes(userName)) {
     if (parent) parent.style.display = "none";
   }
 
@@ -209,11 +209,11 @@ function processCommentUserBlock(
         event.stopPropagation();
         event.preventDefault();
 
-        chrome.storage.local.get({ blockedUsers: [] }, (data) => {
-          const updated = data.blockedUsers || [];
+        chrome.storage.local.get({ blockedComments: [] }, (data) => {
+          const updated = data.blockedComments || [];
           if (!updated.includes(userName)) {
             updated.push(userName);
-            chrome.storage.local.set({ blockedUsers: updated }, () => {
+            chrome.storage.local.set({ blockedComments: updated }, () => {
               if (parent) parent.style.display = "none";
               runBlocker();
             });
@@ -596,33 +596,29 @@ function runBlocker() {
         });
 
       // コメント欄処理（ユーザー単位で非表示）
-      const blockedUsers = result.blockedUsers || [];
-      document
-        .querySelectorAll("ytd-comment-thread-renderer")
-        .forEach((item) => {
+      const blockedComments = result.blockedComments || [];
+      document.querySelectorAll("ytd-comment-thread-renderer").forEach((item) => {
           processCommentUserBlock(
-            item,
-            blockedUsers,
-            "#author-text span",
-            "#author-text",
-            "ytd-comment-thread-renderer",
-            runBlocker
+              item,
+              blockedComments,
+              "#author-text span",
+              "#author-text",
+              "ytd-comment-thread-renderer",
+              runBlocker
           );
-        });
+      });
 
       // Shortsコメント
-      document
-        .querySelectorAll("ytd-comment-renderer")
-        .forEach((item) => {
-          processCommentUserBlock(
+      document.querySelectorAll("ytd-comment-renderer").forEach((item) => {
+        processCommentUserBlock(
             item,
-            blockedUsers,
-            'ytd-author-comment-badge-renderer #channel-name #text', // userSelector
-            'ytd-author-comment-badge-renderer #text-container',     // buttonContainerSelector
-            null,                                                   // parentSelectorはitemでOK
+            blockedComments,
+            'ytd-author-comment-badge-renderer #channel-name #text',
+            'ytd-author-comment-badge-renderer #text-container',
+            null,
             runBlocker
-          );
-        });
+        );
+    });
 
     }
   );

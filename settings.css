@@ -96,7 +96,7 @@ body, html {
   color: #333;
 }
 
-#searchInput, #keywordSearchInput {
+#searchInput, #keywordSearchInput, #commentSearchInput {
   width: 100%;
   padding: 10px 12px;
   font-size: 16px;
@@ -105,7 +105,7 @@ body, html {
   border-radius: 6px;
 }
 
-#blockListContainer, #keywordListContainer {
+#blockListContainer, #keywordListContainer, #commentListContainer {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -114,7 +114,7 @@ body, html {
   overflow: hidden;
 }
 
-#blockListContainer li, #keywordListContainer li {
+#blockListContainer li, #keywordListContainer li, #commentListContainer li {
   display: flex;
   justify-content: space-between;
   padding: 12px 16px;
@@ -123,7 +123,8 @@ body, html {
 }
 
 #blockListContainer li:last-child,
-#keywordListContainer li:last-child {
+#keywordListContainer li:last-child,
+#commentListContainer li:last-child {
   border-bottom: none;
 }
 
@@ -256,24 +257,6 @@ body, html {
   border-bottom: none;
 }
 
-/* #addChannelFilterBtn {
-  background-color: #eee;
-  color: #333;
-  border: 1px solid #888;
-  border-radius: 4px;
-  padding: 6px 14px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-left: 8px;
-  transition: background 0.3s, color 0.3s, border 0.3s;
-}
-
-#addChannelFilterBtn:hover {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #333;
-} */
-
 .editBtn, .saveBtn, .cancelBtn {
   background-color: #eee;
   color: #333;
@@ -362,13 +345,16 @@ body, html {
 #section-channel-filter h2,
 #section-hide-shorts h2,
 #section-import-export h2,
+#section-blocked-comments h2,
 #section-language h2,
-#section-donation h2 {
+#section-donation h2,
+#section-promotion h2 {
   font-size: 2.0em;
 }
 
 #section-language p,
 #section-donation p,
+#section-promotion p,
 #section-import-export p {
   font-size: 1.4em;
 }
@@ -376,3 +362,58 @@ body, html {
 #section-import-export h3 {
   font-size: 1.4em;
 }
+/* --- 非表示コメントリスト入力と追加ボタンを統一 --- */
+#section-blocked-comments > div {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 入力とボタンの間隔 */
+  margin: 8px 0;
+}
+
+/* 非表示コメントリストのリストも統一 */
+#commentListContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* support-links 全体の文字サイズを変更 */
+#support-links {
+  font-size: 1.5em; /* 1.2倍に拡大、好みに応じて調整 */
+  line-height: 1.6; /* 行間も少し広げると見やすい */
+}
+
+.donate-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    margin: 10px 0;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.1s ease-in-out;
+  }
+
+  .donate-button:hover {
+    transform: scale(1.05);
+  }
+
+  #paypal-button {
+    background-color: #f5d800; /* 見やすい黄色 */
+    color: #000;
+  }
+
+  #kofi-button {
+    background-color: #0070BA;
+    color: #fff;
+  }
+
+  #kofi-button span {
+    margin-left: 8px;
+  }
