@@ -145,7 +145,8 @@ body, html {
 /* エクスポートボタン（赤） */
 #exportChannelsBtn,
 #exportTitleKeywordsBtn,
-#exportChannelKeywordsBtn {
+#exportChannelKeywordsBtn,
+#exportBlockedCommentsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
@@ -160,14 +161,16 @@ body, html {
 
 #exportChannelsBtn:hover,
 #exportTitleKeywordsBtn:hover,
-#exportChannelKeywordsBtn:hover {
+#exportChannelKeywordsBtn:hover,
+#exportBlockedCommentsBtn:hover {
   background-color: #b02a37;
 }
 
 /* インポートボタン（青） */
 #importChannelsBtn,
 #importTitleKeywordsBtn,
-#importChannelKeywordsBtn {
+#importChannelKeywordsBtn,
+#importBlockedCommentsBtn {
   margin-top: 20px;
   margin-right: 12px;
   padding: 10px 20px;
@@ -182,7 +185,8 @@ body, html {
 
 #importChannelsBtn:hover,
 #importTitleKeywordsBtn:hover,
-#importChannelKeywordsBtn:hover {
+#importChannelKeywordsBtn:hover,
+#importBlockedCommentsBtn:hover {
   background-color: #0056b3;
 }
 

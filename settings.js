@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const importTitleKeywordsBtn = document.getElementById('importTitleKeywordsBtn');
   const exportChannelKeywordsBtn = document.getElementById('exportChannelKeywordsBtn');
   const importChannelKeywordsBtn = document.getElementById('importChannelKeywordsBtn');
+  const exportBlockedCommentsBtn = document.getElementById('exportBlockedCommentsBtn');
+  const importBlockedCommentsBtn = document.getElementById('importBlockedCommentsBtn');
   const fileInput = document.getElementById('fileInput');
   const status = document.getElementById('status');
 
@@ -79,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
       importList: 'チャンネルNGフィルターをインポートしました',
       importKeywords: '動画タイトルNGフィルターをインポートしました',
       importChannelKeywords: 'チャンネルNGフィルターをインポートしました',
+      importBlockedComments: '非表示コメントリストをインポートしました',
+      exportBlockedComments: '非表示コメントリストをエクスポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '削除',
       removeBtnKeyword: '削除',
@@ -96,6 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
       importList: 'Imported channel block list',
       importKeywords: 'Imported title keyword NG list',
       importChannelKeywords: 'Imported channel filter set',
+      importBlockedComments: 'Imported blocked comment users list',
+      exportBlockedComments: 'Exported blocked comment users list',
       importError: 'Import failed (invalid file format)',
       removeBtn: 'Remove',
       removeBtnKeyword: 'Remove',
@@ -850,6 +856,7 @@ renderBlockedCommentUsers();
     });
   });
 
+  // エクスポート処理一覧
   exportChannelsBtn.addEventListener('click', () => {
     getLang(lang => {
       chrome.storage.local.get('blockedChannels', (result) => {
@@ -880,6 +887,16 @@ renderBlockedCommentUsers();
     });
   });
 
+  exportBlockedCommentsBtn.addEventListener('click', () => {
+    getLang(lang => {
+      chrome.storage.local.get('blockedComments', (result) => {
+        const data = JSON.stringify(result.blockedComments || [], null, 2);
+        downloadJSON(data, 'blocked_comments_users_backup.json');
+        showStatus(texts[lang].exportBlockedComments, 'green');
+      });
+    });
+  });
+
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
     fileInput.click();
@@ -894,6 +911,11 @@ renderBlockedCommentUsers();
     currentImportTarget = 'channelKeywords';
     fileInput.click();
   });
+
+  importBlockedCommentsBtn.addEventListener('click', () => {
+  currentImportTarget = 'blockedComments';
+  fileInput.click();
+});
 
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -938,7 +960,23 @@ renderBlockedCommentUsers();
               renderChannelFilterList(channelFilterSearchInput.value);
               showStatus(texts[lang].importChannelKeywords, 'green');
             });
+          }else if (currentImportTarget === 'blockedComments') {
+            if (!Array.isArray(json) || json.some(item => typeof item !== 'string')) {
+              showStatus(texts[lang].importError, 'red');
+              return;
+            }
+            if (json.length > 10000) {
+              showStatus(lang === 'en'
+                ? 'The list limit of 10,000 entries has been reached. Import cannot be completed.'
+                : 'リスト上限(10000)に達しました。インポートできません。', 'red');
+              return;
+            }
+            chrome.storage.local.set({ blockedComments: json }, () => {
+              renderBlockedCommentUsers(commentSearchInput.value);
+              showStatus(texts[lang].exportBlockedComments, 'green');
+            });
           }
+
         });
       } catch {
         getLang(lang => showStatus(texts[lang].importError, 'red'));
@@ -1034,6 +1072,7 @@ renderBlockedCommentUsers();
   h3Elements[0].textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
   h3Elements[1].textContent = lang === 'en' ? 'Channel Filter List' : 'チャンネルNGフィルター';
   h3Elements[2].textContent = lang === 'en' ? 'Title Filter List' : 'タイトルNGフィルター';
+  h3Elements[3].textContent = lang === 'en' ? 'Blocked Comment List' : '非表示コメントリスト';
 
   // 非表示リストのエクスポート・インポートボタン
   exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
@@ -1046,6 +1085,10 @@ renderBlockedCommentUsers();
   // タイトルNGフィルターのエクスポート・インポートボタン
   exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
+
+  // 非表示コメントリスト
+  exportBlockedCommentsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
+  importBlockedCommentsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
   // 表示/非表示
   document.querySelector('#section-hide-shorts h2').textContent = lang === 'en'
