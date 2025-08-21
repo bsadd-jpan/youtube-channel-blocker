@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
       importList: 'チャンネルNGフィルターをインポートしました',
       importKeywords: '動画タイトルNGフィルターをインポートしました',
       importChannelKeywords: 'チャンネルNGフィルターをインポートしました',
-      importBlockedComments: '非表示コメントリストをインポートしました',
-      exportBlockedComments: '非表示コメントリストをエクスポートしました',
+      importBlockedComments: '非表示コメントユーザーリストをインポートしました',
+      exportBlockedComments: '非表示コメントユーザーリストをエクスポートしました',
       importError: 'インポート失敗（ファイル形式エラー）',
       removeBtn: '削除',
       removeBtnKeyword: '削除',
@@ -1027,7 +1027,7 @@ renderBlockedCommentUsers();
   tabListBtn.textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
   tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
   tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : 'タイトルNGフィルター';
-  tabCommentsBtn.textContent = lang === 'en' ? 'Blocked Comment Users' : '非表示コメントリスト';
+  tabCommentsBtn.textContent = lang === 'en' ? 'Blocked Comment Users List' : '非表示コメントユーザーリスト';
   tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
   tabHideShortsBtn.textContent = lang === 'en' ? 'Show/Hide Toggle' : '表示／非表示切替';
   tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
@@ -1058,7 +1058,7 @@ renderBlockedCommentUsers();
   keywordSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
 
   // 非表示コメントユーザータブ・セクション
-  document.querySelector('#section-blocked-comments h2').textContent = lang === 'en' ? 'Blocked Comment Users' : '非表示コメントユーザー';
+  document.querySelector('#section-blocked-comments h2').textContent = lang === 'en' ? 'Blocked Comment Users List' : '非表示コメントユーザーリスト';
   document.getElementById('commentUserInput').placeholder = lang === 'en' ? 'Username' : 'ユーザー名';
   addCommentUserBtn.textContent = lang === 'en' ? 'Add' : '追加';
   commentSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
@@ -1072,7 +1072,7 @@ renderBlockedCommentUsers();
   h3Elements[0].textContent = lang === 'en' ? 'Block Channel List' : '非表示チャンネルリスト';
   h3Elements[1].textContent = lang === 'en' ? 'Channel Filter List' : 'チャンネルNGフィルター';
   h3Elements[2].textContent = lang === 'en' ? 'Title Filter List' : 'タイトルNGフィルター';
-  h3Elements[3].textContent = lang === 'en' ? 'Blocked Comment List' : '非表示コメントリスト';
+  h3Elements[3].textContent = lang === 'en' ? 'Blocked Comment User List' : '非表示コメントユーザーリスト';
 
   // 非表示リストのエクスポート・インポートボタン
   exportChannelsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
@@ -1086,7 +1086,7 @@ renderBlockedCommentUsers();
   exportTitleKeywordsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importTitleKeywordsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
-  // 非表示コメントリスト
+  // 非表示コメントユーザーリスト
   exportBlockedCommentsBtn.textContent = lang === 'en' ? 'Export' : 'エクスポート';
   importBlockedCommentsBtn.textContent = lang === 'en' ? 'Import' : 'インポート';
 
