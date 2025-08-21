@@ -2,7 +2,6 @@
   Copyright (c) 2025 AKS_Studio aki009
   Licensed under the MIT License.
 -->
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -19,10 +18,11 @@
         <li><button id="tab-list" class="tab active">非表示リスト</button></li>
         <li><button id="tab-channel-filter" class="tab">チャンネルNGフィルター</button></li>
         <li><button id="tab-keywords" class="tab">動画タイトルNGフィルター</button></li>
+        <li><button id="tab-blocked-comments" class="tab">非表示コメントリスト</button></li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
         <li><button id="tab-hide-shorts" class="tab">表示／非表示切替</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
-        <li><button id="tab-donation" class="tab">💛 寄付</button></li>
+        <li><button id="tab-donation" class="tab">💛 開発者支援</button></li>
       </ul>
     </nav>
 
@@ -32,7 +32,6 @@
         <!-- 非表示リスト -->
         <section id="section-list" class="tab-content active">
           <h2>非表示チャンネルリスト</h2>
-          <!-- ここに追加フォームを挿入 -->
           <input type="text" id="searchInput" placeholder="検索..." />
           <div style="margin: 8px 0;">
             <input id="blockChannelInput" type="text" placeholder="チャンネル名" maxlength="100">
@@ -54,6 +53,7 @@
           <ul id="keywordListContainer"></ul>
         </section>
 
+        <!-- チャンネルフィルター -->
         <section id="section-channel-filter" style="display:none">
           <h2>チャンネルフィルターリスト</h2>
           <input id="channelFilterSearchInput" type="text" placeholder="検索...">
@@ -66,7 +66,18 @@
           <ul id="channelFilterListContainer"></ul>
         </section>
 
-        <!-- セクション（コンテンツ） -->
+        <!-- 非表示コメントリスト -->
+        <section id="section-blocked-comments" style="display:none">
+          <h2>非表示コメントリスト</h2>
+          <input type="text" id="commentSearchInput" placeholder="検索..." />
+          <div style="margin: 8px 0;">
+            <input type="text" id="commentUserInput" placeholder="ユーザー名" maxlength="100">
+            <button id="addCommentUserBtn">追加</button>
+          </div>
+          <ul id="commentListContainer"></ul>
+        </section>
+
+        <!-- 表示／非表示切替 -->
         <section id="section-hide-shorts" style="display:none; padding: 1em;">
           <h2>表示／非表示切替</h2>
           <label>
@@ -92,7 +103,12 @@
             <h3>タイトルNGフィルター</h3>
             <button id="exportTitleKeywordsBtn">エクスポート</button>
             <button id="importTitleKeywordsBtn">インポート</button>
-          </div>          
+          </div>
+          <div>
+            <h3>非表示コメントリスト</h3>
+            <button id="exportBlockedCommentsBtn">エクスポート</button>
+            <button id="importBlockedCommentsBtn">インポート</button>
+          </div>
           <input type="file" id="fileInput" accept="application/json" style="display:none;" />
           <div id="status" role="status" aria-live="polite"></div>
         </section>
@@ -113,23 +129,26 @@
 
         <!-- 💛 寄付セクション -->
         <section id="section-donation" class="tab-content">
-          <h2>開発者を応援する</h2>
+          <h2 id="donation-h2">寄付で開発者を応援</h2>
           <p id="donation-message-1">このページを見ていただきありがとうございます！</p>
           <p id="donation-message-2">この拡張機能が役に立ったと感じたら、寄付をご検討ください。</p>
           <p id="donation-message-3">Ko-fiはニックネーム（匿名）での寄付が可能です。</p>
-          <a id="paypal-button" href="https://www.paypal.com/ncp/payment/RK4KLRRWNYXLU" target="_blank"
-             style="display:inline-block;padding:10px 20px;background:#eeeb2f;color:#000;
-                    font-weight:bold;text-decoration:none;border-radius:5px;">
+          <a id="paypal-button" class="donate-button" href="https://www.paypal.com/ncp/payment/RK4KLRRWNYXLU" target="_blank">
             PayPalで寄付
           </a>
-          <br /><br />
-          <a id="kofi-button" href="https://ko-fi.com/aks_studio" target="_blank"
-            style="display:inline-flex;align-items:center;padding:10px 20px;
-            background:#0070BA;color:#fff;font-weight:bold;
-            text-decoration:none;border-radius:5px;font-size:14px;">
-            ☕&nbsp;<span id="kofi-text">Ko-fiで寄付</span>
+
+          <a id="kofi-button" class="donate-button" href="https://ko-fi.com/aks_studio" target="_blank">
+            ☕<span>Ko-fiで寄付</span>
           </a>
-          
+          <br /><br />
+          <h2 id="promotion-h2">宣伝で開発者を応援</h2>
+          <p id="donation-message-4">寄付以外だとSNSでの宣伝やXのフォロー、拡張機能の拡散も有効です！</p>
+          <ul id="support-links" style="margin-top:8px; padding-left:1.2em;">
+            <li>X (Twitter)：<a href="https://x.com/aki009113" target="_blank">https://x.com/aki009113</a></li>
+            <li>Blog（ブログ記事）：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">https://physx.hatenablog.com/entry/2025/07/28/170000</a></li>
+            <li>GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">https://github.com/bsadd-jpan/youtube-channel-blocker</a></li>
+          </ul>
+          <p id="donation-message-5">開発者の制作物の宣伝やブログのPV上昇につながり、非常に嬉しいです！</p>
         </section>
       </div>
     </main>
