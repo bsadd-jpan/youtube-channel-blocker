@@ -1117,8 +1117,8 @@ renderBlockedCommentUsers();
     ? 'If you found this extension useful, please consider donating.'
     : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
   document.querySelector('#donation-message-3').textContent = lang === 'en'
-    ? 'Ko-fi allows donations with a nickname (anonymous).'
-    : 'Ko-fiはニックネーム（匿名）での寄付が可能です。';
+    ? 'Ko-fi allows donations anonymously without registration, using a credit card (PayPal requires registration).'
+    : 'Ko-fiは登録不要で匿名かつクレジットカードからの寄付が可能です（PayPalは登録が必要）。';
 
   document.querySelector('#paypal-button').textContent = lang === 'en'
     ? 'Donate via PayPal'
@@ -1133,11 +1133,12 @@ renderBlockedCommentUsers();
     : '📢 宣伝で開発者を応援';
   document.querySelector('#donation-message-4').textContent = lang === 'en'
   ? 'Besides donations, promoting on social media, following on X, and sharing this extension are also very helpful!'
-  : '寄付以外だとSNSでの宣伝やXのフォロー、拡張機能の拡散も有効です！';
+  : '寄付以外だとSNSでの宣伝やXのフォロー、拡張機能のシェアも有効です！';
 
   document.querySelector('#donation-message-5').textContent = lang === 'en'
-    ? 'It helps promote the developer’s works and increases blog traffic, which is greatly appreciated!'
-    : '開発者の他の制作物の宣伝やブログのPV上昇につながり、非常に嬉しいです！';
+    ? 'It helps promote the developer’s other works, increases blog traffic, and expands the extension’s user base, which is greatly appreciated!'
+    : '開発者の他の制作物の宣伝やブログのPV上昇、ユーザー数増加につながるので、非常に嬉しいです！';
+
 
 
 }
