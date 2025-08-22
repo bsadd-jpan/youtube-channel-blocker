@@ -124,7 +124,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 個人的な「こんな機能あると良いなあ」で実装済みのやつを箇条書き
 
 <details>
-<summary>詳細を表示</summary>
+<summary><strong>▶️ 詳細を表示</strong></summary>
 
 - **リストのインポート・エクスポート**  
   - エキスポートボタンではjsonファイルとしてリストを出力  
@@ -324,7 +324,7 @@ If you install from the store, it seems that updates are applied automatically (
 Features implemented based on “it would be nice to have” ideas.
 
 <details>
-<summary>Show details</summary>
+<summary><strong>▶️ Show details</strong></summary>
 
 - **Import and Export List**  
   - The export button outputs the list as a JSON file  
