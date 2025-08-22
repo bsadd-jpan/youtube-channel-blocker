@@ -142,10 +142,14 @@ function createBlockCommentButton(commentText) {
         list.push(commentText);
         if (list.length >= 10000) {
           // 上限に達しているので追加せずに終了
-          getLang(lang => showStatus(
-            lang === 'en' ? 'Block list limit reached' : 'リスト上限に達しました',
-            'red'
-          ));
+          getLang((lang) =>
+            showStatus(
+              lang === "en"
+                ? "Block list limit reached"
+                : "リスト上限に達しました",
+              "red"
+            )
+          );
           return; // ここで関数終了
         }
         chrome.storage.local.set({ blockedComments: list }, () => {
@@ -225,7 +229,6 @@ function processCommentUserBlock(
     }
   }
 }
-
 
 /**
  * ブロック対象のアイテムを非表示にする
@@ -597,29 +600,30 @@ function runBlocker() {
 
       // コメント欄処理（ユーザー単位で非表示）
       const blockedComments = result.blockedComments || [];
-      document.querySelectorAll("ytd-comment-thread-renderer").forEach((item) => {
+      document
+        .querySelectorAll("ytd-comment-thread-renderer")
+        .forEach((item) => {
           processCommentUserBlock(
-              item,
-              blockedComments,
-              "#author-text span",
-              "#author-text",
-              "ytd-comment-thread-renderer",
-              runBlocker
+            item,
+            blockedComments,
+            "#author-text span",
+            "#author-text",
+            "ytd-comment-thread-renderer",
+            runBlocker
           );
-      });
+        });
 
       // Shortsコメント
       document.querySelectorAll("ytd-comment-renderer").forEach((item) => {
         processCommentUserBlock(
-            item,
-            blockedComments,
-            'ytd-author-comment-badge-renderer #channel-name #text',
-            'ytd-author-comment-badge-renderer #text-container',
-            null,
-            runBlocker
+          item,
+          blockedComments,
+          "ytd-author-comment-badge-renderer #channel-name #text",
+          "ytd-author-comment-badge-renderer #text-container",
+          null,
+          runBlocker
         );
-    });
-
+      });
     }
   );
 }
