@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.1.0）
+# YouTube Channel Blocker（v1.2.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、特定のチャンネルの動画を非表示にできます。  
@@ -148,29 +148,29 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
     - 「<u>GTA切り抜き</u>集」→表示  
     - 「<u>さしすせそ切り抜き</u>集」→表示  
     - 「<u>GTA</u>面白い瞬間【<u>さしすせそ</u>/<u>切り抜き</u>】」→非表示  
-
 - **エラーメッセージのポップアップ**  
   - ×ボタンを押したときに、違うチャンネルがリストに追加されそうなときはエラーメッセージをポップアップ  
   - 「Error:(チャンネル名A) ≠ (チャンネル名B)」というメッセージがポップアップ（リストには追加されない）  
   - レイアウト崩れによるものだと思うので、ブラウザの更新等を推奨  
   - エラーメッセージではないが、×ボタンでリストに追加したときは「Blocked: チャンネル名」とポップアップするので間違いがないか要確認  
-
 - **言語切り替え機能**  
   - 設定ページからも表示する言語を切り替え可能  
   - 切り替えは英語と日本語  
-
 - **リストの編集ボタン**  
   - 設定ページから、各リストを編集して名前を変更することが可能  
   - 編集後に保存したい場合は保存ボタンを、キャンセルしたい場合はキャンセルボタンを押下  
-
 - **チャンネルフィルター**
   - キーワードを含むすべてのチャンネル名が非表示 
   - 1つのキーワードの文字数制限は10文字
   - それ以外は、タイトルフィルターと同様
 - **ショート動画~~ぶっ殺し~~抹消機能**
-  - ショート動画は問答無用で非表示に
-  - ~~ゴミみたいなサムネのクソショート動画を消せます~~
+  - ショート動画は問答無用で非表示
+  - ~~ゴミみたいなサムネのクソショート動画を抹消！~~
   - 設定ページの「表示/非表示切替」から可能
+- **コメント非表示リスト**
+  - コメントも×ボタンで非表示
+  - 時間がなかったので、返信や投稿者コメントはv1.2.1とかで対応予定
+  - コメントはID、動画は名前なのでチャンネル名非表示リストと別
 </details>
 
 ---
@@ -207,7 +207,6 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ## 実装予定（未実装・確実にやるとは言わない）  
 - プレイリストの表示/非表示ボタン
-- コメントの非表示リスト（多分、新しくコメント用リストを作る）
 - ホワイトリストの追加（どの条件よりも強力に表示するリスト）
 - 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
 - 全リストのエキスポートボタン
@@ -368,6 +367,10 @@ Features implemented based on “it would be nice to have” ideas.
   - Shorts videos are ruthlessly and completely hidden
   - ~~Get rid of trashy, obnoxious Shorts with garbage thumbnails~~
   - Can be toggled from the "Show/Hide Toggle" section in the settings page
+- **Hidden Comments List**
+  - Comments can also be hidden using the × button  
+  - Replies and creator comments will be supported in **v1.2.1** (or later)  
+  - Since comments are managed by **ID** and videos are managed by **name**, they are implemented separately in the hidden list  
 
 </details>
 
@@ -401,7 +404,6 @@ All use is at the user's own risk.
 
 ## Planned Features (Not Implemented, and No Promises)
 - Add a toggle to show/hide playlists.
-- Hidden comment list (probably a new list specifically for comments).
 - Add a whitelist (a list that overrides all other conditions to always show).
 - Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
 - Add an export button for all lists.
