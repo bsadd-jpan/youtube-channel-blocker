@@ -899,16 +899,16 @@ renderBlockedCommentUsers();
   });
 
   // ツイートボタンの設定
-  document.addEventListener("DOMContentLoaded", () => {
-    const tweetBtn = document.getElementById("tweet-support-button");
-    if (tweetBtn) {
-      tweetBtn.addEventListener("click", () => {
-        const defaultText = "Good work #YouTubeChannelBlocker";
-        const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(defaultText);
-        window.open(url, "_blank", "width=600,height=400");
-      });
-    }
-  });
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const tweetBtn = document.getElementById("tweet-support-button");
+  //   if (tweetBtn) {
+  //     tweetBtn.addEventListener("click", () => {
+  //       const defaultText = "Good work #YouTubeChannelBlocker";
+  //       const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(defaultText);
+  //       window.open(url, "_blank", "width=600,height=400");
+  //     });
+  //   }
+  // });
 
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
