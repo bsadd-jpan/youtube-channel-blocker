@@ -821,6 +821,7 @@ renderBlockedCommentUsers();
 
   keywordSearchInput.addEventListener('input', () => renderKeywordList(keywordSearchInput.value));
 
+  // キーワード入力の最大文字数制限30文字
   keywordInputs.forEach(input => {
     input.setAttribute('maxlength', '30');
     input.addEventListener('input', () => {
@@ -895,6 +896,18 @@ renderBlockedCommentUsers();
         showStatus(texts[lang].exportBlockedComments, 'green');
       });
     });
+  });
+
+  // ツイートボタンの設定
+  document.addEventListener("DOMContentLoaded", () => {
+    const tweetBtn = document.getElementById("tweet-support-button");
+    if (tweetBtn) {
+      tweetBtn.addEventListener("click", () => {
+        const defaultText = "Good work #YouTubeChannelBlocker";
+        const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(defaultText);
+        window.open(url, "_blank", "width=600,height=400");
+      });
+    }
   });
 
   importChannelsBtn.addEventListener('click', () => {
