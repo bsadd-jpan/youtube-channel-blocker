@@ -611,6 +611,14 @@ function runBlocker() {
             "ytd-comment-thread-renderer",
             runBlocker
           );
+          processCommentUserBlock(
+            item,
+            blockedComments,
+            "#author-comment-badge ytd-channel-name #text",
+            "#author-comment-badge ytd-channel-name #text-container",
+            "ytd-comment-thread-renderer",
+            runBlocker
+          );
         });
 
       // Shortsコメント
