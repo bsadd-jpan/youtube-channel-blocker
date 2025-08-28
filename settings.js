@@ -1128,7 +1128,7 @@ renderBlockedCommentUsers();
 
   document.querySelector('#donation-message-2').textContent = lang === 'en'
     ? 'If you found this extension useful, please consider donating.'
-    : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
+    : 'この拡張機能が役に立ったと感じたら、寄付をご検討いただければ幸いです！';
   document.querySelector('#donation-message-3').textContent = lang === 'en'
     ? 'Ko-fi allows donations anonymously without registration, using a credit card (PayPal requires registration).'
     : 'Ko-fiは登録不要で匿名かつクレジットカードからの寄付が可能です（PayPalは登録が必要）。';
