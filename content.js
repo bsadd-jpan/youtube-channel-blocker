@@ -9,6 +9,22 @@ let debounceTimer = null;
 
 let hoveredChannelName = null; // マウスオーバーで保存するチャンネル名
 
+function logBlockAction(
+  item,
+  blockedComments,
+  userSelector,
+  buttonContainerSelector,
+  parentSelector
+) {
+  const userElem = item.querySelector(userSelector);
+  const userName = userElem ? userElem.textContent?.trim() : "(not found)";
+  const info = item.outerHTML?.slice(0, 100).replace(/\s+/g, " ");
+  console.log(
+    `[BlockLog] user="${userName}" blockedComments=${JSON.stringify(
+      blockedComments
+    )} userSelector="${userSelector}" buttonContainerSelector="${buttonContainerSelector}" parentSelector="${parentSelector}" item="${info}"`
+  );
+}
 /**
  * ポップアップ表示用要素を作成（1回だけ）
  */
@@ -190,6 +206,13 @@ function processCommentUserBlock(
   // ブロックユーザーなら即非表示
   if (blockedComments.includes(userName)) {
     if (parent) parent.style.display = "none";
+    // logBlockAction(
+    //   item,
+    //   blockedComments,
+    //   userSelector,
+    //   buttonContainerSelector,
+    //   parentSelector
+    // );
   }
 
   // ブロックボタン追加（ユーザー名の左側）
@@ -496,11 +519,11 @@ function runBlocker() {
       }
 
       // ホーム画面の動画
-      document.querySelectorAll("#dismissible").forEach((item) => {
+      document.querySelectorAll("ytd-rich-item-renderer").forEach((item) => {
         processItemGeneric(
           item,
           blockList,
-          "#channel-name a, ytd-channel-name a",
+          "a.yt-core-attributed-string__link[href^='/@']",
           null,
           "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
@@ -514,7 +537,7 @@ function runBlocker() {
         processItemGeneric(
           item,
           blockList,
-          ".yt-content-metadata-view-model-wiz__metadata-text",
+          ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string",
           null,
           "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
@@ -600,30 +623,63 @@ function runBlocker() {
 
       // コメント欄処理（ユーザー単位で非表示）
       const blockedComments = result.blockedComments || [];
-      document
-        .querySelectorAll("ytd-comment-thread-renderer")
-        .forEach((item) => {
-          processCommentUserBlock(
-            item,
-            blockedComments,
-            "#author-text span",
-            "#author-text",
-            "ytd-comment-thread-renderer",
-            runBlocker
-          );
-        });
+      // ...existing code...
+
+// 親コメント用
+document.querySelectorAll("ytd-comment-thread-renderer").forEach((item) => {
+  // チャンネル名
+  processCommentUserBlock(
+    item,
+    blockedComments,
+    "#author-text span",
+    "#author-text",
+    null,
+    runBlocker
+  );
+  // バッジ名（親コメント用）
+  // processCommentUserBlock(
+  //   item,
+  //   blockedComments,
+  //   "#author-comment-badge ytd-channel-name #text",
+  //   "#author-comment-badge ytd-channel-name #text-container",
+  //   null,
+  //   runBlocker
+  // );
+});
+
+// 返信コメント用
+document.querySelectorAll("ytd-comment-replies-renderer ytd-comment-view-model").forEach((item) => {
+  // チャンネル名
+  processCommentUserBlock(
+    item,
+    blockedComments,
+    "#header-author #author-text span",
+    "#header-author #author-text",
+    null,
+    runBlocker
+  );
+  // バッジ名（返信コメント用）
+  // processCommentUserBlock(
+  //   item,
+  //   blockedComments,
+  //   "#author-comment-badge ytd-channel-name #text",
+  //   "#author-comment-badge ytd-channel-name #text-container",
+  //   null,
+  //   runBlocker
+  // );
+});
 
       // Shortsコメント
-      document.querySelectorAll("ytd-comment-renderer").forEach((item) => {
-        processCommentUserBlock(
-          item,
-          blockedComments,
-          "ytd-author-comment-badge-renderer #channel-name #text",
-          "ytd-author-comment-badge-renderer #text-container",
-          null,
-          runBlocker
-        );
-      });
+      // document.querySelectorAll("ytd-comment-renderer").forEach((item) => {
+      //   processCommentUserBlock(
+      //     item,
+      //     blockedComments,
+      //     "ytd-author-comment-badge-renderer #channel-name #text",
+      //     "ytd-author-comment-badge-renderer #text-container",
+      //     null,
+      //     runBlocker
+      //   );
+      // });
     }
   );
 }
