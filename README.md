@@ -124,7 +124,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 個人的な「こんな機能あると良いなあ」で実装済みのやつを箇条書き
 
 <details>
-<summary>詳細を表示</summary>
+<summary><strong>▶️ 詳細を表示</strong></summary>
 
 - **リストのインポート・エクスポート**  
   - エキスポートボタンではjsonファイルとしてリストを出力  
@@ -184,7 +184,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 - 本家Channel Blockerと同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
   （現時点でその現象は確認出来てませんが）
 - 力を入れて更新する気はないですが、ブログやX（Twitter）へのコメントやプルリクエストがあれば、対応するかもしれません 
-- チャンネルページや再生している動画からの非表示は未実装でした....だが今は違う！  
+- チャンネルページや再生している動画からのリスト入りは未実装でした....だが今は違う！  
 （K2構文書きたかっただけ）  
 
 ---
@@ -324,7 +324,7 @@ If you install from the store, it seems that updates are applied automatically (
 Features implemented based on “it would be nice to have” ideas.
 
 <details>
-<summary>Show details</summary>
+<summary><strong>▶️ Show details</strong></summary>
 
 - **Import and Export List**  
   - The export button outputs the list as a JSON file  

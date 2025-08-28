@@ -821,6 +821,7 @@ renderBlockedCommentUsers();
 
   keywordSearchInput.addEventListener('input', () => renderKeywordList(keywordSearchInput.value));
 
+  // キーワード入力の最大文字数制限30文字
   keywordInputs.forEach(input => {
     input.setAttribute('maxlength', '30');
     input.addEventListener('input', () => {
@@ -896,6 +897,18 @@ renderBlockedCommentUsers();
       });
     });
   });
+
+  // ツイートボタンの設定
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const tweetBtn = document.getElementById("tweet-support-button");
+  //   if (tweetBtn) {
+  //     tweetBtn.addEventListener("click", () => {
+  //       const defaultText = "Good work #YouTubeChannelBlocker";
+  //       const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(defaultText);
+  //       window.open(url, "_blank", "width=600,height=400");
+  //     });
+  //   }
+  // });
 
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
@@ -1115,7 +1128,7 @@ renderBlockedCommentUsers();
 
   document.querySelector('#donation-message-2').textContent = lang === 'en'
     ? 'If you found this extension useful, please consider donating.'
-    : 'この拡張機能が役に立ったと感じたら、寄付をご検討ください。';
+    : 'この拡張機能が役に立ったと感じたら、寄付をご検討いただければ幸いです！';
   document.querySelector('#donation-message-3').textContent = lang === 'en'
     ? 'Ko-fi allows donations anonymously without registration, using a credit card (PayPal requires registration).'
     : 'Ko-fiは登録不要で匿名かつクレジットカードからの寄付が可能です（PayPalは登録が必要）。';
