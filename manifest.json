@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Channel Blocker",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "特定のチャンネルの動画を非表示にします (Block videos from specific channels.)",
   "permissions": ["storage"],
   "content_scripts": [
