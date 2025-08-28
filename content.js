@@ -519,7 +519,7 @@ function runBlocker() {
       }
 
       // ホーム画面の動画
-      document.querySelectorAll("ytd-rich-item-renderer").forEach((item) => {
+      document.querySelectorAll("ytd-rich-grid-renderer > ytd-rich-item-renderer").forEach((item) => {
         processItemGeneric(
           item,
           blockList,
