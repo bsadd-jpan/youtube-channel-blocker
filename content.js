@@ -519,11 +519,11 @@ function runBlocker() {
       }
 
       // ホーム画面の動画
-      document.querySelectorAll("#dismissible").forEach((item) => {
+      document.querySelectorAll("ytd-rich-item-renderer").forEach((item) => {
         processItemGeneric(
           item,
           blockList,
-          "#channel-name a, ytd-channel-name a",
+          "a.yt-core-attributed-string__link[href^='/@']",
           null,
           "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
@@ -537,7 +537,7 @@ function runBlocker() {
         processItemGeneric(
           item,
           blockList,
-          ".yt-content-metadata-view-model-wiz__metadata-text",
+          ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string",
           null,
           "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
