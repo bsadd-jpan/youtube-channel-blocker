@@ -22,6 +22,16 @@ https://github.com/bsadd-jpan/CB2YCB
 
 ---
 
+### 使い方🔴
+
+- チャンネル名横の赤い×ボタンを押せば、そのチャンネルの動画をすべて非表示にできます  
+- 非表示にならなかったら、ブラウザの更新やコードの確認等を行ってみてください  
+- 自分で名前をリストに追加することも可能です  
+- リストは拡張機能の設定画面等から確認できます    
+- たまに動作しないときがありますが、ブラウザの更新で大体直るはずです
+
+---
+
 ### インストール 🛠️
 
 <details>
@@ -114,18 +124,6 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ---
 
-
-
-### 使い方🔴
-
-- チャンネル名横の赤い×ボタンを押せば、そのチャンネルの動画をすべて非表示にできます  
-- 非表示にならなかったら、ブラウザの更新やコードの確認等を行ってみてください  
-- 自分で名前をリストに追加することも可能です  
-- リストは拡張機能の設定画面等から確認できます    
-- たまに動作しないときがありますが、ブラウザの更新で大体直るはずです
-
----
-
 ### 追加実装 ✨
 
 個人的な「こんな機能あると良いなあ」で実装済みのやつを箇条書き
@@ -170,13 +168,13 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - キーワードを含むすべてのチャンネル名が非表示 
   - 1つのキーワードの文字数制限は10文字
   - それ以外は、タイトルフィルターと同様
-- **ショート動画~~ぶっ殺し~~抹消機能**
+- **ショート動画~~ぶっ殺し~~抹消機能（(v1.1.0)）**
   - ショート動画は問答無用で非表示
   - ~~ゴミみたいなサムネのクソショート動画を抹消！~~
   - 設定ページの「表示/非表示切替」から可能
-- **コメント非表示リスト**
+- **コメント非表示リスト（v1.2.0）**
   - コメントも×ボタンで非表示
-  - 時間がなかったので、返信や投稿者コメントはv1.2.1とかで対応予定
+  - 投稿者コメントの非表示は需要が不明なのとコードの大幅な変更が必要なので先延ばし
   - コメントはID、動画は名前なのでチャンネル名非表示リストと別
 </details>
 
@@ -184,9 +182,8 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ### 注意 ⚠️
 
-- 理論上非表示にできる最大件数：10,000件🧮  
-  （最大件数に近いまたはそれを超えてリストに追加したときの動作は不明）
-- 大体の不具合（というか、処理速度が原因のやつ）はブラウザの更新で直ります🔧
+- チャンネル非表示リストの最大件数：10,000件🧮  
+- 大体の不具合（処理速度が原因のやつ）はブラウザの更新で直ります🔧
 - 処理の関係上、サムネを一瞬で非表示にするのは困難です🙈    
 - 本家Channel Blockerと同じく突然リストが消える可能性があるので、定期的にバックアップを推奨します💾   
   （現時点でその現象は確認出来てませんが）
@@ -225,13 +222,30 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 不具合だけではなく、インストール手順に従って問題なく動いたか等についても、ブログやXで報告いただければ嬉しいです。  
 本GitHubのページはDiscussionやissueも開放しているので、そちらからでもどうぞ。
 
-📘 ブログ（記事に飛ぶ）: [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+📘ブログ
+- [YouTube Channel Blockerを自作した話](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+- [YouTube Channel Blockerをストアに公開した話](https://physx.hatenablog.com/entry/2025/07/28/170000)  
+- [YouTube Channel Blockerがリリース約1ヶ月でユーザー数1000を超えた話](https://physx.hatenablog.com/entry/2025/08/30/190000)   
+
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
 
 ---
 
 ## English
 (Machine Translation)
+
+---
+
+### How to use 🔴
+
+- Press the red × button next to the channel name to hide all videos from that channel  
+  (Blocking from the channel page or currently playing videos is not yet implemented)  
+- If videos are not hidden, try refreshing your browser or checking for missing images  
+- You can also manually add channel names to the list  
+  (The name must match exactly)  
+- You can check the list from the extension’s settings page  
+- If you remove a name from the list, videos from that channel will be shown again (browser refresh required)  
+- If the extension sometimes does not work, refreshing the browser usually fixes it
 
 ---
 
@@ -318,19 +332,6 @@ If you install from the store, it seems that updates are applied automatically (
 
 ---
 
-### How to use 🔴
-
-- Press the red × button next to the channel name to hide all videos from that channel  
-  (Blocking from the channel page or currently playing videos is not yet implemented)  
-- If videos are not hidden, try refreshing your browser or checking for missing images  
-- You can also manually add channel names to the list  
-  (The name must match exactly)  
-- You can check the list from the extension’s settings page  
-- If you remove a name from the list, videos from that channel will be shown again (browser refresh required)  
-- If the extension sometimes does not work, refreshing the browser usually fixes it
-
----
-
 ### Additional Features ✨
 
 Features implemented based on “it would be nice to have” ideas.
@@ -375,13 +376,13 @@ Features implemented based on “it would be nice to have” ideas.
   - All channel names containing the specified keywords will be hidden  
   - Each keyword must be 10 characters or fewer  
   - Other rules are the same as the Title Filter
-- **Aggressive Shorts Removal**
+- **Aggressive Shorts Removal(v1.1.0)**
   - Shorts videos are ruthlessly and completely hidden
   - ~~Get rid of trashy, obnoxious Shorts with garbage thumbnails~~
   - Can be toggled from the "Show/Hide Toggle" section in the settings page
-- **Hidden Comments List**
-  - Comments can also be hidden using the × button  
-  - Replies and creator comments will be supported in **v1.2.1** (or later)  
+- **Hidden Comments List(v1.2.0)**
+  - Comments can also be hidden using the × button
+  - Hiding creator comments is postponed because demand is unclear and it would require significant code changes
   - Since comments are managed by **ID** and videos are managed by **name**, they are implemented separately in the hidden list  
 
 </details>
@@ -390,7 +391,7 @@ Features implemented based on “it would be nice to have” ideas.
 
 ### Notes ⚠️
 
-- The maximum theoretical number of channels that can be hidden is 10,000. 🧮  
+- The maximum number of channel block list is 10,000. 🧮  
 - Most issues can be fixed by refreshing the browser 🔧  
 - Immediate hiding is difficult; thumbnails may briefly appear 🙈  
 Like the original Channel Blocker, there is a possibility that the list may suddenly disappear, so regular backups are recommended 💾
@@ -427,5 +428,9 @@ All use is at the user's own risk.
 I’d be glad to hear your feedback—not just about bugs, but also whether everything worked smoothly after following the installation steps.  
 Feel free to use Discussions or open an issue on this GitHub page.
 
-📘 Blog (Go to article): [https://physx.hatenablog.com/entry/2025/07/13/174229](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+📘 Blog
+- [How I Built My Own Extension](https://physx.hatenablog.com/entry/2025/07/13/174229)  
+- [Publishing to the Store](https://physx.hatenablog.com/entry/2025/07/28/170000)  
+- [Reaching 1,000 Users in the First Month](https://physx.hatenablog.com/entry/2025/08/30/190000) 
+
 🐦 X (Twitter): [https://x.com/aki009113](https://x.com/aki009113)
