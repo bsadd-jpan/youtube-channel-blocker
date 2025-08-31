@@ -1156,9 +1156,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //   ? 'Promotion helps raise awareness of the developer’s other projects, increases blog traffic, and grows the extension’s user base.'
     //   : '宣伝によって、他の制作物の認知やブログのPVが増えたり、拡張機能のユーザーが増えたりします！';
 
-    // document.querySelector('#donation-message-6').textContent = lang === 'en'
-    //   ? "If you have a moment, we’d really appreciate your support by reading our articles or giving them a like!"
-    //   : "お時間のあるときに、記事を読んだり「いいね」をして応援していただけるととても嬉しいです！";
+    document.querySelector('#donation-message-6').textContent = lang === 'en'
+      ? "If you have a moment, we’d really appreciate your support by reading our articles or giving them a like!"
+      : "ふとした時に、記事の閲覧やいいね等で応援していただけるとありがたいです！";
 
     document.querySelector('#donation-message-7').textContent = lang === 'en'
       ? 'You can also share using the Tweet button below!'
