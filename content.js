@@ -8,7 +8,14 @@ const DEBOUNCE_DELAY = 300;
 let debounceTimer = null;
 
 let hoveredChannelName = null; // マウスオーバーで保存するチャンネル名
-
+/**
+ * ポップアップを表示
+ * @param {HTMLElement} item
+ * @param {Array<string>} blockedComments
+ * @param {string} userSelector
+ * @param {string|null} buttonContainerSelector
+ * @param {string|null} parentSelector
+ */
 function logBlockAction(
   item,
   blockedComments,
