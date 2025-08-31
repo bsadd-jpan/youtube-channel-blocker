@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.2.0）
+# YouTube Channel Blocker（v1.2.3）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、特定のチャンネルの動画を非表示にできます。  
@@ -23,6 +23,9 @@ https://github.com/bsadd-jpan/CB2YCB
 ---
 
 ### インストール 🛠️
+
+<details>
+<summary><strong>▶️ 詳細を表示</strong></summary>
 
 ### Gitを使わない場合のインストール方法 📦
 
@@ -107,7 +110,11 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ストアからインストールした場合は勝手に更新にされるようです（タイミングはよくわからず、いつの間にか勝手に更新されてる）。
 
+</details>
+
 ---
+
+
 
 ### 使い方🔴
 
@@ -230,6 +237,9 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 
 ### Installation 🛠️
 
+<details>
+<summary><strong>▶️ Show details</strong></summary>
+
 ### Installation without Git 📦
 
 If you do not use Git, there are three ways to install the extension.
@@ -303,6 +313,8 @@ If you do not use Git, please re-download the necessary files.
 After that, go to the Chrome extensions management page (click the puzzle piece icon), and click the "Reload" button for YouTube Channel Blocker.
 
 If you install from the store, it seems that updates are applied automatically (the timing is unclear, but it updates by itself before you notice).
+
+</details>
 
 ---
 
