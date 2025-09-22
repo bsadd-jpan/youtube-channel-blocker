@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.2.3）
+# YouTube Channel Blocker（v1.3.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、特定のチャンネルの動画を非表示にできます。  
