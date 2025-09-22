@@ -24,6 +24,7 @@
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
         <li><button id="tab-hide-shorts" class="tab">表示／非表示切替</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
+        <li><button id="tab-help" class="tab">使い方・サポート</button></li>
         <li><button id="tab-donation" class="tab">💛 開発者支援</button></li>
       </ul>
     </nav>
@@ -129,6 +130,100 @@
           </label>
         </section>
 
+        <!-- 使い方・サポート -->
+        <section id="section-help" class="tab-content" style="display:none;">
+          <h2>サポート・使い方</h2>
+          <p id="help-message-1">各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。</p>
+          <p id="help-message-2">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker"
+              target="_blank">Repository</a></p>
+          <p id="help-message-3">なお、即時対応が難しいことはご了承ください。</p>
+          
+          <div class="accordion">
+            <button id="accordion-title-1" class="accordion-title">非表示チャンネルリスト</button>
+            <div class="accordion-content">
+              <p id="hide-channel-description-1">特定のチャンネルをリストに登録すると、そのチャンネルの動画を非表示にできます。</p>
+              <p id="hide-channel-description-2">リストへの登録方法は３通り</p>
+              <ul>
+                <p id="hide-channel-description-3">・チャンネル名横の×ボタンを押す</p>
+                <p id="hide-channel-description-4">・アイコンをクリックし、ポップアップ内のリストにチャンネル名を追記する</p>
+                <p id="hide-channel-description-5">・詳細設定の「非表示チャンネルリスト」からチャンネル名を入力して追加する</p>
+              </ul>
+              <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-2" class="accordion-title">チャンネルNGフィルター</button>
+            <div class="accordion-content">
+              <p id="channel-filter-description-1">チャンネル名に特定のキーワードが含まれている場合、そのチャンネルを自動的に非表示にします。</p>
+              <p id="channel-filter-description-2">最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。。</p>
+              <p id="channel-filter-description-3">キーワードセットは最大5000個・10文字以内で設定できます。</p>
+              <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-3" class="accordion-title">タイトルNGフィルター</button>
+            <div class="accordion-content">
+              <p id="video-title-filter-description-1">動画タイトルに特定のキーワードが含まれている場合、その動画を自動的に非表示にします。</p>
+              <p id="video-title-filter-description-2">最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。</p>
+              <p id="video-title-filter-description-3">キーワードセットは最大5000個・30文字以内で設定できます。</p>
+              <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+              <p id="video-title-filter-description-4">例：</p>
+              <ul>
+                <li id="video-title-filter-description-5">「切り抜き」だけ非表示にしたい→「切り抜き」をセット</li>
+                <li id="video-title-filter-description-6">「切り抜き」は見たいが、「切り抜き」と「YouTuber」の2つを含む動画は非表示にしたい→「切り抜き」と「YouTuber」をセット</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-4" class="accordion-title">非表示コメントユーザーリスト</button>
+            <div class="accordion-content">
+              <p id="hide-comment-description-1">@から始まるID名をリストに登録すると、そのチャンネルのコメントを非表示にできます。</p>
+              <p id="hide-comment-description-2">リストへの登録方法は2通り</p>
+              <ul>
+                <p id="hide-comment-description-3">・コメントでID横の×ボタンを押す</p>
+                <p id="hide-comment-description-4">・詳細設定の「非表示コメントユーザーリスト」から@つきのIDを入力して追加する</p>
+              </ul>
+              <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-5" class="accordion-title">エクスポート／インポート</button>
+            <div class="accordion-content">
+              <p id="export-import-description-1">エクスポート／インポート機能を使うことで、非表示リストやキーワードを保存・復元できます。</p>
+              <p id="export-import-description-2">「エクスポート」ボタンを押すと、現在の設定をファイルに保存できます。</p>
+              <p id="export-import-description-3">「インポート」ボタンを押すと、保存したファイルを読み込んで設定を復元できます。</p>
+              <p id="export-import-description-4">定期的なバックアップを推奨します。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-6" class="accordion-title">表示/非表示切替</button>
+            <div class="accordion-content">
+              <p id="show-hide-description-1">「ショート動画フィルター」ボタンを押して「有効」にすると、YouTubeのショート動画がすべて非表示になります。</p>
+              <p id="show-hide-description-2">「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（機能が無効の場合はボタンがグレー表示）。</p>
+              <p id="show-hide-description-3">今後、プレイリスト等についても同様の機能を追加予定です。</p>
+            </div>
+          </div>
+
+
+          <div class="accordion">
+            <button id="accordion-title-7" class="accordion-title">Channel Blockerからリストを変換</button>
+            <div class="accordion-content">
+              <p id="import-from-cb-description-1">
+                Channel Blockerのリスト（.save）を
+                YouTube Channel Blockerのリスト（.json）に変換するHTMLはこちらから利用できます
+              </p>
+              <p>
+                GitHub: <a href="https://github.com/bsadd-jpan/CB2YCB" target="_blank">Repository</a>
+              </p>
+            </div>
+          </div>
+        </section>
+
         <!-- 💛 寄付セクション -->
         <section id="section-donation" class="tab-content">
           <h2 id="donation-h2">寄付で開発者を応援</h2>
@@ -149,9 +244,9 @@
           <p id="donation-message-6">ふとした時に、記事の閲覧やいいね等で応援していただけるとありがたいです！</p>
           <ul id="support-links" style="margin-top:8px; padding-left:1.2em;">
             <section id="section-promotion">
-              <li>X (Twitter)：<a href="https://x.com/aki009113" target="_blank">フォローはこちら</a></li>
-              <li>Blog：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">記事を読む</a></li>
-              <li>GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">リポジトリを見る</a></li>
+              <li id="donation-message-6-1">X (Twitter)：<a href="https://x.com/aki009113" target="_blank">フォローはこちらから</a></li>
+              <li id="donation-message-6-2">Blog：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">記事を見る</a></li>
+              <li id="donation-message-6-3">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">リポジトリを見る</a></li>
             </section>
           </ul>
 
