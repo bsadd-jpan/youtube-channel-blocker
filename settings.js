@@ -1137,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
       : '各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。';
     document.querySelector('#help-message-3').textContent = lang === 'en'
       ? 'Please understand that we may not be able to respond right away.'
-      : 'なお、即時対応が難しいことはご了承ください。';
+      : 'なお、全要望の実装や即時対応が難しいことはご了承ください。';
 
 
     // 各アコーディオンタイトル
@@ -1196,22 +1196,22 @@ document.addEventListener('DOMContentLoaded', () => {
       ? 'If the channel name contains specific keywords, that channel will be automatically hidden.'
       : 'チャンネル名にキーワードが含まれている場合、そのチャンネルを非表示にします。';
     document.querySelector('#channel-filter-description-2').textContent = lang === 'en'
-      ? 'You can register up to 3 keywords per set, and if a channel name contains all the keywords in a set, it will be hidden.'
-      : '最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。';
+      ? 'You can set up to three keywords per keyword set. If there are no special conditions, please set only one keyword.'
+      : '1つのキーワードセットに最大3つのキーワードを設定できます。特に条件がない場合はキーワードを1つだけ設定してください。';
     document.querySelector('#channel-filter-description-3').textContent = lang === 'en'
       ? 'Keyword sets are limited to 5000 sets and 10 characters each.'
-      : 'キーワードセットは最大5000個・10文字以内で設定できます。';
+      : 'キーワードセットは最大5000個、各キーワードは最大10文字です。';
 
     // 動画タイトルNGフィルターアコーディオン
     document.querySelector('#video-title-filter-description-1').textContent = lang === 'en'
       ? 'If the video title contains specific keywords, the video will be automatically hidden.'
       : '動画タイトルに特定のキーワードが含まれている場合、その動画を自動的に非表示にします。';
     document.querySelector('#video-title-filter-description-2').textContent = lang === 'en'
-      ? 'You can register up to 3 keywords per set, and if a video title contains all the keywords in a set, it will be hidden.'
-      : '最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。';
+      ? 'You can set up to three keywords per keyword set. If there are no special conditions, please set only one keyword.'
+      : '1つのキーワードセットに最大3つのキーワードを設定できます。特に条件がない場合はキーワードを1つだけ設定してください。';
     document.querySelector('#video-title-filter-description-3').textContent = lang === 'en'
       ? 'Keyword sets are limited to 5000 sets and 30 characters each.'
-      : 'キーワードセットは最大5000個・30文字以内で設定できます。';
+      : 'キーワードセットは最大5000個、各キーワードは最大30文字です。';
     document.querySelector('#video-title-filter-description-4').textContent = lang === 'en'
       ? 'For example:'
       : '例：';
@@ -1220,7 +1220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       : '「切り抜き」だけ非表示にしたい→「切り抜き」を登録';
     document.querySelector('#video-title-filter-description-6').textContent = lang === 'en'
       ? 'Want to see "clips" but hide videos that contain both "clips" and "YouTuber" → Set "clips" and "YouTuber"'
-      : '「切り抜き」は見たいが、「切り抜き」と「YouTuber」の2つを含む動画は非表示にしたい→「切り抜き」と「YouTuber」を登録';
+      : '「切り抜き」と「YouTuber」の両方を含む動画を非表示にしたい→「切り抜き」と「YouTuber」を登録';
 
     // 非表示コメントユーザーリストアコーディオン
     document.querySelector('#hide-comment-description-1').textContent = lang === 'en'
@@ -1245,18 +1245,18 @@ document.addEventListener('DOMContentLoaded', () => {
       : '「エクスポート」ボタンを押すと、現在の設定をファイルに保存できます。';
     document.querySelector('#export-import-description-3').textContent = lang === 'en'
       ? 'We recommend backing up your data regularly.'
-      : 'インポート」ボタンを押すと、保存したファイルを読み込んで設定を復元できます。（インポートは既存のデータを上書きしますのでご注意ください）';
+      : '「インポート」ボタンを押すと、保存したファイルを読み込んで設定を復元できます。（インポートは既存のデータを上書きしますのでご注意ください）';
     document.querySelector('#export-import-description-4').textContent = lang === 'en'
       ? '💡 We recommend backing up your data regularly.'
       : '💡 定期的なバックアップを推奨します。';
 
     // 表示／非表示切替アコーディオン
     document.querySelector('#show-hide-description-1').textContent = lang === 'en'
-      ? 'Pressing the button to "Enable" will hide all YouTube Shorts videos (button will be colored).'
-      : 'ボタンを「有効」にすると、YouTubeのショート動画がすべて非表示になります（ボタンがカラー表示）。';
+      ? 'Pressing the button to "Enable" will hide all Shorts videos (button will be colored).'
+      : 'ボタンを「有効」にすると、ショート動画がすべて非表示になります（ボタンがカラー表示）。';
     document.querySelector('#show-hide-description-2').textContent = lang === 'en'
       ? 'Pressing the button again to "Disable" will show the Shorts videos again (button will be grayed out).'
-      : 'ボタンを「無効」にすると、YouTubeのショート動画が再び表示されます（ボタンがグレー表示）。';
+      : 'ボタンを「無効」にすると、ショート動画が再び表示されます（ボタンがグレー表示）。';
     document.querySelector('#show-hide-description-3').textContent = lang === 'en'
       ? 'I plan to add similar functionality for playlists and other features in the future.'
       : '今後、プレイリスト等についても同様の機能を追加予定です。';
