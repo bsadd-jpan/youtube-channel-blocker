@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabLanguageBtn = document.getElementById('tab-language'); // 追加
   const tabHideShortsBtn = document.getElementById('tab-hide-shorts');  // 新規追加
   const tabDonationBtn = document.getElementById('tab-donation');
-
+  const tabHelpBtn = document.getElementById('tab-help'); // 新規追加
 
   // セクション
   const sectionList = document.getElementById('section-list');
@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionImportExport = document.getElementById('section-import-export');
   const sectionLanguage = document.getElementById('section-language'); // 追加
   const sectionHideShorts = document.getElementById('section-hide-shorts'); // 新規追加
+  const sectionHelp = document.getElementById('section-help');
   const sectionDonation = document.getElementById('section-donation');
 
   // チャンネルフィルターリスト用要素
@@ -147,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
     tabHideShortsBtn.classList.toggle('active', to === 'hideShorts');  // 追加
     tabLanguageBtn.classList.toggle('active', to === 'language');
+    tabHelpBtn.classList.toggle('active', to === 'help');
     tabDonationBtn.classList.toggle('active', to === 'donation');
 
     sectionList.style.display = to === 'list' ? 'block' : 'none';
@@ -155,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionBlockedComments.style.display = to === 'blockedComments' ? 'block' : 'none';
     sectionImportExport.style.display = to === 'importExport' ? 'block' : 'none';
     sectionHideShorts.style.display = to === 'hideShorts' ? 'block' : 'none';  // 追加
+    sectionHelp.style.display = to === 'help' ? 'block' : 'none';
     sectionLanguage.style.display = to === 'language' ? 'block' : 'none';
     sectionDonation.style.display = to === 'donation' ? 'block' : 'none';
 
@@ -212,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tabImportExportBtn.addEventListener('click', () => switchTab('importExport'));
   tabLanguageBtn.addEventListener('click', () => switchTab('language'));
   tabDonationBtn.addEventListener('click', () => switchTab('donation'));
+  tabHelpBtn.addEventListener('click', () => switchTab('help'));
 
   // チャンネルフィルターリスト描画
   function renderChannelFilterList(filter = '') {
@@ -898,17 +902,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ツイートボタンの設定
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   const tweetBtn = document.getElementById("tweet-support-button");
-  //   if (tweetBtn) {
-  //     tweetBtn.addEventListener("click", () => {
-  //       const defaultText = "Good work #YouTubeChannelBlocker";
-  //       const url = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(defaultText);
-  //       window.open(url, "_blank", "width=600,height=400");
-  //     });
-  //   }
-  // });
+
+  // アコーディオン処理
+  document.querySelectorAll('.accordion-title').forEach((button) => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling;
+      const isOpen = content.style.display === 'block';
+
+      // 一度全部閉じる
+      document.querySelectorAll('.accordion-content').forEach((c) => c.style.display = 'none');
+
+      // クリックしたやつだけ切り替え
+      content.style.display = isOpen ? 'none' : 'block';
+    });
+  });
 
   importChannelsBtn.addEventListener('click', () => {
     currentImportTarget = 'channels';
@@ -1045,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabHideShortsBtn.textContent = lang === 'en' ? 'Show/Hide Toggle' : '表示／非表示切替';
     tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
     tabDonationBtn.textContent = lang === 'en' ? '💛 Support Developer' : '💛 開発者を応援';
+    tabHelpBtn.textContent = lang === 'en' ? 'Support/HowTo' : 'サポート・使い方';
 
 
     // セクション見出し・ラベルなど
@@ -1056,6 +1064,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#section-channel-filter h2').textContent = lang === 'en'
       ? 'Channel Filter List'
       : 'チャンネルNGフィルター';
+    document.getElementById('blockChannelInput').placeholder = lang === 'en' ? 'Channel Name' : 'チャンネル名';
+    document.querySelector('#addBlockChannelBtn').textContent = lang === 'en'
+      ? 'Add'
+      : '追加';
     document.getElementById('channelFilter1').placeholder = lang === 'en' ? 'Keyword 1' : 'キーワード1';
     document.getElementById('channelFilter2').placeholder = lang === 'en' ? 'Keyword 2' : 'キーワード2';
     document.getElementById('channelFilter3').placeholder = lang === 'en' ? 'Keyword 3' : 'キーワード3';
@@ -1118,7 +1130,144 @@ document.addEventListener('DOMContentLoaded', () => {
       ? 'Choose the language to use for the UI:'
       : 'UIに使用する言語を選択してください：';
 
-    // Donation section
+    // サポート・使い方セクション
+    document.querySelector('#section-help h2').textContent = lang === 'en' ? 'Support / How To' : 'サポート・使い方';
+    document.querySelector('#help-message-1').textContent = lang === 'en'
+      ? 'This section provides an overview of each feature and how to use it. Click on the title to expand the details.'
+      : '各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。';
+    document.querySelector('#help-message-3').textContent = lang === 'en'
+      ? 'Please understand that we may not be able to respond right away.'
+      : 'なお、即時対応が難しいことはご了承ください。';
+
+
+    // 各アコーディオンタイトル
+    document.querySelector('#accordion-title-1').textContent = lang === 'en'
+      ? 'Blocked Channel List'
+      : '非表示チャンネルリスト';
+    document.querySelector('#accordion-title-2').textContent = lang === 'en'
+      ? 'Channel Filter'
+      : 'チャンネルNGフィルター';
+    document.querySelector('#accordion-title-3').textContent = lang === 'en'
+      ? 'Title Filter'
+      : 'タイトルNGフィルター';
+    document.querySelector('#accordion-title-4').textContent = lang === 'en'
+      ? 'Blocked Comment User List'
+      : '非表示コメントユーザーリスト';
+
+    document.querySelector('#accordion-title-5').textContent = lang === 'en'
+      ? 'Export/Import'
+      : 'エクスポート／インポート';
+
+    document.querySelector('#accordion-title-6').textContent = lang === 'en'
+      ? 'Show/Hide Toggle'
+      : '表示/非表示';
+
+    document.querySelector('#accordion-title-7').textContent = lang === 'en'
+      ? 'Import from Channel Blocker'
+      : 'Channel Blockerからリストをインポート';
+
+    // 共通文言
+    document.querySelectorAll('.common-description-1').forEach(el => {
+      el.textContent = lang === 'en'
+        ? 'You can edit the name with the "Edit" button and remove it from the list with the "Delete" button.'
+        : 'リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。';
+    });
+
+
+    // 非表示チャンネルリストアコーディオン
+    document.querySelector('#hide-channel-description-1').textContent = lang === 'en'
+      ? 'By registering specific channels in the blocked channel list, you can hide their videos.'
+      : '特定のチャンネルをリストに登録すると、そのチャンネルの動画を非表示にできます。';
+    document.querySelector('#hide-channel-description-2').textContent = lang === 'en'
+      ? 'There are three ways to add channels'
+      : '登録方法は３通り';
+    document.querySelector('#hide-channel-description-3').textContent = lang === 'en'
+      ? '- Click the × button next to the channel name.'
+      : '・チャンネル名横の×ボタンを押す';
+    document.querySelector('#hide-channel-description-4').textContent = lang === 'en'
+      ? '- Click the extension icon and add it to the list in the popup.'
+      : '・拡張機能アイコンをクリックし、ポップアップ内のリストに追加する';
+    document.querySelector('#hide-channel-description-5').textContent = lang === 'en'
+      ? '- Enter the channel name in the "Channel Name" field below and click the "Add" button.'
+      : '・「チャンネル名」の欄に非表示にしたいチャンネル名を入力して「追加」ボタンを押す';
+
+    // チャンネルNGフィルターアコーディオン
+    document.querySelector('#channel-filter-description-1').textContent = lang === 'en'
+      ? 'If the channel name contains specific keywords, that channel will be automatically hidden.'
+      : 'チャンネル名にキーワードが含まれている場合、そのチャンネルを非表示にします。';
+    document.querySelector('#channel-filter-description-2').textContent = lang === 'en'
+      ? 'You can register up to 3 keywords per set, and if a channel name contains all the keywords in a set, it will be hidden.'
+      : '最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。';
+    document.querySelector('#channel-filter-description-3').textContent = lang === 'en'
+      ? 'Keyword sets are limited to 5000 sets and 10 characters each.'
+      : 'キーワードセットは最大5000個・10文字以内で設定できます。';
+
+    // 動画タイトルNGフィルターアコーディオン
+    document.querySelector('#video-title-filter-description-1').textContent = lang === 'en'
+      ? 'If the video title contains specific keywords, the video will be automatically hidden.'
+      : '動画タイトルに特定のキーワードが含まれている場合、その動画を自動的に非表示にします。';
+    document.querySelector('#video-title-filter-description-2').textContent = lang === 'en'
+      ? 'You can register up to 3 keywords per set, and if a video title contains all the keywords in a set, it will be hidden.'
+      : '最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。';
+    document.querySelector('#video-title-filter-description-3').textContent = lang === 'en'
+      ? 'Keyword sets are limited to 5000 sets and 30 characters each.'
+      : 'キーワードセットは最大5000個・30文字以内で設定できます。';
+    document.querySelector('#video-title-filter-description-4').textContent = lang === 'en'
+      ? 'For example:'
+      : '例：';
+    document.querySelector('#video-title-filter-description-5').textContent = lang === 'en'
+      ? 'Want to hide only "clips" → Set "clips"'
+      : '「切り抜き」だけ非表示にしたい→「切り抜き」を登録';
+    document.querySelector('#video-title-filter-description-6').textContent = lang === 'en'
+      ? 'Want to see "clips" but hide videos that contain both "clips" and "YouTuber" → Set "clips" and "YouTuber"'
+      : '「切り抜き」は見たいが、「切り抜き」と「YouTuber」の2つを含む動画は非表示にしたい→「切り抜き」と「YouTuber」を登録';
+
+    // 非表示コメントユーザーリストアコーディオン
+    document.querySelector('#hide-comment-description-1').textContent = lang === 'en'
+      ? 'By registering ID starting with @ in the list, you can hide comments from that channel.'
+      : '@から始まるID名をリストに登録すると、そのチャンネルのコメントを非表示にできます。';
+    document.querySelector('#hide-comment-description-2').textContent = lang === 'en'
+      ? 'There are two ways to add users to the list:'
+      : 'リストへの登録方法は2通り';
+    document.querySelector('#hide-comment-description-3').textContent = lang === 'en'
+      ? '- Click the × button next to the ID in the comments.'
+      : '・コメントでID横の×ボタンを押す';
+    document.querySelector('#hide-comment-description-4').textContent = lang === 'en'
+      ? '- Enter the ID starting with @ in the "Username" field below and click the "Add" button.'
+      : '・「ユーザー名」の欄に@つきでIDを入力して「追加」ボタンを押す';
+
+    // エクスポート・インポートアコーディオン
+    document.querySelector('#export-import-description-1').textContent = lang === 'en'
+      ? 'By using the export/import feature, you can save and restore your blocked lists and keywords.'
+      : 'エクスポート／インポート機能を使うことで、非表示リストやキーワードを保存・復元できます。';
+    document.querySelector('#export-import-description-2').textContent = lang === 'en'
+      ? 'Please note that importing will overwrite the existing data.'
+      : '「エクスポート」ボタンを押すと、現在の設定をファイルに保存できます。';
+    document.querySelector('#export-import-description-3').textContent = lang === 'en'
+      ? 'We recommend backing up your data regularly.'
+      : 'インポート」ボタンを押すと、保存したファイルを読み込んで設定を復元できます。（インポートは既存のデータを上書きしますのでご注意ください）';
+    document.querySelector('#export-import-description-4').textContent = lang === 'en'
+      ? '💡 We recommend backing up your data regularly.'
+      : '💡 定期的なバックアップを推奨します。';
+
+    // 表示／非表示切替アコーディオン
+    document.querySelector('#show-hide-description-1').textContent = lang === 'en'
+      ? 'Pressing the button to "Enable" the "Shorts Video Filter" will hide all YouTube Shorts videos (button will be colored).'
+      : '「ショート動画フィルター」ボタンを押して「有効」にすると、YouTubeのショート動画がすべて非表示になります（ボタンがカラー表示）。';
+    document.querySelector('#show-hide-description-2').textContent = lang === 'en'
+      ? 'Pressing the button again to "Disable" will show the Shorts videos again (button will be grayed out).'
+      : '「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（ボタンがグレー表示）。';
+    document.querySelector('#show-hide-description-3').textContent = lang === 'en'
+      ? 'I plan to add similar functionality for playlists and other features in the future.'
+      : '今後、プレイリスト等についても同様の機能を追加予定です。';
+
+    // Channel Blockerからのインポートアコーディオン
+    document.querySelector('#import-from-cb-description-1').textContent = lang === 'en'
+      ? 'HTML to convert Channel Blocker lists to YouTube Channel Blocker lists is available here'
+      : 'Channel BlockerのリストをYouTube Channel Blockerのリストに変換するHTMLはこちらから利用できます';
+
+
+    // 開発者応援セクション
     document.querySelector('#donation-h2').textContent = lang === 'en'
       ? '🎁 Support the Developer with a Donation'
       : '🎁 寄付で開発者を応援';
@@ -1133,7 +1282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#donation-message-3').textContent = lang === 'en'
       ? 'Ko-fi allows anonymous donations without registration using a credit card (PayPal requires registration).'
-      : 'Ko-fiは登録不要で匿名かつクレジットカードからの寄付が可能です（PayPalは登録が必要）。';
+      : 'Ko-fiは登録不要で匿名かつクレジットカードからの寄付が可能です。';
 
     document.querySelector('#paypal-button').textContent = lang === 'en'
       ? 'Donate with PayPal'
@@ -1142,23 +1291,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#kofi-button').textContent = lang === 'en'
       ? 'Donate with Ko-fi'
       : 'Ko-fiで寄付';
-
     document.querySelector('#promotion-h2').textContent = lang === 'en'
       ? '📢 Support the Developer by Spreading the Word'
       : '📢 宣伝で開発者を応援（寄付が難しい方へ）';
-
     document.querySelector('#donation-message-4').textContent = lang === 'en'
       ? 'If donating is difficult, you can still support by sharing on social media or following the account!'
       : '寄付が難しい場合でも、SNSでの拡散やアカウントのフォローなどで応援していただけます！';
-
-
-    // document.querySelector('#donation-message-5').textContent = lang === 'en'
-    //   ? 'Promotion helps raise awareness of the developer’s other projects, increases blog traffic, and grows the extension’s user base.'
-    //   : '宣伝によって、他の制作物の認知やブログのPVが増えたり、拡張機能のユーザーが増えたりします！';
-
     document.querySelector('#donation-message-6').textContent = lang === 'en'
       ? "If you have a moment, we’d really appreciate your support by reading our articles or giving them a like!"
       : "ふとした時に、記事の閲覧やいいね等で応援していただけるとありがたいです！";
+
+    document.querySelector('#donation-message-6-1').innerHTML = lang === 'en'
+      ? 'X (Twitter): <a href="https://x.com/aki009113" target="_blank">Follow here</a>'
+      : 'X (Twitter)：<a href="https://x.com/aki009113" target="_blank">フォローはこちらから</a>';
+    document.querySelector('#donation-message-6-2').innerHTML = lang === 'en'
+      ? 'Blog: <a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">Read the article</a>'
+      : 'Blog：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">記事を見る</a>';
+    document.querySelector('#donation-message-6-3').innerHTML = lang === 'en'
+      ? 'GitHub: <a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">View Repository</a>'
+      : 'GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">リポジトリを見る</a>';
+
 
     document.querySelector('#donation-message-7').textContent = lang === 'en'
       ? 'You can also share using the Tweet button below!'
