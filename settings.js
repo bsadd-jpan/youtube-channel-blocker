@@ -1163,8 +1163,8 @@ document.addEventListener('DOMContentLoaded', () => {
       : '表示/非表示切替';
 
     document.querySelector('#accordion-title-7').textContent = lang === 'en'
-      ? 'Import from Channel Blocker'
-      : 'Channel Blockerからリストをインポート';
+      ? 'Convert Channel Blocker List'
+      : 'Channel Blockerのリストを変換';
 
     // 共通文言
     document.querySelectorAll('.common-description-1').forEach(el => {
@@ -1252,11 +1252,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 表示／非表示切替アコーディオン
     document.querySelector('#show-hide-description-1').textContent = lang === 'en'
-      ? 'Pressing the button to "Enable" the "Shorts Video Filter" will hide all YouTube Shorts videos (button will be colored).'
-      : '「ショート動画フィルター」ボタンを押して「有効」にすると、YouTubeのショート動画がすべて非表示になります（ボタンがカラー表示）。';
+      ? 'Pressing the button to "Enable" will hide all YouTube Shorts videos (button will be colored).'
+      : 'ボタンを「有効」にすると、YouTubeのショート動画がすべて非表示になります（ボタンがカラー表示）。';
     document.querySelector('#show-hide-description-2').textContent = lang === 'en'
       ? 'Pressing the button again to "Disable" will show the Shorts videos again (button will be grayed out).'
-      : '「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（ボタンがグレー表示）。';
+      : 'ボタンを「無効」にすると、YouTubeのショート動画が再び表示されます（ボタンがグレー表示）。';
     document.querySelector('#show-hide-description-3').textContent = lang === 'en'
       ? 'I plan to add similar functionality for playlists and other features in the future.'
       : '今後、プレイリスト等についても同様の機能を追加予定です。';
