@@ -1160,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#accordion-title-6').textContent = lang === 'en'
       ? 'Show/Hide Toggle'
-      : '表示/非表示';
+      : '表示/非表示切替';
 
     document.querySelector('#accordion-title-7').textContent = lang === 'en'
       ? 'Import from Channel Blocker'
