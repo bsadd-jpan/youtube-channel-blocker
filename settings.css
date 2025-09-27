@@ -302,6 +302,7 @@ html {
 
 /* サイドバーのタブボタン統一（チャンネルフィルタータブも含める） */
 #sidebar ul li button.tab,
+#sidebar ul li .advanced-subtab,
 #tab-channel-filter.tab {
   display: block;
   width: 100%;
@@ -317,11 +318,13 @@ html {
 }
 
 #sidebar ul li button.tab:hover,
+#sidebar ul li .advanced-subtab:hover,
 #tab-channel-filter.tab:hover {
   background-color: #f1f1f1;
 }
 
 #sidebar ul li button.tab.active,
+#sidebar ul li .advanced-subtab.active,
 #tab-channel-filter.tab.active {
   background-color: #eaf6fb;
   border-left: 4px solid #007bff;
@@ -506,4 +509,26 @@ html {
   display: none;
   padding: 10px;
   background: #fff;
+}
+
+/* 高度な設定タブのスタイル */
+#advancedTabContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#advancedTabContent li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+#advancedTabContent li:last-child {
+  border-bottom: none;
 }

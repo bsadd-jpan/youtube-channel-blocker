@@ -362,7 +362,9 @@ function processItemGeneric(
   blockParentSelectors,
   runBlocker,
   channelKeywordSets,
-  titleKeywordSets
+  titleKeywordSets,
+  channelRegexList = [], // ★追加
+  titleRegexList = []    // ★追加
 ) {
   // プレイリスト特有のタグがあれば処理スキップ
   if (item.querySelector("yt-collection-thumbnail-view-model")) {
@@ -425,6 +427,18 @@ function processItemGeneric(
     }
   }
 
+  // チャンネル名正規表現によるブロック判定
+  if (channelRegexList.some(regex => regex.test(channelName))) {
+    const parent = item.closest(blockParentSelectors);
+    if (parent) {
+      parent.style.display = "none";
+      return;
+    } else {
+      item.style.display = "none";
+      return;
+    }
+  }
+
   // 動画タイトルキーワードANDブロック判定
   const titleElem = item.querySelector(
     "#video-title, h3 a, #title, yt-formatted-string#description-text, ytd-video-renderer #video-title, yt-formatted-string#video-title"
@@ -433,6 +447,16 @@ function processItemGeneric(
 
   const titleText = titleElem.textContent || "";
   if (isTitleBlocked(titleText, titleKeywordSets)) {
+    const parent = item.closest(blockParentSelectors);
+    if (parent) {
+      parent.style.display = "none";
+    } else {
+      item.style.display = "none";
+    }
+  }
+
+  // タイトル正規表現によるブロック判定
+  if (titleRegexList.some(regex => regex.test(titleText))) {
     const parent = item.closest(blockParentSelectors);
     if (parent) {
       parent.style.display = "none";

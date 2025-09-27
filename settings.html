@@ -21,6 +21,13 @@
         <li><button id="tab-channel-filter" class="tab">チャンネルNGフィルター</button></li>
         <li><button id="tab-keywords" class="tab">動画タイトルNGフィルター</button></li>
         <li><button id="tab-blocked-comments" class="tab">非表示コメントリスト</button></li>
+        <li>
+          <button id="tab-advanced-settings" class="tab">高度な設定</button>
+          <div id="advancedSubtabs" style="display:none; margin-left:16px;">
+            <button class="advanced-subtab" data-target="channelRegex">チャンネル名正規表現</button>
+            <button class="advanced-subtab" data-target="titleRegex">タイトル名正規表現</button>
+          </div>
+        </li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
         <li><button id="tab-hide-shorts" class="tab">表示／非表示切替</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
@@ -88,6 +95,20 @@
           </label>
         </section>
 
+        <!-- 高度な設定タブ -->
+        <section id="section-advanced-settings" class="tab-content" style="display:none;">
+          <h2>高度な設定</h2>
+          <div id="advancedTabContent"></div>
+          <!-- 小見出し（最初は非表示） -->
+          <div id="advancedSubtabs" style="display:none; margin-left:16px;">
+            <button class="advanced-subtab" data-target="channelRegex">チャンネル名正規表現</button>
+            <button class="advanced-subtab" data-target="titleRegex">タイトル名正規表現</button>
+          </div>
+
+          <!-- 各リストの表示場所 -->
+          <div id="advancedTabContent" style="margin-left:32px;"></div>
+        </section>
+
         <!-- エクスポート／インポート -->
         <section id="section-import-export" class="tab-content">
           <h2>エクスポート／インポート</h2>
@@ -137,7 +158,7 @@
           <p id="help-message-2">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker"
               target="_blank">Repository</a></p>
           <p id="help-message-3">なお、即時対応が難しいことはご了承ください。</p>
-          
+
           <div class="accordion">
             <button id="accordion-title-1" class="accordion-title">非表示チャンネルリスト</button>
             <div class="accordion-content">
@@ -172,7 +193,8 @@
               <p id="video-title-filter-description-4">例：</p>
               <ul>
                 <li id="video-title-filter-description-5">「切り抜き」だけ非表示にしたい→「切り抜き」をセット</li>
-                <li id="video-title-filter-description-6">「切り抜き」は見たいが、「切り抜き」と「YouTuber」の2つを含む動画は非表示にしたい→「切り抜き」と「YouTuber」をセット</li>
+                <li id="video-title-filter-description-6">
+                  「切り抜き」は見たいが、「切り抜き」と「YouTuber」の2つを含む動画は非表示にしたい→「切り抜き」と「YouTuber」をセット</li>
               </ul>
             </div>
           </div>
@@ -204,7 +226,8 @@
             <button id="accordion-title-6" class="accordion-title">表示/非表示切替</button>
             <div class="accordion-content">
               <p id="show-hide-description-1">「ショート動画フィルター」ボタンを押して「有効」にすると、YouTubeのショート動画がすべて非表示になります。</p>
-              <p id="show-hide-description-2">「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（機能が無効の場合はボタンがグレー表示）。</p>
+              <p id="show-hide-description-2">「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（機能が無効の場合はボタンがグレー表示）。
+              </p>
               <p id="show-hide-description-3">今後、プレイリスト等についても同様の機能を追加予定です。</p>
             </div>
           </div>
@@ -244,9 +267,12 @@
           <p id="donation-message-6">ふとした時に、記事の閲覧やいいね等で応援していただけるとありがたいです！</p>
           <ul id="support-links" style="margin-top:8px; padding-left:1.2em;">
             <section id="section-promotion">
-              <li id="donation-message-6-1">X (Twitter)：<a href="https://x.com/aki009113" target="_blank">フォローはこちらから</a></li>
-              <li id="donation-message-6-2">Blog：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000" target="_blank">記事を見る</a></li>
-              <li id="donation-message-6-3">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker" target="_blank">リポジトリを見る</a></li>
+              <li id="donation-message-6-1">X (Twitter)：<a href="https://x.com/aki009113" target="_blank">フォローはこちらから</a>
+              </li>
+              <li id="donation-message-6-2">Blog：<a href="https://physx.hatenablog.com/entry/2025/07/28/170000"
+                  target="_blank">記事を見る</a></li>
+              <li id="donation-message-6-3">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker"
+                  target="_blank">リポジトリを見る</a></li>
             </section>
           </ul>
 
