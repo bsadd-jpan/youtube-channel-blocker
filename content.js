@@ -375,7 +375,7 @@ function processItemGeneric(
 
   const channelName = channelNameElem.textContent.trim();
   if (!channelName) {
-    console.log("No channel name found, skipping");
+    // console.log("No channel name found, skipping");
     return;
   }
 
@@ -428,12 +428,8 @@ function processItemGeneric(
   }
 
   // チャンネル名正規表現によるブロック判定
-  console.log(channelRegexList.map(r => r.toString())); // 生成された RegExp を確認
-  console.log(channelRegexList.some(r => r.test(channelName))); // 直接テスト
-  console.log("Checking channel regex for:", channelName);
   if (channelRegexList.some(regex => regex.test(channelName))) {
     const parent = item.closest(blockParentSelectors);
-    console.log("Channel regex matched, hiding item:", channelName);
     if (parent) {
       parent.style.display = "none";
       return;
@@ -461,9 +457,6 @@ function processItemGeneric(
   }
 
   // タイトル正規表現によるブロック判定
-  // console.log(titleRegexList.map(r => r.toString())); // 生成された RegExp を確認
-  // console.log(titleRegexList.some(r => r.test(titleText))); // 直接テスト
-  // console.log("Checking title regex for:", titleText);
   if (titleRegexList.some(regex => regex.test(titleText))) {
     const parent = item.closest(blockParentSelectors);
     // console.log("Title regex matched, hiding item:", titleText);
@@ -596,7 +589,7 @@ async function runBlocker() {
         return;
       }
 
-      console.log(hideShortsFlag);
+      // console.log(hideShortsFlag);
       // hideShortsFlag = !!result.hideShortsFlag;
 
       const blockList = result.blockedChannels || [];
