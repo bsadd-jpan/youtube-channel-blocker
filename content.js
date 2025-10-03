@@ -428,8 +428,12 @@ function processItemGeneric(
   }
 
   // チャンネル名正規表現によるブロック判定
+  console.log(channelRegexList.map(r => r.toString())); // 生成された RegExp を確認
+  console.log(channelRegexList.some(r => r.test(channelName))); // 直接テスト
+  console.log("Checking channel regex for:", channelName);
   if (channelRegexList.some(regex => regex.test(channelName))) {
     const parent = item.closest(blockParentSelectors);
+    console.log("Channel regex matched, hiding item:", channelName);
     if (parent) {
       parent.style.display = "none";
       return;
@@ -438,6 +442,7 @@ function processItemGeneric(
       return;
     }
   }
+  console.log("regex match finished:", channelName);
 
   // 動画タイトルキーワードANDブロック判定
   const titleElem = item.querySelector(
@@ -456,14 +461,19 @@ function processItemGeneric(
   }
 
   // タイトル正規表現によるブロック判定
+  // console.log(titleRegexList.map(r => r.toString())); // 生成された RegExp を確認
+  // console.log(titleRegexList.some(r => r.test(titleText))); // 直接テスト
+  // console.log("Checking title regex for:", titleText);
   if (titleRegexList.some(regex => regex.test(titleText))) {
     const parent = item.closest(blockParentSelectors);
+    // console.log("Title regex matched, hiding item:", titleText);
     if (parent) {
       parent.style.display = "none";
     } else {
       item.style.display = "none";
     }
   }
+  // console.log("regex match finished:", titleText);
 }
 
 /**
@@ -487,10 +497,89 @@ function hideParentByChildSelector(childSelector, parentSelector) {
   });
 }
 
+// content.js helper: background 経由で取得
+function getRegexListFromBackground(type) {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: 'getRegexList', type }, (res) => {
+      if (!res || res.ok === false) {
+        // エラーでも空配列で処理継続
+        console.error('getRegexListFromBackground error', res && res.error);
+        resolve([]);
+      } else {
+        resolve(res.list || []);
+      }
+    });
+  });
+}
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open('RegexListsDB', 1);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('regexLists')) {
+        db.createObjectStore('regexLists', { keyPath: 'type' });
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+/**
+ * 指定した type の正規表現リストを取得
+ * @param {"channel"|"title"} type
+ * @returns {Promise<string[]>} リスト
+ */
+async function getRegexList(type) {
+  const db = await openDB();
+  return new Promise((resolve) => {
+    const tx = db.transaction('regexLists', 'readonly');
+    const store = tx.objectStore('regexLists');
+    const req = store.get(type);
+    req.onsuccess = () => resolve(req.result ? req.result.list : []);
+    req.onerror = () => resolve([]);
+  });
+}
+/**
+ * ユーザー入力の正規表現文字列を RegExp に変換
+ * - /pattern/flags の形式で入力することを前提
+ * @param {string} input
+ * @returns {RegExp|null}
+ */
+function parseUserRegex(input) {
+  if (!input) return null;
+  const m = input.match(/^\/(.+)\/([a-z]*)$/i);
+  if (!m) {
+    console.error("Regex must be /pattern/flags:", input);
+    return null;
+  }
+  let [, pattern, flags] = m;
+  if (!flags.includes('u')) flags += 'u'; // u を追加（重複は作らない）
+  try {
+    return new RegExp(pattern, flags);
+  } catch (e) {
+    console.error("Invalid regex pattern:", input, e);
+    return null;
+  }
+}
+
 /**
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
-function runBlocker() {
+async function runBlocker() {
+  // background 経由で取得
+  const channelPatterns = await getRegexListFromBackground("channelRegex");
+  const titlePatterns = await getRegexListFromBackground("titleRegex");
+
+  const channelRegexList = channelPatterns
+    .map(p => parseUserRegex(p))
+    .filter(r => r !== null);
+
+  const titleRegexList = titlePatterns
+    .map(p => parseUserRegex(p))
+    .filter(r => r !== null);
+
   chrome.storage.local.get(
     [
       "blockerEnabled",
@@ -560,7 +649,9 @@ function runBlocker() {
           "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -574,7 +665,9 @@ function runBlocker() {
           "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -590,7 +683,9 @@ function runBlocker() {
             "ytd-compact-video-renderer",
             runBlocker,
             channelKeywordSets,
-            titleKeywordSets
+            titleKeywordSets,
+            channelRegexList,
+            titleRegexList
           );
         });
 
@@ -604,7 +699,9 @@ function runBlocker() {
           "ytd-video-renderer",
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -618,7 +715,9 @@ function runBlocker() {
           "ytd-channel-renderer",
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -632,7 +731,9 @@ function runBlocker() {
           "ytd-video-renderer",
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -646,7 +747,9 @@ function runBlocker() {
           null,
           runBlocker,
           channelKeywordSets,
-          titleKeywordSets
+          titleKeywordSets,
+          channelRegexList,
+          titleRegexList
         );
       });
 
@@ -710,28 +813,7 @@ function runBlocker() {
           null,
           runBlocker
         );
-        // バッジ名（返信コメント用）
-        // processCommentUserBlock(
-        //   item,
-        //   blockedComments,
-        //   "#author-comment-badge ytd-channel-name #text",
-        //   "#author-comment-badge ytd-channel-name #text-container",
-        //   null,
-        //   runBlocker
-        // );
       });
-
-      // Shortsコメント
-      // document.querySelectorAll("ytd-comment-renderer").forEach((item) => {
-      //   processCommentUserBlock(
-      //     item,
-      //     blockedComments,
-      //     "ytd-author-comment-badge-renderer #channel-name #text",
-      //     "ytd-author-comment-badge-renderer #text-container",
-      //     null,
-      //     runBlocker
-      //   );
-      // });
     }
   );
 }
