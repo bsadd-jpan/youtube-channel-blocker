@@ -429,6 +429,9 @@ function processItemGeneric(
 
   // チャンネル名正規表現によるブロック判定
   if (channelRegexList.some(regex => regex.test(channelName))) {
+    if (blockParentSelectors == null) {
+      return; // blockParentSelectors（第５引数）がnullの場合は非表示にしない
+    }
     const parent = item.closest(blockParentSelectors);
     if (parent) {
       parent.style.display = "none";
@@ -496,7 +499,7 @@ function getRegexListFromBackground(type) {
     chrome.runtime.sendMessage({ action: 'getRegexList', type }, (res) => {
       if (!res || res.ok === false) {
         // エラーでも空配列で処理継続
-        console.error('getRegexListFromBackground error', res && res.error);
+        // console.error('getRegexListFromBackground error', res && res.error);
         resolve([]);
       } else {
         resolve(res.list || []);
@@ -544,7 +547,7 @@ function parseUserRegex(input) {
   if (!input) return null;
   const m = input.match(/^\/(.+)\/([a-z]*)$/i);
   if (!m) {
-    console.error("Regex must be /pattern/flags:", input);
+    // console.error("Regex must be /pattern/flags:", input);
     return null;
   }
   let [, pattern, flags] = m;
@@ -552,7 +555,7 @@ function parseUserRegex(input) {
   try {
     return new RegExp(pattern, flags);
   } catch (e) {
-    console.error("Invalid regex pattern:", input, e);
+    // console.error("Invalid regex pattern:", input, e);
     return null;
   }
 }
