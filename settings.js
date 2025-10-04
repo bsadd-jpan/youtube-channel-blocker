@@ -1013,10 +1013,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const editBtn = document.createElement('button');
       editBtn.textContent = '編集';
+      editBtn.className = 'editBtn';
       editBtn.style.marginLeft = '8px';
 
       const removeBtn = document.createElement('button');
       removeBtn.textContent = '削除';
+      removeBtn.className = 'removeBtn';
 
       const btnWrapper = document.createElement('span');
       btnWrapper.style.display = 'flex';
@@ -1035,6 +1037,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const saveBtn = document.createElement('button');
         saveBtn.textContent = '保存';
+        saveBtn.className = 'saveBtn';
 
         const cancelBtn = document.createElement('button');
         cancelBtn.textContent = 'キャンセル';
@@ -1079,26 +1082,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // ======================
   document.querySelectorAll('.advanced-subtab').forEach(btn => {
     btn.addEventListener('click', async () => {
+      document.querySelectorAll('.advanced-subtab').forEach(b => b.classList.remove('active'));
+
+    // クリックされたボタンに「active」クラスを付与
+    btn.classList.add('active');
+
+    // サイドバーの「高度な設定」タブをアクティブ状態に
+    document.querySelectorAll('#sidebar .tab').forEach(t => t.classList.remove('active'));
+    const advancedTab = document.getElementById('tab-advanced-settings');
+    if (advancedTab) advancedTab.classList.add('active')
       const target = btn.getAttribute('data-target');
       const tabContent = document.getElementById('advancedTabContent');
       tabContent.innerHTML = '';
 
-      const h3 = document.createElement('h3');
-      h3.textContent = target === 'channelRegex' ? 'チャンネル名正規表現リスト' : 'タイトル名正規表現リスト';
-      tabContent.appendChild(h3);
+      const h2 = document.createElement('h2');
+      h2.textContent = target === 'channelRegex' ? 'チャンネル名正規表現リスト' : 'タイトル名正規表現リスト';
+      tabContent.appendChild(h2);
 
       const searchInput = document.createElement('input');
       searchInput.type = 'text';
       searchInput.placeholder = '検索...';
+      searchInput.id = 'regexSearchInput'; // ← ID追加
       tabContent.appendChild(searchInput);
 
       const addInput = document.createElement('input');
       addInput.type = 'text';
       addInput.placeholder = '正規表現パターン';
+      addInput.id = 'regexAddInput'; // ← ID追加
       tabContent.appendChild(addInput);
 
       const addBtn = document.createElement('button');
       addBtn.textContent = '追加';
+      addBtn.id = 'regexAddBtn'; // ← ID追加
       tabContent.appendChild(addBtn);
 
       const ul = document.createElement('ul');
