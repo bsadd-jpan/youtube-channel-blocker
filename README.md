@@ -1,4 +1,4 @@
-# YouTube Channel Blocker（v1.3.0）
+# YouTube Channel Blocker（v1.4.0）
 
 不要なYouTubeチャンネルを非表示にするシンプルなChrome拡張です。  
 チャンネル名の非表示リストやキーワードフィルターを用いて、特定のチャンネルの動画を非表示にできます。  
@@ -167,8 +167,15 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
   - 設定ページの「表示/非表示切替」から可能
 - **コメント非表示リスト（v1.2.0）**
   - コメントも×ボタンで非表示
-  - 投稿者コメントの非表示は需要が不明なのとコードの大幅な変更が必要なので先延ばし
+  - 投稿者コメントの非表示は需要が不明なのとコードの大幅な変更が必要なので延期
   - コメントはID、動画は名前なのでチャンネル名非表示リストと別
+- **「サポート／使い方」タブの追加（v1.3.0）**
+  - 「サポート／使い方」タブに各機能の説明を追加
+  - 新機能含めて、ここを見れば使い方がわかる...多分
+- **正規表現フィルターの実装（v1.4.0）**
+  - 正規表現でチャンネル名と動画タイトルを非表示可能
+  - リテラル記法での登録を想定
+  - 使い方例は「サポート／使い方」タブに記載
 </details>
 
 ---
@@ -208,6 +215,7 @@ Gitを使ってない場合は、必要なファイルの再ダウンロード�
 - 簡易ポップアップの非表示リストで表示される名前を30件に制限（多すぎても見にくいだけだから）
 - 全リストのエキスポートボタン
 - 特にチャンネルページで×ボタン小さいのなんとかしたい
+- 検索ワードと無関係な動画の非表示機能
 
 ---
 
@@ -377,6 +385,14 @@ Features implemented based on “it would be nice to have” ideas.
   - Comments can also be hidden using the × button
   - Hiding creator comments is postponed because demand is unclear and it would require significant code changes
   - Since comments are managed by **ID** and videos are managed by **name**, they are implemented separately in the hidden list  
+- **Support/Usage Tab Added (v1.3.0)**
+  - Added explanations of each feature to the "Support/Usage" tab
+  - Including new features, you should be able to understand how to use the extension by checking this tab... probably
+- **Regex Filter Implementation (v1.4.0)**
+  - Channel names and video titles can now be hidden using regular expressions
+  - Registration is expected in literal notation
+  - Usage examples are provided in the "Support/Usage" tab
+
 
 </details>
 
@@ -414,6 +430,7 @@ All use is at the user's own risk.
 - Limit the number of names displayed in the simple popup block list to 30 entries (too many makes it hard to view).
 - Add an export button for all lists.
 - Especially on the channel page, want to do something about the × button being too small
+- Hide Videos Unrelated to Search Keywords
 
 ---
 
