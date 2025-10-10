@@ -24,14 +24,14 @@
         <li>
           <button id="tab-advanced-settings" class="tab">高度な設定</button>
           <div id="advancedSubtabs" style="display:none; margin-left:16px;">
-            <button class="advanced-subtab" data-target="channelRegex">チャンネル名正規表現</button>
-            <button class="advanced-subtab" data-target="titleRegex">タイトル名正規表現</button>
+            <button id="channelRegex" class="advanced-subtab" data-target="channelRegex">チャンネルNGフィルター（正規表現）</button>
+            <button id="titleRegex" class="advanced-subtab" data-target="titleRegex">タイトルNGフィルター（正規表現）</button>
           </div>
         </li>
         <li><button id="tab-import-export" class="tab">エクスポート／インポート</button></li>
         <li><button id="tab-hide-shorts" class="tab">表示／非表示切替</button></li>
         <li><button id="tab-language" class="tab">表示言語</button></li>
-        <li><button id="tab-help" class="tab">使い方・サポート</button></li>
+        <li><button id="tab-help" class="tab">サポート／使い方</button></li>
         <li><button id="tab-donation" class="tab">💛 開発者支援</button></li>
       </ul>
     </nav>
@@ -102,8 +102,9 @@
           <!-- 小見出し（最初は非表示） -->
           <div id="advancedSubtabs" style="display:none; margin-left:16px;">
             <input type="text" id="channelregexSearchInput" placeholder="検索..." />
-            <button class="advanced-subtab" data-target="channelRegex">チャンネル名正規表現</button>
-            <button class="advanced-subtab" data-target="titleRegex">タイトル名正規表現</button>
+            <button id="channelRegexTitle" class="advanced-subtab"
+              data-target="channelRegex">チャンネルNGフィルター（正規表現）</button>
+            <button id="titleRegexTitle" class="advanced-subtab" data-target="titleRegex">タイトルNGフィルター（正規表現）</button>
           </div>
 
           <!-- 各リストの表示場所 -->
@@ -152,9 +153,9 @@
           </label>
         </section>
 
-        <!-- 使い方・サポート -->
+        <!-- サポート／使い方 -->
         <section id="section-help" class="tab-content" style="display:none;">
-          <h2>サポート・使い方</h2>
+          <h2>サポート／使い方</h2>
           <p id="help-message-1">各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。</p>
           <p id="help-message-2">GitHub：<a href="https://github.com/bsadd-jpan/youtube-channel-blocker"
               target="_blank">Repository</a></p>
@@ -210,6 +211,40 @@
                 <p id="hide-comment-description-4">・詳細設定の「非表示コメントユーザーリスト」から@つきのIDを入力して追加する</p>
               </ul>
               <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button id="accordion-title-8" class="accordion-title">正規表現フィルター</button>
+            <div class="accordion-content">
+              <p id="regex-filter-description-1">正規表現（リテラル記法）を使ってチャンネル名や動画タイトルをフィルタリングします。</p>
+              <p id="regex-filter-description-2">正規表現の例：</p>
+              <pre class="code-block"><code>
+  非表示条件の例 / Examples of hide conditions
+
+  ──────────────────────────────
+  英語の文字を含む / Match if at least one English letter exists
+
+  /.*[a-zA-Z].*/
+
+  ──────────────────────────────
+  数字のみ / Match if consists of only digits
+
+  /^\d+$/
+
+  ───────────────────────────────
+  "keyword"を含む / Match if contains a specific word "keyword"
+
+  /keyword/
+
+  ──────────────────────────────
+  "keyword1"を含むが、"keyword1" + "keyword2" は除外 / 
+  Matches strings containing "keyword1" but not "keyword1" + "keyword2"
+  
+  /^(?=.*keyword1)(?!.*keyword2).*/
+
+              </code></pre>
+
             </div>
           </div>
 

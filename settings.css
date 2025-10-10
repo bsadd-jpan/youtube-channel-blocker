@@ -28,7 +28,7 @@ html {
 #sidebar {
   background-color: #ffffff;
   border-right: 1px solid #ddd;
-  width: 300px;
+  width: 350px;
   padding-top: 20px;
 }
 
@@ -555,3 +555,16 @@ html {
   background-color: #eee;
 }
 
+.code-block {
+  background: #1e1e1e;
+  color: #f5f5f5;
+  font-size: 1.0rem;
+  padding: 0px;
+  border-radius: 0px;
+  font-family: "Fira Code", monospace;
+  white-space: pre;
+  overflow-x: auto;
+  margin-top: 8px;
+  text-align: left;
+  display: block;
+}
