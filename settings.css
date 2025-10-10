@@ -28,7 +28,7 @@ html {
 #sidebar {
   background-color: #ffffff;
   border-right: 1px solid #ddd;
-  width: 260px;
+  width: 350px;
   padding-top: 20px;
 }
 
@@ -104,7 +104,8 @@ html {
 
 #searchInput,
 #keywordSearchInput,
-#commentSearchInput {
+#commentSearchInput,
+#regexSearchInput{
   width: 100%;
   padding: 10px 12px;
   font-size: 16px;
@@ -302,6 +303,7 @@ html {
 
 /* サイドバーのタブボタン統一（チャンネルフィルタータブも含める） */
 #sidebar ul li button.tab,
+#sidebar ul li .advanced-subtab,
 #tab-channel-filter.tab {
   display: block;
   width: 100%;
@@ -317,11 +319,13 @@ html {
 }
 
 #sidebar ul li button.tab:hover,
+#sidebar ul li .advanced-subtab:hover,
 #tab-channel-filter.tab:hover {
   background-color: #f1f1f1;
 }
 
 #sidebar ul li button.tab.active,
+#sidebar ul li .advanced-subtab.active,
 #tab-channel-filter.tab.active {
   background-color: #eaf6fb;
   border-left: 4px solid #007bff;
@@ -381,7 +385,8 @@ html {
 #section-language h2,
 #section-donation h2,
 #section-promotion h2,
-#section-help h2 {
+#section-help h2,
+#section-advanced-settings h2 {
   font-size: 2.0em;
 }
 
@@ -506,4 +511,60 @@ html {
   display: none;
   padding: 10px;
   background: #fff;
+}
+
+/* 高度な設定タブのスタイル */
+#advancedTabContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#advancedTabContent li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+#advancedTabContent li:last-child {
+  border-bottom: none;
+}
+
+
+/* サブタブ（.advanced-subtab）をアクティブにしたとき */
+.advanced-subtab.active {
+  background-color: #0078d7;
+  color: white;
+  border-radius: 4px;
+}
+
+/* 通常時 */
+.advanced-subtab {
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.advanced-subtab:hover {
+  background-color: #eee;
+}
+
+.code-block {
+  background: #1e1e1e;
+  color: #f5f5f5;
+  font-size: 1.0rem;
+  padding: 0px;
+  border-radius: 0px;
+  font-family: "Fira Code", monospace;
+  white-space: pre;
+  overflow-x: auto;
+  margin-top: 8px;
+  text-align: left;
+  display: block;
 }

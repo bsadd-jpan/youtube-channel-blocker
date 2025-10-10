@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabListBtn = document.getElementById('tab-list');
   const tabKeywordsBtn = document.getElementById('tab-keywords');
   const tabChannelFilterBtn = document.getElementById('tab-channel-filter'); // ★追加
+  const tabAdvancedSettingsBtn = document.getElementById('tab-advanced-settings'); // 新規追加
   const tabImportExportBtn = document.getElementById('tab-import-export');
   const tabLanguageBtn = document.getElementById('tab-language'); // 追加
   const tabHideShortsBtn = document.getElementById('tab-hide-shorts');  // 新規追加
@@ -20,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const sectionKeywords = document.getElementById('section-keywords');
   const sectionChannelFilter = document.getElementById('section-channel-filter'); // ★追加
   const sectionBlockedComments = document.getElementById('section-blocked-comments');
+  const sectionAdvancedSettings = document.getElementById('section-advanced-settings'); // 新規追加
+  const advancedSubtabs = document.getElementById('advancedSubtabs');
   const sectionImportExport = document.getElementById('section-import-export');
   const sectionLanguage = document.getElementById('section-language'); // 追加
   const sectionHideShorts = document.getElementById('section-hide-shorts'); // 新規追加
@@ -40,6 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabCommentsBtn = document.getElementById('tab-blocked-comments');
   const commentListContainer = document.getElementById('commentListContainer');
   const commentSearchInput = document.getElementById('commentSearchInput');
+
+  // 正規表現フィルター用要素
+  const regexListContainer = document.getElementById('regexListContainer');
+  const regexSearchInput = document.getElementById('regexSearchInput');
+  const regexAddInput = document.getElementById('regexAddInput');
+  const regexAddBtn = document.getElementById('regexAddBtn');
 
   // キーワードNGリスト用要素
   const keywordListContainer = document.getElementById('keywordListContainer');
@@ -145,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabKeywordsBtn.classList.toggle('active', to === 'keywords');
     tabChannelFilterBtn.classList.toggle('active', to === 'channelFilter'); // ★追加
     tabCommentsBtn.classList.toggle('active', to === 'blockedComments');
+    tabAdvancedSettingsBtn.classList.toggle('active', to === 'advancedSettings'); // 高度な設定
     tabImportExportBtn.classList.toggle('active', to === 'importExport');
     tabHideShortsBtn.classList.toggle('active', to === 'hideShorts');  // 追加
     tabLanguageBtn.classList.toggle('active', to === 'language');
@@ -155,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionKeywords.style.display = to === 'keywords' ? 'block' : 'none';
     sectionChannelFilter.style.display = to === 'channelFilter' ? 'block' : 'none'; // ★追加
     sectionBlockedComments.style.display = to === 'blockedComments' ? 'block' : 'none';
+    sectionAdvancedSettings.style.display = to === 'advancedSettings' ? 'block' : 'none';
     sectionImportExport.style.display = to === 'importExport' ? 'block' : 'none';
     sectionHideShorts.style.display = to === 'hideShorts' ? 'block' : 'none';  // 追加
     sectionHelp.style.display = to === 'help' ? 'block' : 'none';
@@ -162,7 +173,24 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionDonation.style.display = to === 'donation' ? 'block' : 'none';
 
     clearStatus();
+
   }
+
+  // タブボタンのクリックイベント追加
+  tabAdvancedSettingsBtn.addEventListener('click', () => {
+    switchTab('advancedSettings'); // ← これを追加
+    advancedSubtabs.style.display = 'block';
+  });
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    if (btn.id !== 'tab-advanced-settings') {
+      btn.addEventListener('click', () => {
+        advancedSubtabs.style.display = 'none';
+      });
+    }
+  });
+
+  // 小見出しタブクリック時の処理もここに追加
 
   // タブボタンのクリックイベント追加
   tabHideShortsBtn.addEventListener('click', () => switchTab('hideShorts'));
@@ -199,6 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+
 
   // ページロード時に設定を読み込んで反映
   chrome.storage.local.get('hideShortsFlag', (result) => {
@@ -903,6 +933,250 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  // ======================
+  // IndexedDB ラッパー
+  // ======================
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open('RegexListsDB', 1);
+
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('regexLists')) {
+          db.createObjectStore('regexLists', { keyPath: 'type' });
+        }
+      };
+
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  /**
+   * 指定した type の正規表現リストを取得
+   * @param {"channel"|"title"} type
+   * @returns {Promise<string[]>}
+   */
+  async function getRegexList(type) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('regexLists', 'readonly');
+      const store = tx.objectStore('regexLists');
+      const req = store.get(type);
+      req.onsuccess = () => resolve(req.result?.list || []);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  /**
+   * 指定した type の正規表現リストを保存
+   * @param {"channel"|"title"} type
+   * @param {string[]} list
+   */
+  async function setRegexList(type, list) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('regexLists', 'readwrite');
+      const store = tx.objectStore('regexLists');
+      const req = store.put({ type, list });
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  // ======================
+  // 正規表現リスト描画
+  // ======================
+  async function renderRegexList(type, container, filter = '') {
+  const list = await getRegexList(type);
+
+  getLang((lang) => {
+    container.innerHTML = '';
+
+    const filtered = list.filter(pattern =>
+      pattern.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    if (!filtered.length) {
+      const li = document.createElement('li');
+      li.textContent = lang === 'en' ? 'No matching patterns.' : '該当するパターンはありません。';
+      container.appendChild(li);
+      return;
+    }
+
+    filtered.forEach((pattern, idx) => {
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.justifyContent = 'space-between';
+      li.style.alignItems = 'center';
+
+      const span = document.createElement('span');
+      span.textContent = pattern;
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = lang === 'en' ? 'Edit' : '編集';
+      editBtn.className = 'editBtn';
+      editBtn.style.marginLeft = '8px';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = lang === 'en' ? 'Remove' : '削除';
+      removeBtn.className = 'removeBtn';
+
+      const btnWrapper = document.createElement('span');
+      btnWrapper.style.display = 'flex';
+      btnWrapper.style.gap = '8px';
+      btnWrapper.append(editBtn, removeBtn);
+
+      li.append(span, btnWrapper);
+      container.appendChild(li);
+
+      // 編集
+      editBtn.onclick = () => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = pattern;
+        input.style.flex = '1';
+
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = lang === 'en' ? 'Save' : '保存';
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = lang === 'en' ? 'Cancel' : 'キャンセル';
+
+        li.replaceChild(input, span);
+        btnWrapper.replaceChild(cancelBtn, editBtn);
+        btnWrapper.insertBefore(saveBtn, cancelBtn);
+
+        saveBtn.onclick = async () => {
+          const newPattern = input.value.trim();
+          if (!newPattern) return cancelBtn.onclick();
+          if (newPattern.length > 200) {
+            alert(lang === 'en' ? 'Pattern must be max 200 characters.' : '正規表現パターンは最大200文字までです。');
+            return;
+          }
+          list[idx] = newPattern;
+          await setRegexList(type, list);
+          await renderRegexList(type, container, filter);
+        };
+
+        cancelBtn.onclick = () => {
+          li.replaceChild(span, input);
+          btnWrapper.replaceChild(editBtn, saveBtn);
+          btnWrapper.removeChild(cancelBtn);
+        };
+      };
+
+      // 削除
+      removeBtn.onclick = async () => {
+        list.splice(idx, 1);
+        await setRegexList(type, list);
+        await renderRegexList(type, container, filter);
+      };
+    });
+  });
+}
+
+
+  // ======================
+  // ページ読み込み時に既存データを描画
+  // ======================
+  document.querySelectorAll('.advanced-subtab').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      document.querySelectorAll('.advanced-subtab').forEach(b => b.classList.remove('active'));
+
+      // クリックされたボタンに「active」クラスを付与
+      btn.classList.add('active');
+
+      // サイドバーの「高度な設定」タブをアクティブ状態に
+      document.querySelectorAll('#sidebar .tab').forEach(t => t.classList.remove('active'));
+      const advancedTab = document.getElementById('tab-advanced-settings');
+      if (advancedTab) advancedTab.classList.add('active')
+      const target = btn.getAttribute('data-target');
+      const tabContent = document.getElementById('advancedTabContent');
+      tabContent.innerHTML = '';
+
+      const h2 = document.createElement('h2');
+      h2.textContent = target === 'channelRegex' ? 'チャンネルNGフィルター（正規表現）' : 'タイトルNGフィルター（正規表現）';
+      h2.id = 'regexSectionTitle';
+      tabContent.appendChild(h2);
+      
+      const searchInput = document.createElement('input');
+      searchInput.type = 'text';
+      searchInput.placeholder = '検索...';
+      searchInput.id = 'regexSearchInput'; // ← ID追加
+      tabContent.appendChild(searchInput);
+
+      const addInput = document.createElement('input');
+      addInput.type = 'text';
+      addInput.placeholder = '正規表現パターン';
+      addInput.id = 'regexAddInput'; // ← ID追加
+      tabContent.appendChild(addInput);
+
+      const addBtn = document.createElement('button');
+      addBtn.textContent = '追加';
+      addBtn.id = 'regexAddBtn'; // ← ID追加
+      tabContent.appendChild(addBtn);
+
+      getLang((lang) => {
+        applyUIText(lang);
+        const regexTitle = document.getElementById('regexSectionTitle');
+        if (regexTitle) {
+          regexTitle.textContent = lang === 'en'
+            ? (target === 'channelRegex' ? 'Channel Filter (Regex)' : 'Title Filter (Regex)')
+            : (target === 'channelRegex' ? 'チャンネルNGフィルター（正規表現）' : 'タイトルNGフィルター（正規表現）');
+        }
+        document.getElementById('regexAddBtn').textContent = lang == 'en' ? 'Add' : '追加';
+        document.getElementById('regexAddInput').placeholder = lang == 'en' ? 'Regex Pattern' : '正規表現パターン';
+        document.getElementById('regexSearchInput').placeholder = lang == 'en' ? 'Search...' : '検索...';
+        // document.getElementById('saveBtn').textContent = lang == 'en' ? 'Save' : '保存';
+        // document.getElementById('editBtn').textContent = lang == 'en' ? 'Edit' : '編集';
+        // document.getElementById('removeBtn').textContent = lang == 'en' ? 'Remove' : '削除';
+        // document.getElementById('cancelBtn').textContent = lang == 'en' ? 'Cancel' : 'キャンセル';
+      });
+
+      const ul = document.createElement('ul');
+      ul.style.listStyle = 'none';
+      ul.style.padding = '0';
+      ul.style.margin = '0';
+      ul.style.border = '1px solid #ddd';
+      ul.style.borderRadius = '6px';
+      ul.style.overflow = 'hidden';
+      tabContent.appendChild(ul);
+
+      // 検索
+      searchInput.oninput = () => renderRegexList(target, ul, searchInput.value);
+
+      // 追加
+      addBtn.onclick = async () => {
+        const pattern = addInput.value.trim();
+        if (!pattern) return;
+
+        // 文字数制限チェック
+        if (pattern.length > 200) {
+          alert("正規表現パターンは最大200文字までです。");
+          return;
+        }
+
+
+        const list = await getRegexList(target);
+
+        // リスト上限チェック
+        if (list.length >= 1000) {
+          alert("リストは最大1000個まで追加可能です。");
+          return;
+        }
+        if (!list.includes(pattern)) {
+          list.push(pattern);
+          await setRegexList(target, list);
+          await renderRegexList(target, ul, searchInput.value);
+          addInput.value = '';
+        }
+      };
+
+      // 初期表示
+      await renderRegexList(target, ul);
+    });
+  });
+
   // アコーディオン処理
   document.querySelectorAll('.accordion-title').forEach((button) => {
     button.addEventListener('click', () => {
@@ -1048,11 +1322,13 @@ document.addEventListener('DOMContentLoaded', () => {
     tabChannelFilterBtn.textContent = lang === 'en' ? 'Channel Filter' : 'チャンネルNGフィルター';
     tabKeywordsBtn.textContent = lang === 'en' ? 'Title Filter' : 'タイトルNGフィルター';
     tabCommentsBtn.textContent = lang === 'en' ? 'Blocked Comment Users List' : '非表示コメントユーザーリスト';
+    tabAdvancedSettingsBtn.textContent = lang === 'en' ? 'Advanced Settings' : '高度な設定';
+    tabAdvancedSettingsBtn.title = lang === 'en' ? 'Channel/Title Filter (Regex)' : 'チャンネル／タイトルNGフィルター（正規表現）';
     tabImportExportBtn.textContent = lang === 'en' ? 'Export/Import' : 'エクスポート／インポート';
     tabHideShortsBtn.textContent = lang === 'en' ? 'Show/Hide Toggle' : '表示／非表示切替';
     tabLanguageBtn.textContent = lang === 'en' ? 'Language' : '言語（Language）';
     tabDonationBtn.textContent = lang === 'en' ? '💛 Support Developer' : '💛 開発者を応援';
-    tabHelpBtn.textContent = lang === 'en' ? 'Support/HowTo' : 'サポート・使い方';
+    tabHelpBtn.textContent = lang === 'en' ? 'Support/Usage' : 'サポート／使い方';
 
 
     // セクション見出し・ラベルなど
@@ -1087,6 +1363,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('commentUserInput').placeholder = lang === 'en' ? 'Username' : 'ユーザー名';
     addCommentUserBtn.textContent = lang === 'en' ? 'Add' : '追加';
     commentSearchInput.placeholder = lang === 'en' ? 'Search...' : '検索...';
+
+    // 高度な設定タブ
+    document.getElementById('channelRegex').textContent = lang === 'en' ? 'Channel Filter (Regex)' : 'チャンネルNGフィルター（正規表現）';
+    document.getElementById('titleRegex').textContent = lang === 'en' ? 'Title Filter (Regex)' : 'タイトルNGフィルター（正規表現）';
 
     // ★ エクスポート・インポートセクション
     document.querySelector('#section-import-export h2').textContent = lang === 'en' ? 'Export / Import' : 'エクスポート／インポート';
@@ -1130,8 +1410,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ? 'Choose the language to use for the UI:'
       : 'UIに使用する言語を選択してください：';
 
-    // サポート・使い方セクション
-    document.querySelector('#section-help h2').textContent = lang === 'en' ? 'Support / How To' : 'サポート・使い方';
+    // サポート／使い方セクション
+    document.querySelector('#section-help h2').textContent = lang === 'en' ? 'Support / Usage' : 'サポート／使い方';
     document.querySelector('#help-message-1').textContent = lang === 'en'
       ? 'This section provides an overview of each feature and how to use it. Click on the title to expand the details.'
       : '各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。';
@@ -1165,6 +1445,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#accordion-title-7').textContent = lang === 'en'
       ? 'Convert Channel Blocker List'
       : 'Channel Blockerのリストを変換';
+    document.querySelector('#accordion-title-8').textContent = lang === 'en'
+      ? 'Regex Filter'
+      : '正規表現フィルター';
 
     // 共通文言
     document.querySelectorAll('.common-description-1').forEach(el => {
@@ -1235,6 +1518,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#hide-comment-description-4').textContent = lang === 'en'
       ? '- Enter the ID starting with @ in the "Username" field below and click the "Add" button.'
       : '・「ユーザー名」の欄に@つきでIDを入力して「追加」ボタンを押す';
+
+    // 正規表現フィルターアコーディオン
+    document.querySelector('#regex-filter-description-1').textContent = lang === 'en'
+      ? 'Use regular expressions (literal notation) to filter channel names and video titles.'
+      : '正規表現（リテラル記法）を使ってチャンネル名や動画タイトルをフィルタリングします。';
+    document.querySelector('#regex-filter-description-2').textContent = lang === 'en'
+      ? 'Examples of regular expressions:'
+      : '正規表現の例：';
 
     // エクスポート・インポートアコーディオン
     document.querySelector('#export-import-description-1').textContent = lang === 'en'
