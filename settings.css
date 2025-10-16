@@ -354,9 +354,11 @@ html {
   /* グレー */
 }
 
-#blockChannelInput {
+#blockChannelInput,
+#commentUserInput,
+#regexAddInput {
   height: 24px !important;
-  /* width: 300px !important; */
+  width: 300px !important;
 }
 
 #keyword1,
@@ -568,3 +570,5 @@ html {
   text-align: left;
   display: block;
 }
+
+
