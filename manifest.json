@@ -1,11 +1,12 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "YouTube Channel Blocker",
   "version": "1.4.0",
   "description": "特定のチャンネルの動画を非表示にします (Block videos from specific channels.)",
   "permissions": ["storage", "unlimitedStorage"],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
@@ -15,7 +16,7 @@
       "run_at": "document_idle"
     }
   ],
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon48.png"
   },
@@ -23,7 +24,10 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "options_page": "settings.html",
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": true
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "yt-channel-blocker@yourdomain.dev",
