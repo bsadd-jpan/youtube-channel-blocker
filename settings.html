@@ -228,9 +228,9 @@
   /.*[a-zA-Z].*/
 
   ──────────────────────────────
-  数字のみ / Match if consists of only digits
+  空白を含む英語のみで構成 / Match if consists of only English letters and spaces
 
-  /^\d+$/
+  /^[A-Za-z\s]+$/
 
   ───────────────────────────────
   "keyword"を含む / Match if contains a specific word "keyword"
@@ -238,10 +238,10 @@
   /keyword/
 
   ──────────────────────────────
-  "keyword1"を含むが、"keyword1" + "keyword2" は除外 / 
-  Matches strings containing "keyword1" but not "keyword1" + "keyword2"
-  
-  /^(?=.*keyword1)(?!.*keyword2).*/
+  "雑学"を含むが、"雑学" + "ゆっくり" は除外 / 
+  Matches strings containing "雑学" but not "雑学" + "ゆっくり"
+
+  /^(?=.*雑学)(?!.*ゆっくり).*/
 
               </code></pre>
 
