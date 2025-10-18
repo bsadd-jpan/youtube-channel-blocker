@@ -219,32 +219,20 @@
             <div class="accordion-content">
               <p id="regex-filter-description-1">正規表現（リテラル記法）を使ってチャンネル名や動画タイトルをフィルタリングします。</p>
               <p id="regex-filter-description-2">正規表現の例：</p>
-              <pre class="code-block"><code>
-  非表示条件の例 / Examples of hide conditions
-
-  ──────────────────────────────
-  英語の文字を含む / Match if at least one English letter exists
-
-  /.*[a-zA-Z].*/
-
-  ──────────────────────────────
-  空白を含む英語のみで構成 / Match if consists of only English letters and spaces
-
-  /^[A-Za-z\s]+$/
-
-  ───────────────────────────────
-  "keyword"を含む / Match if contains a specific word "keyword"
-
-  /keyword/
-
-  ──────────────────────────────
-  "雑学"を含むが、"雑学" + "ゆっくり" は除外 / 
-  Matches strings containing "雑学" but not "雑学" + "ゆっくり"
-
-  /(?=.*雑学)(?!.*ゆっくり)/
-
-              </code></pre>
-
+              <div class="code-block">
+                <p id="regex-filter-example-1" class="code-block">英語を1文字でも含む場合に非表示</p>
+                <code>/. *[a-zA-Z].*/</code><br>
+                <p id="regex-filter-example-2" class="code-block">空白を含む英語のみで構成されている場合に非表示</p>
+                <code>/^[A-Za-z\s]+$/</code><br>
+                <p id="regex-filter-example-3" class="code-block">"keyword" を含む場合に非表示</p>
+                <code>/keyword/</code><br>
+                <p id="regex-filter-example-4" class="code-block">"雑学" を含むが、"雑学" + "ゆっくり" は除外</p>
+                <code>/(?=.*雑学)(?!.*ゆっくり)/</code><br>
+                <p id="regex-filter-example-5" class="code-block">"PR"、"広告"、"提供" のいずれかを含む</p>
+                <code>/(PR|広告|提供)/</code><br>
+                <p id="regex-filter-example-6" class="code-block">連続する記号を含む</p>
+                <code>/[!?★☆]{2,}/</code><br>
+              </div>
             </div>
           </div>
 
