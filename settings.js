@@ -988,92 +988,92 @@ document.addEventListener('DOMContentLoaded', () => {
   // 正規表現リスト描画
   // ======================
   async function renderRegexList(type, container, filter = '') {
-  const list = await getRegexList(type);
+    const list = await getRegexList(type);
 
-  getLang((lang) => {
-    container.innerHTML = '';
+    getLang((lang) => {
+      container.innerHTML = '';
 
-    const filtered = list.filter(pattern =>
-      pattern.toLowerCase().includes(filter.toLowerCase())
-    );
+      const filtered = list.filter(pattern =>
+        pattern.toLowerCase().includes(filter.toLowerCase())
+      );
 
-    if (!filtered.length) {
-      const li = document.createElement('li');
-      li.textContent = lang === 'en' ? 'No matching patterns.' : '該当するパターンはありません。';
-      container.appendChild(li);
-      return;
-    }
+      if (!filtered.length) {
+        const li = document.createElement('li');
+        li.textContent = lang === 'en' ? 'No matching patterns.' : '該当するパターンはありません。';
+        container.appendChild(li);
+        return;
+      }
 
-    filtered.forEach((pattern, idx) => {
-      const li = document.createElement('li');
-      li.style.display = 'flex';
-      li.style.justifyContent = 'space-between';
-      li.style.alignItems = 'center';
+      filtered.forEach((pattern, idx) => {
+        const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.justifyContent = 'space-between';
+        li.style.alignItems = 'center';
 
-      const span = document.createElement('span');
-      span.textContent = pattern;
+        const span = document.createElement('span');
+        span.textContent = pattern;
 
-      const editBtn = document.createElement('button');
-      editBtn.textContent = lang === 'en' ? 'Edit' : '編集';
-      editBtn.className = 'editBtn';
-      editBtn.style.marginLeft = '8px';
+        const editBtn = document.createElement('button');
+        editBtn.textContent = lang === 'en' ? 'Edit' : '編集';
+        editBtn.className = 'editBtn';
+        editBtn.style.marginLeft = '8px';
 
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = lang === 'en' ? 'Remove' : '削除';
-      removeBtn.className = 'removeBtn';
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = lang === 'en' ? 'Remove' : '削除';
+        removeBtn.className = 'removeBtn';
 
-      const btnWrapper = document.createElement('span');
-      btnWrapper.style.display = 'flex';
-      btnWrapper.style.gap = '8px';
-      btnWrapper.append(editBtn, removeBtn);
+        const btnWrapper = document.createElement('span');
+        btnWrapper.style.display = 'flex';
+        btnWrapper.style.gap = '8px';
+        btnWrapper.append(editBtn, removeBtn);
 
-      li.append(span, btnWrapper);
-      container.appendChild(li);
+        li.append(span, btnWrapper);
+        container.appendChild(li);
 
-      // 編集
-      editBtn.onclick = () => {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = pattern;
-        input.style.flex = '1';
+        // 編集
+        editBtn.onclick = () => {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = pattern;
+          input.style.flex = '1';
 
-        const saveBtn = document.createElement('button');
-        saveBtn.textContent = lang === 'en' ? 'Save' : '保存';
-        const cancelBtn = document.createElement('button');
-        cancelBtn.textContent = lang === 'en' ? 'Cancel' : 'キャンセル';
+          const saveBtn = document.createElement('button');
+          saveBtn.textContent = lang === 'en' ? 'Save' : '保存';
+          const cancelBtn = document.createElement('button');
+          cancelBtn.textContent = lang === 'en' ? 'Cancel' : 'キャンセル';
 
-        li.replaceChild(input, span);
-        btnWrapper.replaceChild(cancelBtn, editBtn);
-        btnWrapper.insertBefore(saveBtn, cancelBtn);
+          li.replaceChild(input, span);
+          btnWrapper.replaceChild(cancelBtn, editBtn);
+          btnWrapper.insertBefore(saveBtn, cancelBtn);
 
-        saveBtn.onclick = async () => {
-          const newPattern = input.value.trim();
-          if (!newPattern) return cancelBtn.onclick();
-          if (newPattern.length > 200) {
-            alert(lang === 'en' ? 'Pattern must be max 200 characters.' : '正規表現パターンは最大200文字までです。');
-            return;
-          }
-          list[idx] = newPattern;
+          saveBtn.onclick = async () => {
+            const newPattern = input.value.trim();
+            if (!newPattern) return cancelBtn.onclick();
+            if (newPattern.length > 200) {
+              alert(lang === 'en' ? 'Pattern must be max 200 characters.' : '正規表現パターンは最大200文字までです。');
+              return;
+            }
+            list[idx] = newPattern;
+            await setRegexList(type, list);
+            await renderRegexList(type, container, filter);
+          };
+
+          cancelBtn.onclick = () => {
+            li.replaceChild(span, input);
+            btnWrapper.replaceChild(editBtn, saveBtn);
+            btnWrapper.removeChild(cancelBtn);
+          };
+        };
+
+        // 削除
+        removeBtn.onclick = async () => {
+          list.splice(idx, 1);
           await setRegexList(type, list);
           await renderRegexList(type, container, filter);
         };
-
-        cancelBtn.onclick = () => {
-          li.replaceChild(span, input);
-          btnWrapper.replaceChild(editBtn, saveBtn);
-          btnWrapper.removeChild(cancelBtn);
-        };
-      };
-
-      // 削除
-      removeBtn.onclick = async () => {
-        list.splice(idx, 1);
-        await setRegexList(type, list);
-        await renderRegexList(type, container, filter);
-      };
+      });
     });
-  });
-}
+  }
 
 
   // ======================
@@ -1098,7 +1098,7 @@ document.addEventListener('DOMContentLoaded', () => {
       h2.textContent = target === 'channelRegex' ? 'チャンネルNGフィルター（正規表現）' : 'タイトルNGフィルター（正規表現）';
       h2.id = 'regexSectionTitle';
       tabContent.appendChild(h2);
-      
+
       const searchInput = document.createElement('input');
       searchInput.type = 'text';
       searchInput.placeholder = '検索...';
@@ -1526,6 +1526,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#regex-filter-description-2').textContent = lang === 'en'
       ? 'Examples of regular expressions:'
       : '正規表現の例：';
+
+    document.querySelector('#regex-filter-example-1').textContent = lang === 'en'
+      ? 'Block if the text contains any English letters'
+      : '英語の文字を含む場合に非表示';
+
+    document.querySelector('#regex-filter-example-2').textContent = lang === 'en'
+      ? 'Block if the text consists only of English letters and spaces'
+      : '空白を含む英語のみで構成されている場合に非表示';
+
+    document.querySelector('#regex-filter-example-3').textContent = lang === 'en'
+      ? 'Block if the text contains the word "keyword"'
+      : '"keyword" を含む場合に非表示';
+
+    document.querySelector('#regex-filter-example-4').textContent = lang === 'en'
+      ? 'Block if the text contains "雑学" but not if it also contains "ゆっくり"'
+      : '"雑学" を含む場合に非表示（ただし "ゆっくり" も含む場合は除外）';
+
+    document.querySelector('#regex-filter-example-5').textContent = lang === 'en'
+      ? 'Block if the text contains any of "PR", "広告", or "提供"'
+      : '"PR"、"広告"、"提供" のいずれかを含む場合に非表示';
+
+    document.querySelector('#regex-filter-example-6').textContent = lang === 'en'
+      ? 'Block if the text contains consecutive symbols'
+      : '連続する記号を含む場合に非表示';
+
 
     // エクスポート・インポートアコーディオン
     document.querySelector('#export-import-description-1').textContent = lang === 'en'
