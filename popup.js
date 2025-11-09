@@ -180,20 +180,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 直近の1つを削除ボタン
   removeLastBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["blockedChannels", "language"], (result) => {
-      let blockList = result.blockedChannels || [];
-      const lang = result.language === "en" ? "en" : "ja";
-      if (blockList.length === 0) {
-        showStatus(texts[lang].listEmpty, "red");
-        return;
-      }
-      blockList.pop();
-      chrome.storage.local.set({ blockedChannels: blockList }, () => {
-        textarea.value = blockList.join("\n");
-        showStatus(texts[lang].removedLast, "green");
-      });
+  chrome.storage.local.get(["blockedChannels", "language"], (result) => {
+    let blockList = result.blockedChannels || [];
+    const lang = result.language === "en" ? "en" : "ja";
+
+    if (blockList.length === 0) {
+      showStatus(texts[lang].listEmpty, "red");
+      return;
+    }
+
+    const removedChannel = blockList.pop(); // ここで最後のチャンネル名を取得
+
+    chrome.storage.local.set({ blockedChannels: blockList }, () => {
+      textarea.value = blockList.join("\n");
+      // 削除したチャンネル名をメッセージに追加
+      showStatus(`${texts[lang].removedLast}: ${removedChannel}`, "green");
     });
   });
+});
 
   // トグルボタン
   toggleBtn.addEventListener("click", () => {

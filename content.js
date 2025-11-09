@@ -56,31 +56,14 @@ const popup = createPopup();
 let popupTimeout = null;
 
 /**
- * ポップアップを表示
- * @param {MouseEvent} event
- * @param {string} channelName
+ * 汎用ポップアップ表示
+ * @param {MouseEvent} event - マウスイベント（位置取得用）
+ * @param {string} message - 表示する文字列
+ * @param {number} duration - 表示時間（ms, デフォルト5000）
  */
-function showPopup(event, channelName) {
-  popup.textContent = `Blocked: ${channelName}`;
-  const x = event.clientX + 15;
-  const y = event.clientY + 15;
-  popup.style.left = `${x}px`;
-  popup.style.top = `${y}px`;
-  popup.style.opacity = "1";
-
-  if (popupTimeout) clearTimeout(popupTimeout);
-  popupTimeout = setTimeout(() => {
-    popup.style.opacity = "0";
-  }, 5000);
-}
-
-/**
- * エラーポップアップを表示
- * @param {MouseEvent} event
- * @param {string} message
- */
-function showErrorPopup(event, message) {
+function showPopupMessage(event, message, duration = 5000) {
   popup.textContent = message;
+
   const x = event.clientX + 15;
   const y = event.clientY + 15;
   popup.style.left = `${x}px`;
@@ -90,7 +73,7 @@ function showErrorPopup(event, message) {
   if (popupTimeout) clearTimeout(popupTimeout);
   popupTimeout = setTimeout(() => {
     popup.style.opacity = "0";
-  }, 5000);
+  }, duration);
 }
 
 /**
@@ -115,7 +98,7 @@ function createBlockButton(channelName, runBlocker) {
 
     // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
     if (hoveredChannelName !== channelName) {
-      showErrorPopup(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
+      showPopupMessage(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
       return;
     }
 
@@ -125,7 +108,7 @@ function createBlockButton(channelName, runBlocker) {
         return;
       }
       if (updatedList.length >= 10000) {
-        showErrorPopup(event, "Error: Block list limit (10000) reached");
+        showPopupMessage(event, "Error: Block list limit (10000) reached");
         return;
       }
       updatedList.push(channelName);
@@ -133,7 +116,7 @@ function createBlockButton(channelName, runBlocker) {
         console.log(`Blocked: ${channelName}`);
         runBlocker();
 
-        showPopup(event, channelName);
+        showPopupMessage(event, `Blocked: ${channelName}`);
       });
     });
   });
@@ -250,7 +233,7 @@ function processCommentUserBlock(
             chrome.storage.local.set({ blockedComments: updated }, () => {
               if (parent) parent.style.display = "none";
               runBlocker();
-              showPopup(event, userName);
+              showPopupMessage(event, `Blocked: ${userName}`);
             });
           } else {
             if (parent) parent.style.display = "none";
