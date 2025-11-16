@@ -76,6 +76,22 @@ function showPopupMessage(event, message, duration = 5000) {
   }, duration);
 }
 
+function createXButton(className, onClick) {
+  const btn = document.createElement("button");
+  btn.textContent = "×";
+  btn.className = className;
+  btn.style.cssText = `
+    color: red;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 4px;
+  `;
+  btn.addEventListener("click", onClick);
+  return btn;
+}
+
 /**
  * チャンネルブロックボタンを生成
  * @param {string} channelName
@@ -505,21 +521,7 @@ function openDB() {
   });
 }
 
-/**
- * 指定した type の正規表現リストを取得
- * @param {"channel"|"title"} type
- * @returns {Promise<string[]>} リスト
- */
-async function getRegexList(type) {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction('regexLists', 'readonly');
-    const store = tx.objectStore('regexLists');
-    const req = store.get(type);
-    req.onsuccess = () => resolve(req.result ? req.result.list : []);
-    req.onerror = () => resolve([]);
-  });
-}
+
 /**
  * ユーザー入力の正規表現文字列を RegExp に変換
  * - /pattern/flags の形式で入力することを前提
