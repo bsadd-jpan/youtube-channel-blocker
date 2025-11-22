@@ -56,12 +56,14 @@ const popup = createPopup();
 let popupTimeout = null;
 
 /**
- * ポップアップを表示
- * @param {MouseEvent} event
- * @param {string} channelName
+ * 汎用ポップアップ表示
+ * @param {MouseEvent} event - マウスイベント（位置取得用）
+ * @param {string} message - 表示する文字列
+ * @param {number} duration - 表示時間（ms, デフォルト5000）
  */
-function showPopup(event, channelName) {
-  popup.textContent = `Blocked: ${channelName}`;
+function showPopupMessage(event, message, duration = 5000) {
+  popup.textContent = message;
+
   const x = event.clientX + 15;
   const y = event.clientY + 15;
   popup.style.left = `${x}px`;
@@ -71,26 +73,23 @@ function showPopup(event, channelName) {
   if (popupTimeout) clearTimeout(popupTimeout);
   popupTimeout = setTimeout(() => {
     popup.style.opacity = "0";
-  }, 5000);
+  }, duration);
 }
 
-/**
- * エラーポップアップを表示
- * @param {MouseEvent} event
- * @param {string} message
- */
-function showErrorPopup(event, message) {
-  popup.textContent = message;
-  const x = event.clientX + 15;
-  const y = event.clientY + 15;
-  popup.style.left = `${x}px`;
-  popup.style.top = `${y}px`;
-  popup.style.opacity = "1";
-
-  if (popupTimeout) clearTimeout(popupTimeout);
-  popupTimeout = setTimeout(() => {
-    popup.style.opacity = "0";
-  }, 5000);
+function createXButton(className, onClick) {
+  const btn = document.createElement("button");
+  btn.textContent = "×";
+  btn.className = className;
+  btn.style.cssText = `
+    color: red;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 4px;
+  `;
+  btn.addEventListener("click", onClick);
+  return btn;
 }
 
 /**
@@ -114,26 +113,27 @@ function createBlockButton(channelName, runBlocker) {
     event.preventDefault();
 
     // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
-    if (hoveredChannelName !== channelName) {
-      showErrorPopup(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
-      return;
-    }
+    // if (hoveredChannelName !== channelName) {
+    //   showPopupMessage(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
+    //   return;
+    // }
+    const targetName = hoveredChannelName || channelName;
 
     chrome.storage.local.get(["blockedChannels"], (result) => {
       const updatedList = result.blockedChannels || [];
-      if (updatedList.includes(channelName)) {
+      if (updatedList.includes(targetName)) {
         return;
       }
       if (updatedList.length >= 10000) {
-        showErrorPopup(event, "Error: Block list limit (10000) reached");
+        showPopupMessage(event, "Error: Block list limit (10000) reached");
         return;
       }
-      updatedList.push(channelName);
+      updatedList.push(targetName);
       chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-        console.log(`Blocked: ${channelName}`);
+        console.log(`Blocked: ${targetName}`);
         runBlocker();
 
-        showPopup(event, channelName);
+        showPopupMessage(event, `Blocked: ${targetName}`);
       });
     });
   });
@@ -250,7 +250,7 @@ function processCommentUserBlock(
             chrome.storage.local.set({ blockedComments: updated }, () => {
               if (parent) parent.style.display = "none";
               runBlocker();
-              showPopup(event, userName);
+              showPopupMessage(event, `Blocked: ${userName}`);
             });
           } else {
             if (parent) parent.style.display = "none";
@@ -522,21 +522,7 @@ function openDB() {
   });
 }
 
-/**
- * 指定した type の正規表現リストを取得
- * @param {"channel"|"title"} type
- * @returns {Promise<string[]>} リスト
- */
-async function getRegexList(type) {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction('regexLists', 'readonly');
-    const store = tx.objectStore('regexLists');
-    const req = store.get(type);
-    req.onsuccess = () => resolve(req.result ? req.result.list : []);
-    req.onerror = () => resolve([]);
-  });
-}
+
 /**
  * ユーザー入力の正規表現文字列を RegExp に変換
  * - /pattern/flags の形式で入力することを前提
