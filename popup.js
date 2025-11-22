@@ -141,9 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ステータス表示
-  function showStatus(message, color) {
+  function showStatus(message, color, fontSize = "15px") {
     status.textContent = message;
     status.style.color = color;
+    status.style.fontSize = fontSize;
     setTimeout(() => {
       status.textContent = "";
     }, 2000);
@@ -194,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.local.set({ blockedChannels: blockList }, () => {
       textarea.value = blockList.join("\n");
       // 削除したチャンネル名をメッセージに追加
-      showStatus(`${texts[lang].removedLast}: ${removedChannel}`, "green");
+      showStatus(`${texts[lang].removedLast}: ${removedChannel}`, "red");
     });
   });
 });
