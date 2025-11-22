@@ -113,26 +113,27 @@ function createBlockButton(channelName, runBlocker) {
     event.preventDefault();
 
     // 保存しているマウスオーバー名とクリックしたチャンネル名が一致するかチェック
-    if (hoveredChannelName !== channelName) {
-      showPopupMessage(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
-      return;
-    }
+    // if (hoveredChannelName !== channelName) {
+    //   showPopupMessage(event, `Error: ${hoveredChannelName} ≠ ${channelName}`);
+    //   return;
+    // }
+    const targetName = hoveredChannelName || channelName;
 
     chrome.storage.local.get(["blockedChannels"], (result) => {
       const updatedList = result.blockedChannels || [];
-      if (updatedList.includes(channelName)) {
+      if (updatedList.includes(targetName)) {
         return;
       }
       if (updatedList.length >= 10000) {
         showPopupMessage(event, "Error: Block list limit (10000) reached");
         return;
       }
-      updatedList.push(channelName);
+      updatedList.push(targetName);
       chrome.storage.local.set({ blockedChannels: updatedList }, () => {
-        console.log(`Blocked: ${channelName}`);
+        console.log(`Blocked: ${targetName}`);
         runBlocker();
 
-        showPopupMessage(event, `Blocked: ${channelName}`);
+        showPopupMessage(event, `Blocked: ${targetName}`);
       });
     });
   });
