@@ -21,6 +21,7 @@
         <li><button id="tab-channel-filter" class="tab">チャンネルNGフィルター</button></li>
         <li><button id="tab-keywords" class="tab">動画タイトルNGフィルター</button></li>
         <li><button id="tab-blocked-comments" class="tab">非表示コメントリスト</button></li>
+        <li><button id="tab-whitelist" class="tab">ホワイトリスト</button></li>
         <li>
           <button id="tab-advanced-settings" class="tab">高度な設定</button>
           <div id="advancedSubtabs" style="display:none; margin-left:16px;">
@@ -87,11 +88,26 @@
           <ul id="commentListContainer"></ul>
         </section>
 
+        <!-- ホワイトリスト -->
+        <section id="section-whitelist" style="display:none">
+          <h2>ホワイトリスト</h2>
+          <input type="text" id="whitelistSearchInput" placeholder="検索..." />
+          <div style="margin: 8px 0;">
+            <input id="whitelistChannelInput" type="text" placeholder="チャンネル名" maxlength="100">
+            <button id="addWhitelistChannelBtn">追加</button>
+          </div>
+          <ul id="whitelistContainer"></ul>
+        </section>
+
         <!-- 表示／非表示切替 -->
         <section id="section-hide-shorts" style="display:none; padding: 1em;">
           <h2>表示／非表示切替</h2>
           <label>
             <button id="hideShortsButton" class="toggle-button off">ショート動画を非表示</button>
+          </label>
+          <br /><br />
+          <label>
+            <button id="whitelistBypassButton" class="toggle-button off">ホワイトリスト：フィルター有効</button>
           </label>
         </section>
 
@@ -134,6 +150,11 @@
             <h3>非表示コメントリスト</h3>
             <button id="exportBlockedCommentsBtn">エクスポート</button>
             <button id="importBlockedCommentsBtn">インポート</button>
+          </div>
+          <div>
+            <h3>ホワイトリスト</h3>
+            <button id="exportWhitelistBtn">エクスポート</button>
+            <button id="importWhitelistBtn">インポート</button>
           </div>
           <input type="file" id="fileInput" accept="application/json" style="display:none;" />
           <div id="status" role="status" aria-live="polite"></div>
@@ -237,6 +258,16 @@
           </div>
 
           <div class="accordion">
+            <button id="accordion-title-9" class="accordion-title">ホワイトリスト</button>
+            <div class="accordion-content">
+              <p id="whitelist-description-1">ホワイトリストに登録したチャンネルには×（ブロック）ボタンが表示されません。</p>
+              <p id="whitelist-description-2">「表示／非表示切替」ページで「フィルター無効」にすると、ホワイトリストのチャンネルにはキーワードフィルターや正規表現フィルターも適用されません。</p>
+              <p id="whitelist-description-3">「フィルター有効」の場合は×ボタンだけ非表示となり、各種フィルターは通常通り動作します。</p>
+              <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
+            </div>
+          </div>
+
+          <div class="accordion">
             <button id="accordion-title-5" class="accordion-title">エクスポート／インポート</button>
             <div class="accordion-content">
               <p id="export-import-description-1">エクスポート／インポート機能を使うことで、非表示リストやキーワードを保存・復元できます。</p>
@@ -322,6 +353,8 @@
       </div>
     </main>
   </div>
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
   <script src="settings.js"></script>
 </body>
 
