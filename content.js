@@ -37,6 +37,7 @@ const SHORTS_HIDE_RULES = [
   { childSelector: 'a[href^="/shorts/"]', parentSelector: "ytd-reel-shelf-renderer" },
   { childSelector: 'a[href^="/shorts/"]', parentSelector: "ytd-video-renderer" },
   { childSelector: 'a[href^="/shorts/"]', parentSelector: "ytd-compact-video-renderer" },
+  { childSelector: 'a[href^="/shorts/"]', parentSelector: "yt-lockup-view-model" },
 ];
 
 // ============================================================
@@ -127,7 +128,7 @@ async function runBlocker() {
   const titleRegexList = titlePatterns.map(parseUserRegex).filter(Boolean);
 
   chrome.storage.local.get(
-    [STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.CHANNEL_KEYWORD_SETS, STORAGE_KEYS.TITLE_KEYWORD_SETS, STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.BLOCKED_COMMENTS, STORAGE_KEYS.WHITELISTED_CHANNELS, STORAGE_KEYS.WHITELIST_BYPASS_ALL],
+    [STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.CHANNEL_KEYWORD_SETS, STORAGE_KEYS.TITLE_KEYWORD_SETS, STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.BLOCKED_COMMENTS, STORAGE_KEYS.WHITELISTED_CHANNELS, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS],
     (result) => {
       if (result[STORAGE_KEYS.BLOCKER_ENABLED] === false) {
         console.log("Blocker is disabled");
@@ -138,6 +139,7 @@ async function runBlocker() {
       const blockedChannels = result[STORAGE_KEYS.BLOCKED_CHANNELS] || [];
       const whitelistedChannels = result[STORAGE_KEYS.WHITELISTED_CHANNELS] || [];
       const whitelistBypassAll = !!result[STORAGE_KEYS.WHITELIST_BYPASS_ALL];
+      const whitelistHideShorts = !!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS];
 
       // チャンネル名フィルター用キーワードセット
       const channelKeywords = (result[STORAGE_KEYS.CHANNEL_KEYWORD_SETS] || [])
@@ -166,6 +168,8 @@ async function runBlocker() {
         titleRegexList,
         whitelistedChannels,
         whitelistBypassAll,
+        hideShortsFlag,
+        whitelistHideShorts,
       };
 
       // 各ページセレクタのアイテムを処理

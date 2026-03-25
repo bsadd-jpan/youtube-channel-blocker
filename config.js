@@ -21,6 +21,7 @@ const STORAGE_KEYS = {
   BLOCKED_COMMENTS:     'blockedComments',
   WHITELISTED_CHANNELS: 'whitelistedChannels',
   WHITELIST_BYPASS_ALL: 'whitelistBypassAll',
+  WHITELIST_HIDE_SHORTS:'whitelistHideShorts',
   LANGUAGE:             'language',
 };
 

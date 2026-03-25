@@ -291,6 +291,8 @@ const VIDEO_TITLE_SELECTOR = [
  * @param {RegExp[]}   options.titleRegexList        - タイトル正規表現リスト
  * @param {string[]}   options.whitelistedChannels   - ホワイトリスト
  * @param {boolean}    options.whitelistBypassAll    - ホワイトリスト全フィルターバイパスフラグ
+ * @param {boolean}    options.hideShortsFlag        - ショート動画非表示フラグ
+ * @param {boolean}    options.whitelistHideShorts   - ホワイトリストチャンネルのショートも非表示にするフラグ
  */
 function processVideoItem(item, options) {
   const {
@@ -305,6 +307,8 @@ function processVideoItem(item, options) {
     titleRegexList = [],
     whitelistedChannels = [],
     whitelistBypassAll = false,
+    hideShortsFlag = false,
+    whitelistHideShorts = false,
   } = options;
 
   // プレイリスト特有のタグがあれば処理スキップ
@@ -348,6 +352,15 @@ function processVideoItem(item, options) {
 
   // ホワイトリスト登録チャンネルのフィルター分岐
   if (isWhitelisted) {
+    // ショート動画かどうか判定
+    const isShortsItem = !!item.querySelector('a[href^="/shorts/"]');
+
+    // ショート非表示がONかつホワイトリストのショートも非表示がONの場合、復元しない
+    if (hideShortsFlag && whitelistHideShorts && isShortsItem) {
+      hideItemOrParent(item, parentSelectors);
+      return;
+    }
+
     // 非表示になっていた場合は復元
     item.style.display = "";
     if (parentSelectors) {

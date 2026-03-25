@@ -122,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ホワイトリストバイパストグル
   const whitelistBypassButton = document.getElementById('whitelistBypassButton');
 
+  // ホワイトリストショート非表示トグル
+  const whitelistHideShortsButton = document.getElementById('whitelistHideShortsButton');
+
   let currentImportTarget = '';
 
   // ============================================================
@@ -999,6 +1002,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ============================================================
+  // 9-2. ホワイトリストショート非表示トグル
+  // ============================================================
+
+  /**
+   * ホワイトリストショート非表示ボタンの表示状態を更新する
+   * @param {boolean} enabled - ショート非表示が有効かどうか
+   * @param {string} lang - 言語コード
+   */
+  function updateWhitelistHideShortsState(enabled, lang) {
+    whitelistHideShortsButton.classList.toggle('on', enabled);
+    whitelistHideShortsButton.classList.toggle('off', !enabled);
+    whitelistHideShortsButton.textContent = enabled ? t('whitelistHideShortsOn', lang) : t('whitelistHideShortsOff', lang);
+  }
+
+  /** ホワイトリストショート非表示トグルボタン */
+  whitelistHideShortsButton.addEventListener('click', () => {
+    chrome.storage.local.get(STORAGE_KEYS.WHITELIST_HIDE_SHORTS, (result) => {
+      const next = !result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS];
+      chrome.storage.local.set({ [STORAGE_KEYS.WHITELIST_HIDE_SHORTS]: next }, () => {
+        getCurrentLang(lang => {
+          updateWhitelistHideShortsState(next, lang);
+          showStatus(next ? t('whitelistHideShortsEnabled', lang) : t('whitelistHideShortsDisabled', lang), 'green');
+        });
+      });
+    });
+  });
+
+  /** ホワイトリストショート非表示ボタンの初期状態読み込み */
+  chrome.storage.local.get(STORAGE_KEYS.WHITELIST_HIDE_SHORTS, (result) => {
+    getCurrentLang(lang => updateWhitelistHideShortsState(!!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS], lang));
+  });
+
+  // ============================================================
   // 10. UIテキスト適用 (i18n)
   // ============================================================
 
@@ -1073,9 +1109,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 表示/非表示トグル
     document.querySelector('#section-hide-shorts h2').textContent = t('sectionShowHideToggle', lang);
-    chrome.storage.local.get([STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.WHITELIST_BYPASS_ALL], (result) => {
+    chrome.storage.local.get([STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS], (result) => {
       updateShortsButtonState(!!result[STORAGE_KEYS.HIDE_SHORTS_FLAG], lang);
       updateWhitelistBypassState(!!result[STORAGE_KEYS.WHITELIST_BYPASS_ALL], lang);
+      updateWhitelistHideShortsState(!!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS], lang);
     });
 
     // 言語セクション

@@ -138,6 +138,12 @@ const I18N = {
   hideShortsEnabled:  { ja: 'ショート動画非表示を有効にしました',     en: 'Hide Shorts enabled' },
   hideShortsDisabled: { ja: 'ショート動画非表示を無効にしました',     en: 'Hide Shorts disabled' },
 
+  // ─── ホワイトリストショート動画トグル ───
+  whitelistHideShortsOn:       { ja: 'ホワイトリスト：ショート非表示',                     en: 'Whitelist: Hide Shorts' },
+  whitelistHideShortsOff:      { ja: 'ホワイトリスト：ショート表示',                     en: 'Whitelist: Show Shorts' },
+  whitelistHideShortsEnabled:  { ja: 'ホワイトリストのショート動画も非表示にしました', en: 'Whitelist Shorts hiding enabled' },
+  whitelistHideShortsDisabled: { ja: 'ホワイトリストのショート動画を表示します',     en: 'Whitelist Shorts hiding disabled' },
+
   // ─── ホワイトリスト ───
   tabWhitelist:            { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
   sectionWhitelist:        { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
