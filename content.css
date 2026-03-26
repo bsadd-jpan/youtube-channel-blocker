@@ -5,7 +5,7 @@
   gap: 6px;
 }
 
-/* チャンネルブロック用ボタン */
+/* チャンネルブロック用ボタン共通 */
 .block-btn,
 .block-user-btn {
   flex-shrink: 0;
@@ -15,5 +15,16 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
+  margin-right: 4px;
+}
+
+/* コメント内容ブロックボタン */
+.ycb-block-comment-btn {
+  margin-left: 8px;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  background: transparent;
+  border: none;
 }
 

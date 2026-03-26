@@ -4,143 +4,100 @@
  * See the LICENSE file for details.
  */
 
+// ============================================================
+// popup.js - ポップアップ画面のメインロジック
+//
+// 翻訳データは i18n.js に一元管理
+//
+// セクション:
+//   - DOM要素の取得
+//   - ボタン生成ヘルパー
+//   - UIボタンの作成・配置
+//   - ステータス表示
+//   - UIテキスト更新（i18n）
+//   - 初期状態の読み込み
+//   - イベントハンドラ
+// ============================================================
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  // ============================================================
+  // DOM要素の取得
+  // ============================================================
+
   const textarea = document.getElementById("blockList");
   const saveBtn = document.getElementById("save");
 
-  // ボタン作成関数（共通）
-  function createButton(text) {
+  // ============================================================
+  // ボタン生成ヘルパー
+  // ============================================================
+
+  /**
+   * ボタン要素を生成するヘルパー
+   * @param {string} bgColor - 背景色
+   * @returns {HTMLButtonElement}
+   */
+  function createButton(bgColor = '#007bff') {
     const btn = document.createElement("button");
-    btn.style.marginLeft = "8px";
-    btn.style.padding = "4px 8px";
-    btn.style.border = "none";
-    btn.style.borderRadius = "4px";
-    btn.style.cursor = "pointer";
-    btn.style.color = "white";
+    btn.style.cssText = `
+      margin-left: 8px;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      background-color: ${bgColor};
+    `;
     return btn;
   }
 
-  // トグルボタンを作成
-  const toggleBtn = createButton("Blocker: ON");
-  toggleBtn.style.backgroundColor = "red";
+  // ============================================================
+  // UIボタンの作成・配置
+  // ============================================================
+
+  // トグルボタン
+  const toggleBtn = createButton("red");
   saveBtn.parentNode.insertBefore(toggleBtn, saveBtn.nextSibling);
 
   // 直近の1つを削除ボタン
-  const removeLastBtn = createButton("直近の1つを削除");
-  removeLastBtn.style.backgroundColor = "#f08c00";
+  const removeLastBtn = createButton("#f08c00");
   saveBtn.parentNode.insertBefore(removeLastBtn, toggleBtn.nextSibling);
 
-  // エクスポート・インポートボタンの親コンテナを作成
+  // エクスポート・インポートボタン
   const exportImportWrapper = document.createElement("div");
   exportImportWrapper.style.display = "flex";
-  exportImportWrapper.style.gap = "8px"; // ボタン間の隙間
+  exportImportWrapper.style.gap = "8px";
 
-  const exportBtn = createButton("エクスポート");
-  exportBtn.style.backgroundColor = "#007bff";
-  const importBtn = createButton("インポート");
-  importBtn.style.backgroundColor = "#007bff";
-
-  // 親にボタンを入れる
+  const exportBtn = createButton("#007bff");
+  const importBtn = createButton("#007bff");
   exportImportWrapper.appendChild(exportBtn);
   exportImportWrapper.appendChild(importBtn);
-
-  // 親要素をsaveBtnの後ろに挿入
-  saveBtn.parentNode.insertBefore(
-    exportImportWrapper,
-    removeLastBtn.nextSibling
-  );
+  saveBtn.parentNode.insertBefore(exportImportWrapper, removeLastBtn.nextSibling);
 
   // 設定ボタン
-  const settingsBtn = createButton("設定");
-  settingsBtn.style.backgroundColor = "#28a745"; // 緑
+  const settingsBtn = createButton("#28a745");
   saveBtn.parentNode.insertBefore(settingsBtn, exportImportWrapper.nextSibling);
 
   // 言語切替ボタン
-  const langBtn = createButton("English");
-  langBtn.style.backgroundColor = "#6c757d"; // グレー
+  const langBtn = createButton("#6c757d");
   saveBtn.parentNode.insertBefore(langBtn, settingsBtn.nextSibling);
 
-  // ステータス表示
+  // ステータス表示エリア
   const status = document.createElement("div");
   status.style.color = "green";
   status.style.marginTop = "8px";
   saveBtn.parentNode.insertBefore(status, langBtn.nextSibling);
 
-  // 言語用テキスト
-  const texts = {
-    ja: {
-      removeLast: "直近の1つを削除",
-      export: "エクスポート",
-      import: "インポート",
-      settings: "設定",
-      blockerOn: "Blocker: ON",
-      blockerOff: "Blocker: OFF",
-      langSwitch: "言語（Language）: 日本語",
-      saved: "保存しました",
-      saveFailed: "保存に失敗しました",
-      listEmpty: "リストは空です",
-      removedLast: "直近の1つを削除しました",
-      enabled: "有効化しました",
-      disabled: "無効化しました",
-      exportDone: "エクスポートしました",
-      importDone: "インポートしました",
-      importFail: "インポート失敗（ファイル形式エラー）",
-    },
-    en: {
-      removeLast: "Remove Last",
-      export: "Export",
-      import: "Import",
-      settings: "Settings",
-      blockerOn: "Blocker: ON",
-      blockerOff: "Blocker: OFF",
-      langSwitch: "Language(言語): English",
-      saved: "Saved",
-      saveFailed: "Failed to save",
-      listEmpty: "List is empty",
-      removedLast: "Removed last entry",
-      enabled: "Enabled",
-      disabled: "Disabled",
-      exportDone: "Exported",
-      importDone: "Imported",
-      importFail: "Import failed (file format error)",
-    },
-  };
-
-  // 現在の言語取得（ストレージ or デフォルトja）
-  function getLanguage(callback) {
-    chrome.storage.local.get(["language"], (result) => {
-      callback(result.language === "en" ? "en" : "ja");
-    });
-  }
-
-  // UIテキスト更新
-  function updateUIText(lang) {
-    document.getElementById("title").textContent =
-      lang === "ja" ? "非表示にするチャンネル名" : "Blocked Channels";
-    removeLastBtn.textContent = texts[lang].removeLast;
-    exportBtn.textContent = texts[lang].export;
-    importBtn.textContent = texts[lang].import;
-    settingsBtn.textContent = texts[lang].settings;
-    langBtn.textContent = texts[lang].langSwitch;
-    saveBtn.textContent = lang === "ja" ? "保存" : "Save";
-
-    // toggleボタンの状態は更新ToggleButton内で
-    // statusメッセージはリセット
-    status.textContent = "";
-  }
-
-  // toggleボタンの見た目更新
-  function updateToggleButton(btn, isEnabled, lang) {
-    if (isEnabled) {
-      btn.textContent = texts[lang].blockerOn;
-      btn.style.backgroundColor = "red";
-    } else {
-      btn.textContent = texts[lang].blockerOff;
-      btn.style.backgroundColor = "gray";
-    }
-  }
-
+  // ============================================================
   // ステータス表示
+  // ============================================================
+
+  /**
+   * ステータスメッセージを表示し、一定時間後にクリアする
+   * @param {string} message - 表示する文字列
+   * @param {string} color - 表示色
+   * @param {string} fontSize - フォントサイズ
+   */
   function showStatus(message, color, fontSize = "15px") {
     status.textContent = message;
     status.style.color = color;
@@ -150,18 +107,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   }
 
-  // 初期状態読み込み
-  chrome.storage.local.get(
-    ["blockedChannels", "blockerEnabled", "language"],
-    (result) => {
-      textarea.value = (result.blockedChannels || []).join("\n");
-      const isEnabled = result.blockerEnabled !== false; // default ON
-      const lang = result.language === "en" ? "en" : "ja";
+  // ============================================================
+  // UIテキスト更新（全ボタン・ラベルを現在の言語に合わせる）
+  // ============================================================
 
+  /**
+   * 全ボタン・ラベルを現在の言語に合わせて更新する
+   * @param {string} lang - 言語コード
+   */
+  function updateUIText(lang) {
+    document.getElementById("title").textContent = t('popupTitle', lang);
+    removeLastBtn.textContent = t('removeLast', lang);
+    exportBtn.textContent = t('exportBtn', lang);
+    importBtn.textContent = t('importBtn', lang);
+    settingsBtn.textContent = t('settings', lang);
+    langBtn.textContent = t('langSwitch', lang);
+    saveBtn.textContent = t('save', lang);
+    status.textContent = "";
+  }
+
+  /**
+   * トグルボタンの表示状態を更新する
+   * @param {HTMLButtonElement} btn - トグルボタン要素
+   * @param {boolean} isEnabled - 有効かどうか
+   * @param {string} lang - 言語コード
+   */
+  function updateToggleButton(btn, isEnabled, lang) {
+    btn.textContent = isEnabled ? t('blockerOn', lang) : t('blockerOff', lang);
+    btn.style.backgroundColor = isEnabled ? "red" : "gray";
+  }
+
+  // ============================================================
+  // 初期状態の読み込み
+  // ============================================================
+
+  chrome.storage.local.get(
+    [STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.LANGUAGE],
+    (result) => {
+      textarea.value = (result[STORAGE_KEYS.BLOCKED_CHANNELS] || []).join("\n");
+      const isEnabled = result[STORAGE_KEYS.BLOCKER_ENABLED] !== false;
+      const lang = result[STORAGE_KEYS.LANGUAGE] === "en" ? "en" : "ja";
       updateUIText(lang);
       updateToggleButton(toggleBtn, isEnabled, lang);
     }
   );
+
+  // ============================================================
+  // イベントハンドラ
+  // ============================================================
 
   // 保存ボタン
   saveBtn.addEventListener("click", () => {
@@ -169,55 +162,56 @@ document.addEventListener("DOMContentLoaded", () => {
       .split("\n")
       .map((name) => name.trim())
       .filter(Boolean);
-
-    chrome.storage.local.set({ blockedChannels: blockList }, () => {
-      if (chrome.runtime.lastError) {
-        getLanguage((lang) => showStatus(texts[lang].saveFailed, "red"));
-        return;
-      }
-      getLanguage((lang) => showStatus(texts[lang].saved, "green"));
-    });
-  });
-
-  // 直近の1つを削除ボタン
-  removeLastBtn.addEventListener("click", () => {
-  chrome.storage.local.get(["blockedChannels", "language"], (result) => {
-    let blockList = result.blockedChannels || [];
-    const lang = result.language === "en" ? "en" : "ja";
-
-    if (blockList.length === 0) {
-      showStatus(texts[lang].listEmpty, "red");
+    if (blockList.length > LIMITS.BLOCK_LIST) {
+      getCurrentLang((lang) => showStatus(t('importListLimit', lang), "red"));
       return;
     }
-
-    const removedChannel = blockList.pop(); // ここで最後のチャンネル名を取得
-
-    chrome.storage.local.set({ blockedChannels: blockList }, () => {
-      textarea.value = blockList.join("\n");
-      // 削除したチャンネル名をメッセージに追加
-      showStatus(`${texts[lang].removedLast}: ${removedChannel}`, "red");
+    chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_CHANNELS]: blockList }, () => {
+      getCurrentLang((lang) => {
+        if (chrome.runtime.lastError) {
+          showStatus(t('saveFailed', lang), "red");
+          return;
+        }
+        showStatus(t('saved', lang), "green");
+      });
     });
   });
-});
+
+  // 直近の1つを削除
+  removeLastBtn.addEventListener("click", () => {
+    chrome.storage.local.get([STORAGE_KEYS.BLOCKED_CHANNELS], (result) => {
+      let blockList = result[STORAGE_KEYS.BLOCKED_CHANNELS] || [];
+      getCurrentLang((lang) => {
+        if (blockList.length === 0) {
+          showStatus(t('listEmpty', lang), "red");
+          return;
+        }
+        const removedChannel = blockList.pop();
+        chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_CHANNELS]: blockList }, () => {
+          textarea.value = blockList.join("\n");
+          showStatus(`${t('removedLast', lang)}: ${removedChannel}`, "red");
+        });
+      });
+    });
+  });
 
   // トグルボタン
   toggleBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["blockerEnabled", "language"], (result) => {
-      const lang = result.language === "en" ? "en" : "ja";
-      const isEnabled = !(result.blockerEnabled !== false); // toggle
-      chrome.storage.local.set({ blockerEnabled: isEnabled }, () => {
-        updateToggleButton(toggleBtn, isEnabled, lang);
-        const msg = isEnabled ? texts[lang].enabled : texts[lang].disabled;
-        showStatus(msg, "green");
+    chrome.storage.local.get([STORAGE_KEYS.BLOCKER_ENABLED], (result) => {
+      const isEnabled = !(result[STORAGE_KEYS.BLOCKER_ENABLED] !== false);
+      chrome.storage.local.set({ [STORAGE_KEYS.BLOCKER_ENABLED]: isEnabled }, () => {
+        getCurrentLang((lang) => {
+          updateToggleButton(toggleBtn, isEnabled, lang);
+          showStatus(isEnabled ? t('enabled', lang) : t('disabled', lang), "green");
+        });
       });
     });
   });
 
   // エクスポート
   exportBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["blockedChannels", "language"], (result) => {
-      const lang = result.language === "en" ? "en" : "ja";
-      const data = JSON.stringify(result.blockedChannels || [], null, 2);
+    chrome.storage.local.get([STORAGE_KEYS.BLOCKED_CHANNELS], (result) => {
+      const data = JSON.stringify(result[STORAGE_KEYS.BLOCKED_CHANNELS] || [], null, 2);
       const blob = new Blob([data], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -227,37 +221,40 @@ document.addEventListener("DOMContentLoaded", () => {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showStatus(texts[lang].exportDone, "green");
+      getCurrentLang((lang) => showStatus(t('exportDone', lang), "green"));
     });
   });
 
   // インポート
   importBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["language"], (result) => {
-      const lang = result.language === "en" ? "en" : "ja";
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "application/json";
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        getCurrentLang((lang) => {
           try {
             const arr = JSON.parse(event.target.result);
             if (!Array.isArray(arr)) throw new Error();
-            chrome.storage.local.set({ blockedChannels: arr }, () => {
+            if (arr.length > LIMITS.BLOCK_LIST) {
+              showStatus(t('importListLimit', lang), "red");
+              return;
+            }
+            chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_CHANNELS]: arr }, () => {
               textarea.value = arr.join("\n");
-              showStatus(texts[lang].importDone, "green");
+              showStatus(t('importDone', lang), "green");
             });
           } catch {
-            showStatus(texts[lang].importFail, "red");
+            showStatus(t('importFail', lang), "red");
           }
-        };
-        reader.readAsText(file);
+        });
       };
-      input.click();
-    });
+      reader.readAsText(file);
+    };
+    input.click();
   });
 
   // 設定ボタン
@@ -267,21 +264,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 言語切替ボタン
   langBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["language"], (result) => {
-      const currentLang = result.language === "en" ? "en" : "ja";
+    getCurrentLang((currentLang) => {
       const newLang = currentLang === "ja" ? "en" : "ja";
-      chrome.storage.local.set({ language: newLang }, () => {
+      chrome.storage.local.set({ [STORAGE_KEYS.LANGUAGE]: newLang }, () => {
         updateUIText(newLang);
-        // toggleボタンの状態更新も
-        chrome.storage.local.get(["blockerEnabled"], (res) => {
-          const isEnabled = res.blockerEnabled !== false;
+        chrome.storage.local.get([STORAGE_KEYS.BLOCKER_ENABLED], (res) => {
+          const isEnabled = res[STORAGE_KEYS.BLOCKER_ENABLED] !== false;
           updateToggleButton(toggleBtn, isEnabled, newLang);
-          showStatus(
-            newLang === "ja"
-              ? "言語を日本語に切り替えました"
-              : "Switched to English",
-            "green"
-          );
+          showStatus(t('langSwitched', newLang), "green");
         });
       });
     });
