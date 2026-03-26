@@ -102,16 +102,19 @@
         <!-- 表示／非表示切替 -->
         <section id="section-hide-shorts" style="display:none; padding: 1em;">
           <h2>表示／非表示切替</h2>
+
+          <h3 id="toggle-group-shorts">ショート動画</h3>
           <label>
-            <button id="hideShortsButton" class="toggle-button off">ショート動画を非表示</button>
+            <button id="hideShortsButton" class="toggle-button off">ショート動画：表示</button>
+          </label>
+
+          <h3 id="toggle-group-whitelist" style="margin-top: 24px;">ホワイトリスト</h3>
+          <label>
+            <button id="whitelistBypassButton" class="toggle-button off">ホワイトリスト：非表示</button>
           </label>
           <br /><br />
           <label>
-            <button id="whitelistBypassButton" class="toggle-button off">ホワイトリスト：フィルター有効</button>
-          </label>
-          <br /><br />
-          <label>
-            <button id="whitelistHideShortsButton" class="toggle-button off">ホワイトリスト：ショート表示</button>
+            <button id="whitelistHideShortsButton" class="toggle-button off">ホワイトリストのショート動画：表示</button>
           </label>
         </section>
 
@@ -120,7 +123,7 @@
           <!-- <h2>高度な設定</h2> -->
           <div id="advancedTabContent"></div>
           <!-- 小見出し（最初は非表示） -->
-          <div id="advancedSubtabs" style="display:none; margin-left:16px;">
+          <div id="advancedSubtabsContent" style="display:none; margin-left:16px;">
             <input type="text" id="channelregexSearchInput" placeholder="検索..." />
             <button id="channelRegexTitle" class="advanced-subtab"
               data-target="channelRegex">チャンネルNGフィルター（正規表現）</button>
@@ -128,7 +131,7 @@
           </div>
 
           <!-- 各リストの表示場所 -->
-          <div id="advancedTabContent" style="margin-left:32px;"></div>
+          <div id="advancedTabContentArea" style="margin-left:32px;"></div>
         </section>
 
         <!-- エクスポート／インポート -->
@@ -204,7 +207,7 @@
             <button id="accordion-title-2" class="accordion-title">チャンネルNGフィルター</button>
             <div class="accordion-content">
               <p id="channel-filter-description-1">チャンネル名に特定のキーワードが含まれている場合、そのチャンネルを自動的に非表示にします。</p>
-              <p id="channel-filter-description-2">最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。。</p>
+              <p id="channel-filter-description-2">最大3つのキーワード全てを含む動画タイトルを非表示にします。単純な非表示の場合は、1つだけ登録してください。</p>
               <p id="channel-filter-description-3">キーワードセットは最大5000個・10文字以内で設定できます。</p>
               <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
             </div>
@@ -265,8 +268,8 @@
             <button id="accordion-title-9" class="accordion-title">ホワイトリスト</button>
             <div class="accordion-content">
               <p id="whitelist-description-1">ホワイトリストに登録したチャンネルには×（ブロック）ボタンが表示されません。</p>
-              <p id="whitelist-description-2">「表示／非表示切替」ページで「フィルター無効」にすると、ホワイトリストのチャンネルにはキーワードフィルターや正規表現フィルターも適用されません。</p>
-              <p id="whitelist-description-3">「フィルター有効」の場合は×ボタンだけ非表示となり、各種フィルターは通常通り動作します。</p>
+              <p id="whitelist-description-2">「表示／非表示切替」ページで「ホワイトリスト：表示」にすると、ホワイトリストのチャンネルにはキーワードフィルターや正規表現フィルターも適用されず、×ボタンも表示されません。</p>
+              <p id="whitelist-description-3">「ホワイトリスト：非表示」の場合、ホワイトリストは無効となり、通常のチャンネルと同じ扱いになります。</p>
               <p class="common-description-1">リストは「編集」ボタンで名前の編集が、「削除」ボタンでリストからの削除が可能です。</p>
             </div>
           </div>
@@ -284,8 +287,8 @@
           <div class="accordion">
             <button id="accordion-title-6" class="accordion-title">表示/非表示切替</button>
             <div class="accordion-content">
-              <p id="show-hide-description-1">「ショート動画フィルター」ボタンを押して「有効」にすると、YouTubeのショート動画がすべて非表示になります。</p>
-              <p id="show-hide-description-2">「ショート動画フィルター」ボタンを押して「無効」にすると、YouTubeのショート動画が再び表示されます（機能が無効の場合はボタンがグレー表示）。
+              <p id="show-hide-description-1">「ショート動画：非表示」にすると、YouTubeのショート動画がすべて非表示になります。</p>
+              <p id="show-hide-description-2">「ショート動画：表示」にすると、YouTubeのショート動画が再び表示されます（ボタンがグレー表示）。
               </p>
               <p id="show-hide-description-3">今後、プレイリスト等についても同様の機能を追加予定です。</p>
             </div>

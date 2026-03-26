@@ -998,7 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /** ホワイトリストバイパスボタンの初期状態読み込み */
   chrome.storage.local.get(STORAGE_KEYS.WHITELIST_BYPASS_ALL, (result) => {
-    getCurrentLang(lang => updateWhitelistBypassState(!!result[STORAGE_KEYS.WHITELIST_BYPASS_ALL], lang));
+    getCurrentLang(lang => updateWhitelistBypassState(result[STORAGE_KEYS.WHITELIST_BYPASS_ALL] !== false, lang));
   });
 
   // ============================================================
@@ -1109,9 +1109,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 表示/非表示トグル
     document.querySelector('#section-hide-shorts h2').textContent = t('sectionShowHideToggle', lang);
+    document.getElementById('toggle-group-shorts').textContent = t('toggleGroupShorts', lang);
+    document.getElementById('toggle-group-whitelist').textContent = t('toggleGroupWhitelist', lang);
     chrome.storage.local.get([STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS], (result) => {
       updateShortsButtonState(!!result[STORAGE_KEYS.HIDE_SHORTS_FLAG], lang);
-      updateWhitelistBypassState(!!result[STORAGE_KEYS.WHITELIST_BYPASS_ALL], lang);
+      updateWhitelistBypassState(result[STORAGE_KEYS.WHITELIST_BYPASS_ALL] !== false, lang);
       updateWhitelistHideShortsState(!!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS], lang);
     });
 

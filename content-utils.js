@@ -52,7 +52,7 @@ let popupTimeout = null;
  * @param {string} message - 表示する文字列
  * @param {number} duration - 表示時間（ms, デフォルト5000）
  */
-function showPopupMessage(event, message, duration = 5000) {
+function showPopupMessage(event, message, duration = 3000) {
   popup.textContent = message;
   popup.style.left = `${event.clientX + 15}px`;
   popup.style.top = `${event.clientY + 15}px`;
@@ -121,13 +121,13 @@ function createBlockCommentButton(commentText) {
     chrome.storage.local.get({ [STORAGE_KEYS.BLOCKED_COMMENTS]: [] }, (result) => {
       const list = result[STORAGE_KEYS.BLOCKED_COMMENTS];
       if (!list.includes(commentText)) {
-        list.push(commentText);
         if (list.length >= LIMITS.COMMENT_LIST) {
           getCurrentLang((lang) => {
             showPopupMessage(event, t('listLimitReached', lang));
           });
           return;
         }
+        list.push(commentText);
         chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_COMMENTS]: list }, () => {
           runBlocker();
         });
@@ -199,7 +199,7 @@ function hideParentByChildSelector(childSelector, parentSelector) {
  *
  * @param {Element} item - 対象DOM要素
  * @param {Object} options - 処理オプション
- * @param {string[]}   options.blockedComments          - ブロック済みコメントユーザー
+ * @param {Set<string>} options.blockedComments          - ブロック済みコメントユーザー
  * @param {string}     options.userSelector              - ユーザー名要素のセレクタ
  * @param {string|null} options.buttonContainerSelector  - ボタン挿入先セレクタ
  * @param {string|null} options.parentSelector           - 非表示対象の親要素セレクタ
@@ -207,7 +207,7 @@ function hideParentByChildSelector(childSelector, parentSelector) {
  */
 function processCommentUserBlock(item, options) {
   const {
-    blockedComments = [],
+    blockedComments = new Set(),
     userSelector,
     buttonContainerSelector = null,
     parentSelector = null,
@@ -223,7 +223,7 @@ function processCommentUserBlock(item, options) {
   const parent = parentSelector ? item.closest(parentSelector) : item;
 
   // ブロックユーザーなら即非表示
-  if (blockedComments.includes(userName)) {
+  if (blockedComments.has(userName)) {
     if (parent) parent.style.display = "none";
   }
 
@@ -280,7 +280,7 @@ const VIDEO_TITLE_SELECTOR = [
  *
  * @param {Element} item - 対象DOM要素
  * @param {Object} options - 処理オプション
- * @param {string[]}   options.blockedChannels      - ブロックリスト
+ * @param {Set<string>} options.blockedChannels      - ブロックリスト
  * @param {string}     options.channelSelector      - チャンネル名要素のセレクタ
  * @param {string|null} options.insertBeforeSelector - ×ボタンの挿入位置セレクタ
  * @param {string|null} options.parentSelectors      - 非表示対象の親要素セレクタ
@@ -289,14 +289,14 @@ const VIDEO_TITLE_SELECTOR = [
  * @param {string[][]} options.titleKeywords         - タイトルNGキーワードセット
  * @param {RegExp[]}   options.channelRegexList      - チャンネル名正規表現リスト
  * @param {RegExp[]}   options.titleRegexList        - タイトル正規表現リスト
- * @param {string[]}   options.whitelistedChannels   - ホワイトリスト
+ * @param {Set<string>} options.whitelistedChannels   - ホワイトリスト
  * @param {boolean}    options.whitelistBypassAll    - ホワイトリスト全フィルターバイパスフラグ
  * @param {boolean}    options.hideShortsFlag        - ショート動画非表示フラグ
  * @param {boolean}    options.whitelistHideShorts   - ホワイトリストチャンネルのショートも非表示にするフラグ
  */
 function processVideoItem(item, options) {
   const {
-    blockedChannels = [],
+    blockedChannels = new Set(),
     channelSelector,
     insertBeforeSelector = null,
     parentSelectors = null,
@@ -305,7 +305,7 @@ function processVideoItem(item, options) {
     titleKeywords = [],
     channelRegexList = [],
     titleRegexList = [],
-    whitelistedChannels = [],
+    whitelistedChannels = new Set(),
     whitelistBypassAll = false,
     hideShortsFlag = false,
     whitelistHideShorts = false,
@@ -320,8 +320,8 @@ function processVideoItem(item, options) {
   const channelName = channelNameElem.textContent.trim();
   if (!channelName) return;
 
-  // ホワイトリスト判定
-  const isWhitelisted = whitelistedChannels.includes(channelName);
+  // ホワイトリスト判定（ホワイトリストが有効かつ登録済みの場合のみ適用）
+  const isWhitelisted = whitelistBypassAll && whitelistedChannels.has(channelName);
 
   // ×ボタン処理
   if (isWhitelisted) {
@@ -345,10 +345,13 @@ function processVideoItem(item, options) {
     }
   }
 
-  // マウスがitem（親要素）に入ったらチャンネル名を保存
-  item.addEventListener("mouseenter", () => {
-    hoveredChannelName = channelName;
-  });
+  // マウスがitem（親要素）に入ったらチャンネル名を保存（二重登録防止）
+  if (!item.dataset.hoverBound) {
+    item.dataset.hoverBound = "1";
+    item.addEventListener("mouseenter", () => {
+      hoveredChannelName = channelName;
+    });
+  }
 
   // ホワイトリスト登録チャンネルのフィルター分岐
   if (isWhitelisted) {
@@ -367,28 +370,12 @@ function processVideoItem(item, options) {
       const parent = item.closest(parentSelectors);
       if (parent) parent.style.display = "";
     }
-    // whitelistBypassAll=trueなら全フィルターをスキップ
-    if (whitelistBypassAll) {
-      return;
-    }
-    // whitelistBypassAll=falseならタイトルNGフィルターのみ適用（他はスキップ）
-    const titleElem = item.querySelector(VIDEO_TITLE_SELECTOR);
-    if (!titleElem) return;
-    const titleText = titleElem.textContent || "";
-    if (matchesKeywordSets(titleText, titleKeywords)) {
-      hideItemOrParent(item, parentSelectors);
-      return;
-    }
-    if (titleRegexList.some((regex) => regex.test(titleText))) {
-      hideItemOrParent(item, parentSelectors);
-      return;
-    }
-    // それ以外は表示
+    // ホワイトリスト有効：全フィルターをスキップ
     return;
   }
 
   // ブロックリストによる非表示
-  if (blockedChannels.includes(channelName)) {
+  if (blockedChannels.has(channelName)) {
     if (parentSelectors == null) return;
     hideItemOrParent(item, parentSelectors);
     return;
@@ -416,6 +403,7 @@ function processVideoItem(item, options) {
   // 動画タイトルキーワードANDブロック判定
   if (matchesKeywordSets(titleText, titleKeywords)) {
     hideItemOrParent(item, parentSelectors);
+    return;
   }
 
   // タイトル正規表現によるブロック判定

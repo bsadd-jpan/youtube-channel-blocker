@@ -136,9 +136,9 @@ async function runBlocker() {
         return;
       }
 
-      const blockedChannels = result[STORAGE_KEYS.BLOCKED_CHANNELS] || [];
-      const whitelistedChannels = result[STORAGE_KEYS.WHITELISTED_CHANNELS] || [];
-      const whitelistBypassAll = !!result[STORAGE_KEYS.WHITELIST_BYPASS_ALL];
+      const blockedChannels = new Set(result[STORAGE_KEYS.BLOCKED_CHANNELS] || []);
+      const whitelistedChannels = new Set(result[STORAGE_KEYS.WHITELISTED_CHANNELS] || []);
+      const whitelistBypassAll = result[STORAGE_KEYS.WHITELIST_BYPASS_ALL] !== false;
       const whitelistHideShorts = !!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS];
 
       // チャンネル名フィルター用キーワードセット
@@ -196,7 +196,7 @@ async function runBlocker() {
       });
 
       // コメント欄処理（ユーザー単位で非表示）
-      const blockedComments = result[STORAGE_KEYS.BLOCKED_COMMENTS] || [];
+      const blockedComments = new Set(result[STORAGE_KEYS.BLOCKED_COMMENTS] || []);
 
       // 親コメント用
       document.querySelectorAll("ytd-comment-thread-renderer").forEach((item) => {

@@ -162,6 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .split("\n")
       .map((name) => name.trim())
       .filter(Boolean);
+    if (blockList.length > LIMITS.BLOCK_LIST) {
+      getCurrentLang((lang) => showStatus(t('importListLimit', lang), "red"));
+      return;
+    }
     chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_CHANNELS]: blockList }, () => {
       getCurrentLang((lang) => {
         if (chrome.runtime.lastError) {
@@ -235,6 +239,10 @@ document.addEventListener("DOMContentLoaded", () => {
           try {
             const arr = JSON.parse(event.target.result);
             if (!Array.isArray(arr)) throw new Error();
+            if (arr.length > LIMITS.BLOCK_LIST) {
+              showStatus(t('importListLimit', lang), "red");
+              return;
+            }
             chrome.storage.local.set({ [STORAGE_KEYS.BLOCKED_CHANNELS]: arr }, () => {
               textarea.value = arr.join("\n");
               showStatus(t('importDone', lang), "green");

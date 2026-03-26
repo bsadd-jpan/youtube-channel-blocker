@@ -107,6 +107,8 @@ const I18N = {
   sectionBlockedCommentUsers:{ ja: '非表示コメントユーザーリスト', en: 'Blocked Comment Users List' },
   sectionExportImport:       { ja: 'エクスポート／インポート',     en: 'Export / Import' },
   sectionShowHideToggle:     { ja: '表示／非表示切替',             en: 'Show/Hide Toggle' },
+  toggleGroupShorts:         { ja: 'ショート動画',                 en: 'Shorts' },
+  toggleGroupWhitelist:      { ja: 'ホワイトリスト',               en: 'Whitelist' },
   sectionLanguageSetting:    { ja: '表示言語',                     en: 'Language Setting' },
   sectionHelp:               { ja: 'サポート／使い方',             en: 'Support / Usage' },
 
@@ -133,16 +135,16 @@ const I18N = {
   ieCommentList:   { ja: '非表示コメントユーザーリスト', en: 'Blocked Comment User List' },
 
   // ─── settings.js ショート動画トグル ───
-  shortsFilterOn:     { ja: 'ショート動画フィルター：有効',           en: 'Shorts Filter: ON' },
-  shortsFilterOff:    { ja: 'ショート動画フィルター：無効',           en: 'Shorts Filter: OFF' },
-  hideShortsEnabled:  { ja: 'ショート動画非表示を有効にしました',     en: 'Hide Shorts enabled' },
-  hideShortsDisabled: { ja: 'ショート動画非表示を無効にしました',     en: 'Hide Shorts disabled' },
+  shortsFilterOn:     { ja: 'ショート動画：非表示',                   en: 'Shorts: Hidden' },
+  shortsFilterOff:    { ja: 'ショート動画：表示',                     en: 'Shorts: Shown' },
+  hideShortsEnabled:  { ja: 'ショート動画を非表示にしました',         en: 'Shorts now hidden' },
+  hideShortsDisabled: { ja: 'ショート動画を表示します',               en: 'Shorts now shown' },
 
   // ─── ホワイトリストショート動画トグル ───
-  whitelistHideShortsOn:       { ja: 'ホワイトリスト：ショート非表示',                     en: 'Whitelist: Hide Shorts' },
-  whitelistHideShortsOff:      { ja: 'ホワイトリスト：ショート表示',                     en: 'Whitelist: Show Shorts' },
-  whitelistHideShortsEnabled:  { ja: 'ホワイトリストのショート動画も非表示にしました', en: 'Whitelist Shorts hiding enabled' },
-  whitelistHideShortsDisabled: { ja: 'ホワイトリストのショート動画を表示します',     en: 'Whitelist Shorts hiding disabled' },
+  whitelistHideShortsOn:       { ja: 'ホワイトリストのショート動画：非表示',             en: 'Whitelist Shorts: Hidden' },
+  whitelistHideShortsOff:      { ja: 'ホワイトリストのショート動画：表示',               en: 'Whitelist Shorts: Shown' },
+  whitelistHideShortsEnabled:  { ja: 'ホワイトリストのショート動画を非表示にしました', en: 'Whitelist Shorts now hidden' },
+  whitelistHideShortsDisabled: { ja: 'ホワイトリストのショート動画を表示します',       en: 'Whitelist Shorts now shown' },
 
   // ─── ホワイトリスト ───
   tabWhitelist:            { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
@@ -153,20 +155,20 @@ const I18N = {
   whitelistEdited:         { ja: 'ホワイトリストのチャンネル名を編集しました',             en: 'Whitelist channel name edited' },
   whitelistAlreadyExists:  { ja: 'すでにホワイトリストに存在します',                       en: 'Already in whitelist' },
   whitelistLimitReached:   { ja: 'ホワイトリスト上限に達しました',                         en: 'Whitelist limit reached' },
-  whitelistBypassAllOn:    { ja: 'ホワイトリスト：フィルター無効',                     en: 'Whitelist: Filters Off' },
-  whitelistBypassAllOff:   { ja: 'ホワイトリスト：フィルター有効',                     en: 'Whitelist: Filters On' },
-  whitelistBypassEnabled:  { ja: 'ホワイトリストのフィルターを無効にしました',           en: 'Whitelist filters disabled' },
-  whitelistBypassDisabled: { ja: 'ホワイトリストのフィルターを有効にしました',           en: 'Whitelist filters enabled' },
+  whitelistBypassAllOn:    { ja: 'ホワイトリスト：表示',                               en: 'Whitelist: ON' },
+  whitelistBypassAllOff:   { ja: 'ホワイトリスト：非表示',                             en: 'Whitelist: OFF' },
+  whitelistBypassEnabled:  { ja: 'ホワイトリストを有効にしました',                     en: 'Whitelist enabled' },
+  whitelistBypassDisabled: { ja: 'ホワイトリストを無効にしました',                     en: 'Whitelist disabled' },
   exportWhitelist:         { ja: 'ホワイトリストをエクスポートしました',                   en: 'Exported whitelist' },
   importWhitelist:         { ja: 'ホワイトリストをインポートしました',                     en: 'Imported whitelist' },
   ieWhitelist:             { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
   accordionWhitelist:      { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
   helpWhitelist1:          { ja: 'ホワイトリストに登録したチャンネルには×（ブロック）ボタンが表示されません。',
                              en: 'Channels registered in the whitelist will not show the × (block) button.' },
-  helpWhitelist2:          { ja: '「表示／非表示切替」ページで「フィルター無効」にすると、ホワイトリストのチャンネルにはキーワードフィルターや正規表現フィルターも適用されません。',
-                             en: 'If set to "Filters Off" in the Show/Hide Toggle page, whitelisted channels will also bypass keyword and regex filters.' },
-  helpWhitelist3:          { ja: '「フィルター有効」の場合は×ボタンだけ非表示となり、各種フィルターは通常通り動作します。',
-                             en: 'If set to "Filters On", only the × button will be hidden, and all filters will work as usual.' },
+  helpWhitelist2:          { ja: '「表示／非表示切替」ページで「ホワイトリスト：表示」にすると、ホワイトリストのチャンネルにはキーワードフィルターや正規表現フィルターも適用されず、×ボタンも表示されません。',
+                             en: 'If "Whitelist: ON" is set in the Show/Hide Toggle page, whitelisted channels will bypass all filters and the × button will not be shown.' },
+  helpWhitelist3:          { ja: '「ホワイトリスト：非表示」の場合、ホワイトリストは無効となり、通常のチャンネルと同じ扱いになります。',
+                             en: 'If "Whitelist: OFF", the whitelist is disabled and channels are treated normally.' },
 
   // ─── ヘルプセクション ───
   helpIntro:      { ja: '各機能の概要と使い方の説明です。不具合の報告や要望、質問等はGitHubのissuesにお願いします。',
@@ -252,10 +254,10 @@ const I18N = {
   helpExportImport4: { ja: '💡 定期的なバックアップを推奨します。',
                        en: '💡 We recommend backing up your data regularly.' },
 
-  helpShowHide1: { ja: 'ボタンを「有効」にすると、ショート動画がすべて非表示になります（ボタンがカラー表示）。',
-                   en: 'Pressing the button to "Enable" will hide all Shorts videos (button will be colored).' },
-  helpShowHide2: { ja: 'ボタンを「無効」にすると、ショート動画が再び表示されます（ボタンがグレー表示）。',
-                   en: 'Pressing the button again to "Disable" will show the Shorts videos again (button will be grayed out).' },
+  helpShowHide1: { ja: '「ショート動画：非表示」にすると、ショート動画がすべて非表示になります（ボタンがカラー表示）。',
+                   en: 'Setting "Shorts: Hidden" will hide all Shorts videos (button will be colored).' },
+  helpShowHide2: { ja: '「ショート動画：表示」にすると、ショート動画が再び表示されます（ボタンがグレー表示）。',
+                   en: 'Setting "Shorts: Shown" will show Shorts videos again (button will be grayed out).' },
   helpShowHide3: { ja: '今後、プレイリスト等についても同様の機能を追加予定です。',
                    en: 'I plan to add similar functionality for playlists and other features in the future.' },
 
