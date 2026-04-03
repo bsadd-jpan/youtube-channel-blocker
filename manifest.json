@@ -7,6 +7,7 @@
   "permissions": ["storage", "unlimitedStorage"],
   "background": {
     "scripts": ["background.js"]
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -16,6 +17,7 @@
       "run_at": "document_idle"
     }
   ],
+  "action": {
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon48.png"
