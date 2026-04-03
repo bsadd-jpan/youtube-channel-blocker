@@ -62,9 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const whitelistSearchInput = document.getElementById('whitelistSearchInput');
   const addWhitelistChannelBtn = document.getElementById('addWhitelistChannelBtn');
   const whitelistChannelInput = document.getElementById('whitelistChannelInput');
-  // 一括切り替えボタン
-  const whitelistTitleFilterToggle = document.getElementById('whitelistTitleFilterToggle');
-  const whitelistShortsFilterToggle = document.getElementById('whitelistShortsFilterToggle');
 
   // 非表示チャンネルリスト用
   const blockListContainer = document.getElementById('blockListContainer');
@@ -1251,6 +1248,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#show-hide-description-1').textContent = t('helpShowHide1', lang);
     document.querySelector('#show-hide-description-2').textContent = t('helpShowHide2', lang);
     document.querySelector('#show-hide-description-3').textContent = t('helpShowHide3', lang);
+    document.querySelector('#show-hide-description-4').textContent = t('helpShowHide4', lang);
+    document.querySelector('#show-hide-description-5').textContent = t('helpShowHide5', lang);
 
     // Channel Blockerインポートヘルプ
     document.querySelector('#import-from-cb-description-1').textContent = t('helpCBImport1', lang);

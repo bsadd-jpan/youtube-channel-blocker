@@ -270,7 +270,11 @@ const I18N = {
   helpShowHide2: { ja: '「ショート動画：表示」にすると、ショート動画が再び表示されます（ボタンがグレー表示）。',
                    en: 'Setting "Shorts: Shown" will show Shorts videos again (button will be grayed out).' },
   helpShowHide3: { ja: '今後、プレイリスト等についても同様の機能を追加予定です。',
-                   en: 'I plan to add similar functionality for playlists and other features in the future.' },
+                   en: 'Plans to add similar features for playlists, etc. in the future.' },
+  helpShowHide4: { ja: '「ブロックポップアップ：非表示」にすると、×ボタン押下時に表示される通知ポップアップが非表示になります。',
+                   en: 'Setting "Block Popup: Hidden" hides the notification popup that appears when the × button is pressed.' },
+  helpShowHide5: { ja: '「×ボタン：非表示」にすると、各動画・チャンネル横の×ボタンが非表示になります。',
+                   en: 'Setting "× Button: Hidden" hides the × button next to each video and channel.' },
 
   helpCBImport1: { ja: 'Channel BlockerのリストをYouTube Channel Blockerのリストに変換するHTMLはこちらから利用できます',
                    en: 'HTML to convert Channel Blocker lists to YouTube Channel Blocker lists is available here' },
