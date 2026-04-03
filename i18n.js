@@ -109,6 +109,7 @@ const I18N = {
   sectionShowHideToggle:     { ja: '表示／非表示切替',             en: 'Show/Hide Toggle' },
   toggleGroupShorts:         { ja: 'ショート動画',                 en: 'Shorts' },
   toggleGroupWhitelist:      { ja: 'ホワイトリスト',               en: 'Whitelist' },
+  toggleGroupUI:             { ja: 'UI表示',                       en: 'UI Display' },
   sectionLanguageSetting:    { ja: '表示言語',                     en: 'Language Setting' },
   sectionHelp:               { ja: 'サポート／使い方',             en: 'Support / Usage' },
 
@@ -145,6 +146,16 @@ const I18N = {
   whitelistHideShortsOff:      { ja: 'ホワイトリストのショート動画：表示',               en: 'Whitelist Shorts: Shown' },
   whitelistHideShortsEnabled:  { ja: 'ホワイトリストのショート動画を非表示にしました', en: 'Whitelist Shorts now hidden' },
   whitelistHideShortsDisabled: { ja: 'ホワイトリストのショート動画を表示します',       en: 'Whitelist Shorts now shown' },
+
+  // ─── ブロックポップアップ／×ボタントグル ───
+  showBlockPopupOn:       { ja: 'ブロックポップアップ：表示',           en: 'Block Popup: Shown' },
+  showBlockPopupOff:      { ja: 'ブロックポップアップ：非表示',         en: 'Block Popup: Hidden' },
+  showBlockPopupEnabled:  { ja: 'ブロックポップアップを表示します',     en: 'Block popup enabled' },
+  showBlockPopupDisabled: { ja: 'ブロックポップアップを非表示にしました', en: 'Block popup disabled' },
+  showCloseButtonOn:      { ja: '×ボタン：表示',                       en: '× Button: Shown' },
+  showCloseButtonOff:     { ja: '×ボタン：非表示',                     en: '× Button: Hidden' },
+  showCloseButtonEnabled:  { ja: '×ボタンを表示します',                en: '× button enabled' },
+  showCloseButtonDisabled: { ja: '×ボタンを非表示にしました',          en: '× button disabled' },
 
   // ─── ホワイトリスト ───
   tabWhitelist:            { ja: 'ホワイトリスト',                                         en: 'Whitelist' },

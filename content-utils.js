@@ -19,6 +19,9 @@
 /** ホバー中のチャンネル名を保持 */
 let hoveredChannelName = null;
 
+/** ブロックポップアップ表示フラグ（content.js から設定） */
+let showBlockPopupFlag = true;
+
 // ============================================================
 // ポップアップ通知
 // ============================================================
@@ -53,6 +56,7 @@ let popupTimeout = null;
  * @param {number} duration - 表示時間（ms, デフォルト5000）
  */
 function showPopupMessage(event, message, duration = 3000) {
+  if (!showBlockPopupFlag) return;
   popup.textContent = message;
   popup.style.left = `${event.clientX + 15}px`;
   popup.style.top = `${event.clientY + 15}px`;
@@ -309,6 +313,7 @@ function processVideoItem(item, options) {
     whitelistBypassAll = false,
     hideShortsFlag = false,
     whitelistHideShorts = false,
+    showCloseButton = true,
   } = options;
 
   // プレイリスト特有のタグがあれば処理スキップ
@@ -317,6 +322,10 @@ function processVideoItem(item, options) {
   const channelNameElem = item.querySelector(channelSelector);
   if (!channelNameElem) return;
 
+  // 再生数・日付行（•区切りがある行）を誤検出した場合はスキップ
+  const metadataRow = channelNameElem.closest('.yt-content-metadata-view-model__metadata-row');
+  if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter')) return;
+
   const channelName = channelNameElem.textContent.trim();
   if (!channelName) return;
 
@@ -324,8 +333,8 @@ function processVideoItem(item, options) {
   const isWhitelisted = whitelistBypassAll && whitelistedChannels.has(channelName);
 
   // ×ボタン処理
-  if (isWhitelisted) {
-    // ホワイトリスト登録チャンネル：既存の×ボタンがあれば全て削除
+  if (isWhitelisted || !showCloseButton) {
+    // ホワイトリスト登録チャンネル、または×ボタン非表示設定：既存の×ボタンがあれば全て削除
     item.querySelectorAll('.block-btn').forEach(btn => btn.remove());
   } else {
     // 未登録チャンネル：×ボタンを挿入

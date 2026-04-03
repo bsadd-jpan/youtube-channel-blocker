@@ -125,6 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ホワイトリストショート非表示トグル
   const whitelistHideShortsButton = document.getElementById('whitelistHideShortsButton');
 
+  // ブロックポップアップトグル
+  const showBlockPopupButton = document.getElementById('showBlockPopupButton');
+
+  // ×ボタン表示トグル
+  const showCloseButtonButton = document.getElementById('showCloseButtonButton');
+
   let currentImportTarget = '';
 
   // ============================================================
@@ -1035,6 +1041,60 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ============================================================
+  // 9-3. ブロックポップアップトグル
+  // ============================================================
+
+  function updateShowBlockPopupState(enabled, lang) {
+    showBlockPopupButton.classList.toggle('on', enabled);
+    showBlockPopupButton.classList.toggle('off', !enabled);
+    showBlockPopupButton.textContent = enabled ? t('showBlockPopupOn', lang) : t('showBlockPopupOff', lang);
+  }
+
+  showBlockPopupButton.addEventListener('click', () => {
+    chrome.storage.local.get(STORAGE_KEYS.SHOW_BLOCK_POPUP, (result) => {
+      const current = result[STORAGE_KEYS.SHOW_BLOCK_POPUP] !== false;
+      const next = !current;
+      chrome.storage.local.set({ [STORAGE_KEYS.SHOW_BLOCK_POPUP]: next }, () => {
+        getCurrentLang(lang => {
+          updateShowBlockPopupState(next, lang);
+          showStatus(next ? t('showBlockPopupEnabled', lang) : t('showBlockPopupDisabled', lang), 'green');
+        });
+      });
+    });
+  });
+
+  chrome.storage.local.get(STORAGE_KEYS.SHOW_BLOCK_POPUP, (result) => {
+    getCurrentLang(lang => updateShowBlockPopupState(result[STORAGE_KEYS.SHOW_BLOCK_POPUP] !== false, lang));
+  });
+
+  // ============================================================
+  // 9-4. ×ボタン表示トグル
+  // ============================================================
+
+  function updateShowCloseButtonState(enabled, lang) {
+    showCloseButtonButton.classList.toggle('on', enabled);
+    showCloseButtonButton.classList.toggle('off', !enabled);
+    showCloseButtonButton.textContent = enabled ? t('showCloseButtonOn', lang) : t('showCloseButtonOff', lang);
+  }
+
+  showCloseButtonButton.addEventListener('click', () => {
+    chrome.storage.local.get(STORAGE_KEYS.SHOW_CLOSE_BUTTON, (result) => {
+      const current = result[STORAGE_KEYS.SHOW_CLOSE_BUTTON] !== false;
+      const next = !current;
+      chrome.storage.local.set({ [STORAGE_KEYS.SHOW_CLOSE_BUTTON]: next }, () => {
+        getCurrentLang(lang => {
+          updateShowCloseButtonState(next, lang);
+          showStatus(next ? t('showCloseButtonEnabled', lang) : t('showCloseButtonDisabled', lang), 'green');
+        });
+      });
+    });
+  });
+
+  chrome.storage.local.get(STORAGE_KEYS.SHOW_CLOSE_BUTTON, (result) => {
+    getCurrentLang(lang => updateShowCloseButtonState(result[STORAGE_KEYS.SHOW_CLOSE_BUTTON] !== false, lang));
+  });
+
+  // ============================================================
   // 10. UIテキスト適用 (i18n)
   // ============================================================
 
@@ -1111,10 +1171,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#section-hide-shorts h2').textContent = t('sectionShowHideToggle', lang);
     document.getElementById('toggle-group-shorts').textContent = t('toggleGroupShorts', lang);
     document.getElementById('toggle-group-whitelist').textContent = t('toggleGroupWhitelist', lang);
-    chrome.storage.local.get([STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS], (result) => {
+    document.getElementById('toggle-group-ui').textContent = t('toggleGroupUI', lang);
+    chrome.storage.local.get([STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS, STORAGE_KEYS.SHOW_BLOCK_POPUP, STORAGE_KEYS.SHOW_CLOSE_BUTTON], (result) => {
       updateShortsButtonState(!!result[STORAGE_KEYS.HIDE_SHORTS_FLAG], lang);
       updateWhitelistBypassState(result[STORAGE_KEYS.WHITELIST_BYPASS_ALL] !== false, lang);
       updateWhitelistHideShortsState(!!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS], lang);
+      updateShowBlockPopupState(result[STORAGE_KEYS.SHOW_BLOCK_POPUP] !== false, lang);
+      updateShowCloseButtonState(result[STORAGE_KEYS.SHOW_CLOSE_BUTTON] !== false, lang);
     });
 
     // 言語セクション

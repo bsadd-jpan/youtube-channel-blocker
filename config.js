@@ -23,6 +23,8 @@ const STORAGE_KEYS = {
   WHITELIST_BYPASS_ALL: 'whitelistBypassAll',
   WHITELIST_HIDE_SHORTS:'whitelistHideShorts',
   LANGUAGE:             'language',
+  SHOW_BLOCK_POPUP:     'showBlockPopup',
+  SHOW_CLOSE_BUTTON:    'showCloseButton',
 };
 
 /** リスト上限・文字数制限 */
