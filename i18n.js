@@ -109,6 +109,7 @@ const I18N = {
   sectionShowHideToggle:     { ja: '表示／非表示切替',             en: 'Show/Hide Toggle' },
   toggleGroupShorts:         { ja: 'ショート動画',                 en: 'Shorts' },
   toggleGroupWhitelist:      { ja: 'ホワイトリスト',               en: 'Whitelist' },
+  toggleGroupUI:             { ja: 'UI表示',                       en: 'UI Display' },
   sectionLanguageSetting:    { ja: '表示言語',                     en: 'Language Setting' },
   sectionHelp:               { ja: 'サポート／使い方',             en: 'Support / Usage' },
 
@@ -145,6 +146,16 @@ const I18N = {
   whitelistHideShortsOff:      { ja: 'ホワイトリストのショート動画：表示',               en: 'Whitelist Shorts: Shown' },
   whitelistHideShortsEnabled:  { ja: 'ホワイトリストのショート動画を非表示にしました', en: 'Whitelist Shorts now hidden' },
   whitelistHideShortsDisabled: { ja: 'ホワイトリストのショート動画を表示します',       en: 'Whitelist Shorts now shown' },
+
+  // ─── ブロックポップアップ／×ボタントグル ───
+  showBlockPopupOn:       { ja: 'ブロックポップアップ：表示',           en: 'Block Popup: Shown' },
+  showBlockPopupOff:      { ja: 'ブロックポップアップ：非表示',         en: 'Block Popup: Hidden' },
+  showBlockPopupEnabled:  { ja: 'ブロックポップアップを表示します',     en: 'Block popup enabled' },
+  showBlockPopupDisabled: { ja: 'ブロックポップアップを非表示にしました', en: 'Block popup disabled' },
+  showCloseButtonOn:      { ja: '×ボタン：表示',                       en: '× Button: Shown' },
+  showCloseButtonOff:     { ja: '×ボタン：非表示',                     en: '× Button: Hidden' },
+  showCloseButtonEnabled:  { ja: '×ボタンを表示します',                en: '× button enabled' },
+  showCloseButtonDisabled: { ja: '×ボタンを非表示にしました',          en: '× button disabled' },
 
   // ─── ホワイトリスト ───
   tabWhitelist:            { ja: 'ホワイトリスト',                                         en: 'Whitelist' },
@@ -259,7 +270,11 @@ const I18N = {
   helpShowHide2: { ja: '「ショート動画：表示」にすると、ショート動画が再び表示されます（ボタンがグレー表示）。',
                    en: 'Setting "Shorts: Shown" will show Shorts videos again (button will be grayed out).' },
   helpShowHide3: { ja: '今後、プレイリスト等についても同様の機能を追加予定です。',
-                   en: 'I plan to add similar functionality for playlists and other features in the future.' },
+                   en: 'Plans to add similar features for playlists, etc. in the future.' },
+  helpShowHide4: { ja: '「ブロックポップアップ：非表示」にすると、×ボタン押下時に表示される通知ポップアップが非表示になります。',
+                   en: 'Setting "Block Popup: Hidden" hides the notification popup that appears when the × button is pressed.' },
+  helpShowHide5: { ja: '「×ボタン：非表示」にすると、各動画・チャンネル横の×ボタンが非表示になります。',
+                   en: 'Setting "× Button: Hidden" hides the × button next to each video and channel.' },
 
   helpCBImport1: { ja: 'Channel BlockerのリストをYouTube Channel Blockerのリストに変換するHTMLはこちらから利用できます',
                    en: 'HTML to convert Channel Blocker lists to YouTube Channel Blocker lists is available here' },
