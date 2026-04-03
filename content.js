@@ -54,11 +54,12 @@ const PAGE_SELECTORS = [
     parentSelectors: "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
   },
   {
-    // 関連動画サイドバー: 通常動画用
+    // 関連動画サイドバー: 通常動画用（チャンネルページではスキップ）
     itemSelector: "yt-lockup-view-model",
     channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
+    skipIf: () => /^\/@[^/]+(\/|$)/.test(window.location.pathname),
   },
   {
     // 関連動画サイドバー: ショート動画用
@@ -176,7 +177,8 @@ async function runBlocker() {
       };
 
       // 各ページセレクタのアイテムを処理
-      PAGE_SELECTORS.forEach(({ itemSelector, ...selectorConfig }) => {
+      PAGE_SELECTORS.forEach(({ itemSelector, skipIf, ...selectorConfig }) => {
+        if (skipIf && skipIf()) return;
         document.querySelectorAll(itemSelector).forEach((item) => {
           processVideoItem(item, { ...filterContext, ...selectorConfig });
         });
