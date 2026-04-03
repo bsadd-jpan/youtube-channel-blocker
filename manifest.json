@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_appName__",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "__MSG_appDescription__",
   "default_locale": "ja",
   "permissions": ["storage", "unlimitedStorage"],
@@ -33,10 +33,7 @@
       "id": "yt-channel-blocker@yourdomain.dev",
       "strict_min_version": "109.0",
       "data_collection_permissions": {
-        "required": ["none"],
-        "urlVisited": false,
-        "searchTerms": false,
-        "technicalAndInteraction": false
+        "required": ["none"]
       }
     }
   }
