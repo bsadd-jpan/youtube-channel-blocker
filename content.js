@@ -54,11 +54,12 @@ const PAGE_SELECTORS = [
     parentSelectors: "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
   },
   {
-    // 関連動画サイドバー: 通常動画用
+    // 関連動画サイドバー: 通常動画用（チャンネルページではスキップ）
     itemSelector: "yt-lockup-view-model",
     channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
+    skipIf: () => /^\/@[^/]+(\/|$)/.test(window.location.pathname),
   },
   {
     // 関連動画サイドバー: ショート動画用
@@ -128,7 +129,7 @@ async function runBlocker() {
   const titleRegexList = titlePatterns.map(parseUserRegex).filter(Boolean);
 
   chrome.storage.local.get(
-    [STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.CHANNEL_KEYWORD_SETS, STORAGE_KEYS.TITLE_KEYWORD_SETS, STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.BLOCKED_COMMENTS, STORAGE_KEYS.WHITELISTED_CHANNELS, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS],
+    [STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.CHANNEL_KEYWORD_SETS, STORAGE_KEYS.TITLE_KEYWORD_SETS, STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.BLOCKED_COMMENTS, STORAGE_KEYS.WHITELISTED_CHANNELS, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS, STORAGE_KEYS.SHOW_BLOCK_POPUP, STORAGE_KEYS.SHOW_CLOSE_BUTTON],
     (result) => {
       if (result[STORAGE_KEYS.BLOCKER_ENABLED] === false) {
         console.log("Blocker is disabled");
@@ -140,6 +141,8 @@ async function runBlocker() {
       const whitelistedChannels = new Set(result[STORAGE_KEYS.WHITELISTED_CHANNELS] || []);
       const whitelistBypassAll = result[STORAGE_KEYS.WHITELIST_BYPASS_ALL] !== false;
       const whitelistHideShorts = !!result[STORAGE_KEYS.WHITELIST_HIDE_SHORTS];
+      showBlockPopupFlag = result[STORAGE_KEYS.SHOW_BLOCK_POPUP] !== false;
+      const showCloseButton = result[STORAGE_KEYS.SHOW_CLOSE_BUTTON] !== false;
 
       // チャンネル名フィルター用キーワードセット
       const channelKeywords = (result[STORAGE_KEYS.CHANNEL_KEYWORD_SETS] || [])
@@ -170,10 +173,12 @@ async function runBlocker() {
         whitelistBypassAll,
         hideShortsFlag,
         whitelistHideShorts,
+        showCloseButton,
       };
 
       // 各ページセレクタのアイテムを処理
-      PAGE_SELECTORS.forEach(({ itemSelector, ...selectorConfig }) => {
+      PAGE_SELECTORS.forEach(({ itemSelector, skipIf, ...selectorConfig }) => {
+        if (skipIf && skipIf()) return;
         document.querySelectorAll(itemSelector).forEach((item) => {
           processVideoItem(item, { ...filterContext, ...selectorConfig });
         });
@@ -277,6 +282,23 @@ function handleDebouncedMutation() {
     }, DEBOUNCE_DELAY);
   }
 }
+
+// ============================================================
+// ストレージ変更の監視
+// ============================================================
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== 'local') return;
+  if (changes[STORAGE_KEYS.SHOW_BLOCK_POPUP]) {
+    showBlockPopupFlag = changes[STORAGE_KEYS.SHOW_BLOCK_POPUP].newValue !== false;
+  }
+  if (
+    changes[STORAGE_KEYS.SHOW_CLOSE_BUTTON] ||
+    changes[STORAGE_KEYS.SHOW_BLOCK_POPUP]
+  ) {
+    runBlocker();
+  }
+});
 
 // ============================================================
 // 初回実行
