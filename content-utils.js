@@ -326,8 +326,16 @@ function processVideoItem(item, options) {
   const metadataRow = channelNameElem.closest('.yt-content-metadata-view-model__metadata-row, .ytContentMetadataViewModelMetadataRow');
   if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter, .ytContentMetadataViewModelDelimiter')) return;
 
-  const channelName = channelNameElem.textContent.trim();
+  const channelNameLink = channelNameElem.querySelector('a[href^="/@"]');
+  const channelName = (channelNameLink || channelNameElem).textContent.trim();
   if (!channelName) return;
+
+  // SPA遷移でチャンネル名が変わった場合、ボタンとホバー状態をリセット
+  if (item.dataset.blockChannelName && item.dataset.blockChannelName !== channelName) {
+    item.querySelectorAll('.block-btn').forEach(btn => btn.remove());
+    delete item.dataset.hoverBound;
+  }
+  item.dataset.blockChannelName = channelName;
 
   // ホワイトリスト判定（ホワイトリストが有効かつ登録済みの場合のみ適用）
   const isWhitelisted = whitelistBypassAll && whitelistedChannels.has(channelName);
@@ -351,13 +359,14 @@ function processVideoItem(item, options) {
     }
   }
 
-  // マウスがitem（親要素）に入ったらチャンネル名を保存（二重登録防止）
+  // マウスがitem（親要素）に入ったらチャンネル名を保存
   if (!item.dataset.hoverBound) {
     item.dataset.hoverBound = "1";
-    item.addEventListener("mouseenter", () => {
-      hoveredChannelName = channelName;
-    });
   }
+  // 常に最新のチャンネル名でホバーイベントを設定
+  item.onmouseenter = () => {
+    hoveredChannelName = channelName;
+  };
 
   // ホワイトリスト登録チャンネルのフィルター分岐
   if (isWhitelisted) {
