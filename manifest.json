@@ -6,7 +6,7 @@
   "default_locale": "ja",
   "permissions": ["storage", "unlimitedStorage"],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -16,6 +16,7 @@
       "run_at": "document_idle"
     }
   ],
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon48.png"
@@ -31,7 +32,10 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "yt-channel-blocker@yourdomain.dev",
-      "strict_min_version": "109.0"
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }
