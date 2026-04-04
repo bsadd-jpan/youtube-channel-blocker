@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_appName__",
-  "version": "1.6.0",
+  "version": "1.6.3",
   "description": "__MSG_appDescription__",
   "default_locale": "ja",
   "permissions": ["storage", "unlimitedStorage"],
@@ -24,5 +24,14 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "options_page": "settings.html"
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-channel-blocker@yourdomain.dev",
+      "strict_min_version": "109.0"
+    }
+  }
 }
