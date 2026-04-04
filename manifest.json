@@ -16,6 +16,7 @@
       "run_at": "document_idle"
     }
   ],
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon48.png"
