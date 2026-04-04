@@ -323,8 +323,8 @@ function processVideoItem(item, options) {
   if (!channelNameElem) return;
 
   // 再生数・日付行（•区切りがある行）を誤検出した場合はスキップ
-  const metadataRow = channelNameElem.closest('.yt-content-metadata-view-model__metadata-row');
-  if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter')) return;
+  const metadataRow = channelNameElem.closest('.yt-content-metadata-view-model__metadata-row, .ytContentMetadataViewModelMetadataRow');
+  if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter, .ytContentMetadataViewModelDelimiter')) return;
 
   const channelName = channelNameElem.textContent.trim();
   if (!channelName) return;
@@ -338,14 +338,11 @@ function processVideoItem(item, options) {
     item.querySelectorAll('.block-btn').forEach(btn => btn.remove());
   } else {
     // 未登録チャンネル：×ボタンを挿入
-    const insertTarget = insertBeforeSelector
-      ? item.querySelector(insertBeforeSelector)
-      : null;
-    const prevElem = insertTarget
-      ? insertTarget.previousElementSibling
-      : channelNameElem.previousElementSibling;
-    if (!prevElem || !prevElem.classList?.contains("block-btn")) {
+    if (!item.querySelector('.block-btn')) {
       const btn = createChannelBlockButton(channelName, onBlock);
+      const insertTarget = insertBeforeSelector
+        ? item.querySelector(insertBeforeSelector)
+        : null;
       if (insertTarget) {
         insertTarget.parentElement.insertBefore(btn, insertTarget);
       } else if (channelNameElem.parentElement) {

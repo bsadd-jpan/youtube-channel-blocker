@@ -48,7 +48,7 @@ const SHORTS_HIDE_RULES = [
 const PAGE_SELECTORS = [
   {
     // ホーム画面の動画
-    itemSelector: "ytd-rich-grid-renderer > ytd-rich-item-renderer",
+    itemSelector: "ytd-rich-grid-renderer ytd-rich-item-renderer",
     channelSelector: "a.yt-core-attributed-string__link[href^='/@']",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
@@ -56,7 +56,7 @@ const PAGE_SELECTORS = [
   {
     // 関連動画サイドバー: 通常動画用（チャンネルページではスキップ）
     itemSelector: "yt-lockup-view-model",
-    channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string",
+    channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string, .ytContentMetadataViewModelMetadataRow .yt-core-attributed-string",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
     skipIf: () => /^\/@[^/]+(\/|$)/.test(window.location.pathname),
@@ -187,7 +187,7 @@ async function runBlocker() {
       // チャンネルページ
       document.querySelectorAll("yt-dynamic-text-view-model").forEach((item) => {
         const isChannelPage = !!item
-          .closest(".yt-page-header-view-model__page-header-headline-info")
+          .closest(".yt-page-header-view-model__page-header-headline-info, .ytPageHeaderViewModelHeadlineInfo")
           ?.querySelector("yt-content-metadata-view-model");
 
         if (isChannelPage) {
