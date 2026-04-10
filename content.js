@@ -49,14 +49,14 @@ const PAGE_SELECTORS = [
   {
     // ホーム画面の動画
     itemSelector: "ytd-rich-grid-renderer ytd-rich-item-renderer",
-    channelSelector: "a.yt-core-attributed-string__link[href^='/@']",
+    channelSelector: "a.yt-core-attributed-string__link[href^='/@'], a.ytAttributedStringLink[href^='/@'], a.ytAttributedStringLink[href^='/channel/']",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
   },
   {
     // 関連動画サイドバー: 通常動画用（チャンネルページではスキップ）
     itemSelector: "yt-lockup-view-model",
-    channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string, .ytContentMetadataViewModelMetadataRow .yt-core-attributed-string",
+    channelSelector: ".yt-content-metadata-view-model__metadata-row .yt-core-attributed-string, .ytContentMetadataViewModelMetadataRow .yt-core-attributed-string, .ytContentMetadataViewModelMetadataRow .ytContentMetadataViewModelMetadataText",
     insertBeforeSelector: null,
     parentSelectors: "ytd-rich-item-renderer, ytd-video-renderer, ytd-compact-video-renderer, ytd-compact-autoplay-renderer",
     skipIf: () => /^\/@[^/]+(\/|$)/.test(window.location.pathname),
@@ -121,16 +121,21 @@ const WATCHED_SELECTORS =
  * 各画面ごとにアイテムを処理し、ボタン追加＆ブロック判定
  */
 async function runBlocker() {
+  if (!chrome.runtime?.id) return;
+
   // background 経由で正規表現リストを取得
   const channelPatterns = await getRegexListFromBackground("channelRegex");
   const titlePatterns = await getRegexListFromBackground("titleRegex");
 
+  if (!chrome.runtime?.id) return;
+
   const channelRegexList = channelPatterns.map(parseUserRegex).filter(Boolean);
   const titleRegexList = titlePatterns.map(parseUserRegex).filter(Boolean);
 
-  chrome.storage.local.get(
+  try { chrome.storage.local.get(
     [STORAGE_KEYS.BLOCKER_ENABLED, STORAGE_KEYS.BLOCKED_CHANNELS, STORAGE_KEYS.CHANNEL_KEYWORD_SETS, STORAGE_KEYS.TITLE_KEYWORD_SETS, STORAGE_KEYS.HIDE_SHORTS_FLAG, STORAGE_KEYS.BLOCKED_COMMENTS, STORAGE_KEYS.WHITELISTED_CHANNELS, STORAGE_KEYS.WHITELIST_BYPASS_ALL, STORAGE_KEYS.WHITELIST_HIDE_SHORTS, STORAGE_KEYS.SHOW_BLOCK_POPUP, STORAGE_KEYS.SHOW_CLOSE_BUTTON],
     (result) => {
+      if (chrome.runtime.lastError) return;
       if (result[STORAGE_KEYS.BLOCKER_ENABLED] === false) {
         console.log("Blocker is disabled");
         clearBlocks();
@@ -223,7 +228,7 @@ async function runBlocker() {
         });
       });
     }
-  );
+  ); } catch (e) {}
 }
 
 // ============================================================
@@ -266,6 +271,11 @@ const observer = new MutationObserver((mutationsList) => {
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
+
+// SPA遷移時にhoveredChannelNameをリセット
+window.addEventListener('yt-navigate-finish', () => {
+  hoveredChannelName = null;
+});
 
 /**
  * デバウンス付き変更検知ハンドラ
