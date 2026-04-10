@@ -87,7 +87,7 @@ function createChannelBlockButton(channelName, onBlock) {
     event.stopPropagation();
     event.preventDefault();
 
-    const targetName = hoveredChannelName || channelName;
+    const targetName = channelName || hoveredChannelName;
 
     chrome.storage.local.get([STORAGE_KEYS.BLOCKED_CHANNELS], (result) => {
       const updatedList = result[STORAGE_KEYS.BLOCKED_CHANNELS] || [];
@@ -323,10 +323,18 @@ function processVideoItem(item, options) {
   if (!channelNameElem) return;
 
   // 再生数・日付行（•区切りがある行）を誤検出した場合はスキップ
+  // ただし履歴等でチャンネル名と再生数が同じ行の場合はスキップしない
   const metadataRow = channelNameElem.closest('.yt-content-metadata-view-model__metadata-row, .ytContentMetadataViewModelMetadataRow');
-  if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter, .ytContentMetadataViewModelDelimiter')) return;
+  if (metadataRow?.querySelector('.yt-content-metadata-view-model__delimiter, .ytContentMetadataViewModelDelimiter')) {
+    const container = metadataRow.parentElement;
+    const allRows = container?.querySelectorAll('.yt-content-metadata-view-model__metadata-row, .ytContentMetadataViewModelMetadataRow') || [];
+    const hasChannelRow = Array.from(allRows).some(row =>
+      row !== metadataRow && !row.querySelector('.yt-content-metadata-view-model__delimiter, .ytContentMetadataViewModelDelimiter')
+    );
+    if (hasChannelRow) return;
+  }
 
-  const channelNameLink = channelNameElem.querySelector('a[href^="/@"]');
+  const channelNameLink = channelNameElem.querySelector('a[href^="/@"], a[href^="/channel/"]');
   const channelName = (channelNameLink || channelNameElem).textContent.trim();
   if (!channelName) return;
 
@@ -462,13 +470,25 @@ function toggleHideShortsFlag() {
  */
 function getRegexListFromBackground(type) {
   return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ action: 'getRegexList', type }, (res) => {
-      if (!res || res.ok === false) {
-        resolve([]);
-      } else {
-        resolve(res.list || []);
-      }
-    });
+    if (!chrome.runtime?.id) {
+      resolve([]);
+      return;
+    }
+    try {
+      chrome.runtime.sendMessage({ action: 'getRegexList', type }, (res) => {
+        if (chrome.runtime.lastError) {
+          resolve([]);
+          return;
+        }
+        if (!res || res.ok === false) {
+          resolve([]);
+        } else {
+          resolve(res.list || []);
+        }
+      });
+    } catch (e) {
+      resolve([]);
+    }
   });
 }
 
