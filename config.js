@@ -30,13 +30,13 @@ const STORAGE_KEYS = {
 /** リスト上限・文字数制限 */
 const LIMITS = {
   /** ブロックリスト上限 */
-  BLOCK_LIST:          10000,
+  BLOCK_LIST:          100000,
   /** ホワイトリスト上限 */
-  WHITELIST:           10000,
+  WHITELIST:           50000,
   /** コメントブロックリスト上限 */
-  COMMENT_LIST:        10000,
+  COMMENT_LIST:        50000,
   /** キーワードセット上限 */
-  KEYWORD_SETS:        5000,
+  KEYWORD_SETS:        10000,
   /** 1セットあたりのキーワード数上限 */
   KEYWORDS_PER_SET:    3,
   /** チャンネルキーワード文字数上限 */
@@ -44,7 +44,7 @@ const LIMITS = {
   /** タイトルキーワード文字数上限 */
   TITLE_KW_LENGTH:     30,
   /** 正規表現リスト上限 */
-  REGEX_LIST:          1000,
+  REGEX_LIST:          5000,
   /** 正規表現パターン文字数上限 */
   REGEX_LENGTH:        200,
   /** チャンネル名文字数上限 */
