@@ -687,7 +687,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      filtered.forEach((pattern, idx) => {
+      filtered.forEach((pattern) => {
+        const listIdx = list.indexOf(pattern);
+
         const li = document.createElement('li');
         li.style.display = 'flex';
         li.style.justifyContent = 'space-between';
@@ -736,7 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
               alert(t('regexMaxLength', lang));
               return;
             }
-            list[idx] = newPattern;
+            if (listIdx !== -1) list[listIdx] = newPattern;
             await setRegexList(type, list);
             await renderRegexList(type, container, filter);
           };
@@ -750,7 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 削除
         removeBtn.onclick = async () => {
-          list.splice(idx, 1);
+          if (listIdx !== -1) list.splice(listIdx, 1);
           await setRegexList(type, list);
           await renderRegexList(type, container, filter);
         };
