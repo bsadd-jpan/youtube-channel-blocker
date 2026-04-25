@@ -28,7 +28,7 @@ const I18N = {
   importBtn:  { ja: 'インポート',   en: 'Import' },
 
   // ─── content.js（ポップアップ通知） ───
-  blockListLimitReached: { ja: 'リスト上限(10000)に達しました',   en: 'Block list limit (10000) reached' },
+  blockListLimitReached: { ja: 'リスト上限(100000)に達しました',   en: 'Block list limit (100000) reached' },
   blocked:               { ja: 'ブロック済み: ',                   en: 'Blocked: ' },
 
   // ─── popup.js ───
@@ -79,13 +79,13 @@ const I18N = {
   channelFilterEdited:  { ja: 'チャンネルフィルターセットを編集しました',                 en: 'Channel keyword set edited' },
   channelFilterRemoved: { ja: 'チャンネルフィルターセットを削除しました',                 en: 'Channel keyword set removed' },
   channelFilterAdded:   { ja: 'チャンネルフィルターセットを追加しました',                 en: 'Channel filter set added' },
-  channelFilterLimit:   { ja: 'チャンネルフィルターセット上限(5000)に達しました',         en: 'Channel filter set limit (5000) reached' },
+  channelFilterLimit:   { ja: 'チャンネルフィルターセット上限(10000)に達しました',        en: 'Channel filter set limit (10000) reached' },
   keywordEdited:        { ja: 'キーワードセットを編集しました',                           en: 'Keyword set edited' },
-  keywordLimit:         { ja: 'キーワード上限(5000)に達しました',                         en: 'Keyword limit (5000) reached' },
+  keywordLimit:         { ja: 'キーワード上限(10000)に達しました',                        en: 'Keyword limit (10000) reached' },
   commentUserEdited:    { ja: 'ユーザー名を編集しました',                                 en: 'User edited' },
   regexMaxLength:       { ja: '正規表現パターンは最大200文字までです。',                   en: 'Pattern must be max 200 characters.' },
-  regexListLimit:       { ja: 'リストは最大1000個まで追加可能です。',                      en: 'List max is 1000 entries.' },
-  importListLimit:      { ja: 'リスト上限(10000)に達しました。インポートできません。',    en: 'The list limit of 10,000 entries has been reached. Import cannot be completed.' },
+  regexListLimit:       { ja: 'リストは最大5000個まで追加可能です。',                      en: 'List max is 5000 entries.' },
+  importListLimit:      { ja: 'リスト上限(100000)に達しました。インポートできません。',   en: 'The list limit of 100,000 entries has been reached. Import cannot be completed.' },
 
   // ─── settings.js タブ名 ───
   tabBlockList:             { ja: '非表示チャンネルリスト',                            en: 'Block Channel List' },
@@ -214,15 +214,15 @@ const I18N = {
                         en: 'If the channel name contains specific keywords, that channel will be automatically hidden.' },
   helpChannelFilter2: { ja: '1つのキーワードセットに最大3つのキーワードを設定できます。特に条件がない場合はキーワードを1つだけ設定してください。',
                         en: 'You can set up to three keywords per keyword set. If there are no special conditions, please set only one keyword.' },
-  helpChannelFilter3: { ja: 'キーワードセットは最大5000個、各キーワードは最大10文字です。',
-                        en: 'Keyword sets are limited to 5000 sets and 10 characters each.' },
+  helpChannelFilter3: { ja: 'キーワードセットは最大10000個、各キーワードは最大10文字です。',
+                        en: 'Keyword sets are limited to 10000 sets and 10 characters each.' },
 
   helpTitleFilter1: { ja: '動画タイトルに特定のキーワードが含まれている場合、その動画を自動的に非表示にします。',
                       en: 'If the video title contains specific keywords, the video will be automatically hidden.' },
   helpTitleFilter2: { ja: '1つのキーワードセットに最大3つのキーワードを設定できます。特に条件がない場合はキーワードを1つだけ設定してください。',
                       en: 'You can set up to three keywords per keyword set. If there are no special conditions, please set only one keyword.' },
-  helpTitleFilter3: { ja: 'キーワードセットは最大5000個、各キーワードは最大30文字です。',
-                      en: 'Keyword sets are limited to 5000 sets and 30 characters each.' },
+  helpTitleFilter3: { ja: 'キーワードセットは最大10000個、各キーワードは最大30文字です。',
+                      en: 'Keyword sets are limited to 10000 sets and 30 characters each.' },
   helpTitleFilter4: { ja: '例：',
                       en: 'For example:' },
   helpTitleFilter5: { ja: '「切り抜き」だけ非表示にしたい→「切り抜き」を登録',
